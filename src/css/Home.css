@@ -1,0 +1,188 @@
+/*==========================================================
+Global Styles
+==========================================================*/
+.profile.main {
+	flex-direction: column;
+	align-items: center;
+}
+/*---------- 1080px BREAK POINT ----------*/
+@media only screen and (min-width: 1080px) {
+	.profile.main {
+		gap: 1rem;
+		flex-direction: row-reverse;
+		align-items: flex-start;
+	}
+}
+/*==========================================================
+Top 10 Styles
+==========================================================*/
+body {
+	counter-reset: rank-counter;
+}
+.profile.main ol.card.list-group {
+	flex-direction: row;
+	overflow: auto;
+	width: 100%;
+	max-width: 700px;
+	padding: 0;
+}
+.profile.main .list-group-item {
+	background-color: var(--fourth);
+	color: var(--brand-gray3);
+	align-items: center;
+	border: 1px solid rgb(255 255 255 / 13%);
+	display: flex;
+}
+.profile.main .list-group-item a {
+	align-items: center;
+	display: flex;
+}
+.profile.main .list-group-item a > * {
+	margin-right: 1rem;
+}
+/* Counter for Rankings */
+.profile.main .list-group-item:not(:first-child)::before {
+	counter-increment: rank-counter 1;
+	content: counter(rank-counter) "";
+	margin: 0 1rem;
+	font-size: 1.75em;
+	font-weight: 700;
+	color: gray;
+}
+.profile.main .list-group-item:not(:first-child) {
+	padding: 1.5rem 1rem;
+}
+.profile.main .list-group-item a img {
+	height: 100px;
+	transition: transform 0.2s;
+}
+.profile.main .list-group-item a:hover {
+	color: var(--brand-gray3);
+}
+.profile.main .list-group-item a:hover h6 {
+	text-decoration: underline;
+}
+.profile.main .list-group-item a:hover img {
+	transform: scale(1.0625);
+}
+.profile.main .list-group-item h5 {
+	margin: 10px;
+	line-height: 1.5em;
+}
+.profile.main .list-group-item .info {
+	margin-top: 1rem;
+}
+.profile.main .list-group-item .info h6 {
+	margin-bottom: 12px;
+}
+.profile.main .list-group-item .info p {
+	margin-bottom: 7px;
+}
+
+.profile.main .list-group-item .info .icon-group {
+	position: relative;
+	font-weight: 500;
+}
+.profile.main .list-group-item .info .icon-group svg {
+	font-size: 18px;
+	position: relative;
+	top: -2px;
+	color: gray;
+	margin-right: 2px;
+}
+
+/*---------- Scroll bar styles ----------*/
+#style-4::-webkit-scrollbar {
+	height: 8px;
+	background-color: #444444;
+}
+#style-4::-webkit-scrollbar-thumb {
+	background-color: #191919;
+	border: 1px solid #444444;
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+#style-4::-webkit-scrollbar-thumb:hover {
+	background-color: #090909;
+}
+/*---------- 1080px BREAK POINT ----------*/
+@media only screen and (min-width: 1080px) {
+	.profile.main ol.card.list-group {
+		flex-direction: column;
+		overflow: unset;
+		position: static;
+		left: unset;
+		transform: unset;
+		width: 100%;
+		max-width: 400px;
+	}
+	.profile.main .list-group-item:not(:first-child)::before {
+		margin: 0 2rem;
+	}
+	.profile.main .list-group-item a img {
+		width: 123px;
+		height: 123px;
+	}
+	.profile.main .list-group-item .info {
+		margin-right: 0;
+	}
+	.profile.main .list-group-item .icon-group {
+		display: flex;
+	}
+	.profile.main .list-group-item .icon-group p {
+		margin-bottom: 0;
+		margin-right: 1rem;
+	}
+}
+/*==========================================================
+Timeline Styles
+==========================================================*/
+.profile.main .post-column.main {
+	max-width: 700px;
+}
+.post-column.main form {
+	justify-content: end;
+}
+.card .content.team {
+	width: calc(100% - 50px);
+}
+
+.card .content.team .team-container {
+	display: grid;
+	grid-template-columns: repeat(6, minmax(40px, 1fr));
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+.card .content.team .team-container img {
+	width: 40px;
+	height: 40px;
+	display: block;
+	background-color: #444444;
+	transition: transform 0.2s;
+}
+.card .content.team .team-container img:hover,
+.card .content.team .team-container a:focus img {
+	transform: scale(1.1625);
+}
+.card .content.team .team-container a:focus {
+	outline: none;
+}
+.card .content.team .team-container a:focus img {
+	outline: 3px solid #3196fd40;
+}
+/*---------- 600px BREAK POINT ----------*/
+@media only screen and (min-width: 600px) {
+	.card .content.team .team-container img {
+		width: 70px;
+		height: 70px;
+	}
+	.card .content.team .team-container {
+		grid-template-columns: repeat(6, minmax(50px, 1fr));
+	}
+}
+/*---------- 1080px BREAK POINT ----------*/
+@media only screen and (min-width: 1080px) {
+	.card .content.team .team-container {
+		grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+	}
+}
