@@ -34,7 +34,7 @@ function App() {
 			<MobileNav searchBtn={searchBtn} />
 			<div className="app-container">
 				<Routes>
-					<Route exact path="/" element={<Home />} />
+					<Route path="/dexapp_REACT" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/dex" element={<Pokedex />} />
