@@ -40,7 +40,7 @@ const useTopTen = (arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) => {
 			setIsLoading(false)
 		}
 		fetchData().catch((error) => {
-			console.error(error)
+			console.log(error.message)
 			setIsLoading(false)
 		})
 	}, [])

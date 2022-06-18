@@ -35,7 +35,7 @@ function Post({ post }) {
 					<Link to={`/profile/${truncateStr(user.username)}`}>{truncateStr(user.name)}</Link>
 					<span> {truncateStr(user.username)}</span>
 					<span className="date"> &#8226; {getTimeDifference(post.created)}</span>
-					{loggedUser.id === post.added_by && (
+					{loggedUser?.id === post.added_by && (
 						<button className="trash" onClick={() => dispatch({ type: "post/DELETE", postId: post.id })}>
 							<FaTrash />
 						</button>

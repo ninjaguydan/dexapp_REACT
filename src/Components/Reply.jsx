@@ -28,10 +28,10 @@ function Reply({ reply }) {
 			<UserIcon userImg={user.user_img} userName={user.username} userColor={user.bg_color} />
 			<div className="content">
 				<h4>
-					<Link to={`/profile/${""}`}>{truncateStr(user.name)}</Link>
+					<Link to={`/profile/${user.username}`}>{truncateStr(user.name)}</Link>
 					<span> {truncateStr(user.username)}</span>
 					<span className="date"> &#8226; {getTimeDifference(reply.created)}</span>
-					{loggedUser.id === reply.added_by && (
+					{loggedUser?.id === reply.added_by && (
 						<button className="trash" onClick={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}>
 							<FaTrash />
 						</button>

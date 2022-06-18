@@ -1,14 +1,5 @@
 const initState = {
-	loggedUser: {
-		id: 1,
-		bio: "The very best.",
-		pronouns: "He/Him",
-		name: "Daniel Thompson",
-		username: "danboy",
-		password: "password",
-		user_img: "m1",
-		bg_color: "red",
-	},
+	loggedUser: null,
 	users: [
 		{
 			id: 1,
@@ -63,6 +54,7 @@ const initState = {
 		},
 		{ id: 4, content: "Agreed!!!", created: 1651801529404, added_by: 2, for: "post", forId: 3 },
 		{ id: 5, content: "We can be friends!", created: 1651801009404, added_by: 2, for: "post", forId: 1 },
+		{ id: 6, content: "Cool team!!! Red was the best trainer", created: 1651801009404, added_by: 3, for: "team", forId: 1 },
 		{
 			id: "b7825e56-078f-4652-be34-af373c8e9c7a",
 			content: "guys. please. they all suck",
@@ -74,6 +66,7 @@ const initState = {
 	],
 	likes: [
 		{ postType: "reply", user: 1, forId: 4 },
+		{ postType: "team", user: 1, forId: 1 },
 		{ postType: "post", user: 3, forId: 2 },
 		{ postType: "post", user: 1, forId: 2 },
 		{ postType: "post", user: 2, forId: 2 },

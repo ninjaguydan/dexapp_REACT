@@ -57,6 +57,9 @@ function PostForm({ btnText, placeholder, type = { name: "POST" } }) {
 					case "review":
 						newReply["for"] = "review"
 						break
+					case "team":
+						newReply["for"] = "team"
+						break
 					default:
 						newReply["for"] = "post"
 				}

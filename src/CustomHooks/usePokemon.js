@@ -17,8 +17,8 @@ const usePokemon = (id = "") => {
 				setIsLoading(false)
 			})
 			.catch((error) => {
-				console.error(error)
-				setIsLoading(false)
+				console.log(error.message)
+				// setIsLoading(false)
 			})
 	}, [id])
 

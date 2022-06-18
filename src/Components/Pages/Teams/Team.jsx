@@ -9,7 +9,7 @@ function Team({ team }) {
 	let dispatch = useDispatch()
 	const user = useSelector((state) => state.users.filter((user) => user.id === team.added_by)[0])
 	const [repliesVisible, setRepliesVisible] = useState(false)
-	const [replies, setReplies] = useState([])
+	const replies = useSelector((state) => state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id))
 	let likes = useSelector((state) => state.likes.filter((like) => like.postType === "team" && like.forId === team.id))
 	let loggedUser = useSelector((state) => state.loggedUser)
 
@@ -59,7 +59,9 @@ function Team({ team }) {
 					<FaRegCommentAlt /> {replies.length}
 				</button>
 			</div>
-			<div className="replies">{repliesVisible && <ReplyList replies={replies} user={user.username} />}</div>
+			<div className="replies">
+				{repliesVisible && <ReplyList replies={replies} user={user.username} kind={{ name: "team", id: team.id }} />}
+			</div>
 		</div>
 	)
 }
