@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { FaStar, FaHeart } from "react-icons/fa"
 import Loading from "../../Loader/Loading"
-import useTopTen from "../../../Helpers/useTopTen"
+import useTopTen from "../../../CustomHooks/useTopTen"
 
 function TopTenList() {
 	let arr = []

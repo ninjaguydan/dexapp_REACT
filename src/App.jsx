@@ -15,6 +15,7 @@ import Pokemon from "./Components/Pages/Pokemon/Pokemon"
 import Pokedex from "./Components/Pages/Search/Pokedex"
 import User from "./Components/Pages/Profile/User"
 import UserMenu from "./Components/Navigation/UserMenu"
+import PageNotFound from "./Components/Pages/Error404/PageNotFound"
 
 function App() {
 	const loggedUser = useSelector((state) => state.loggedUser)
@@ -39,6 +40,7 @@ function App() {
 					<Route path="/dex" element={<Pokedex />} />
 					<Route path="/pokemon/:id" element={<Pokemon />} />
 					<Route path="/profile/:username" element={<User />} />
+					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</div>
 		</MyRouter>

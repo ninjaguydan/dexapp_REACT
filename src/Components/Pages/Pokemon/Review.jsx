@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { FaStar, FaRegStar, FaHeart, FaRegHeart, FaRegCommentAlt, FaTrash } from "react-icons/fa"
 import { getTimeDifference, titleCase, truncateStr } from "../../../Helpers/Helpers"
-import usePokemon from "../../../Helpers/usePokemon"
+import usePokemon from "../../../CustomHooks/usePokemon"
 
 const Review = ({ review, TL_view = false }) => {
 	let dispatch = useDispatch()

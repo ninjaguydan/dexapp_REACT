@@ -1,7 +1,7 @@
 import Results from "./Results"
 import { titleCase } from "../../../Helpers/Helpers"
-import usePokemon from "../../../Helpers/usePokemon"
-import useTypes from "../../../Helpers/useTypes"
+import usePokemon from "../../../CustomHooks/usePokemon"
+import useTypes from "../../../CustomHooks/useTypes"
 import { useState } from "react"
 
 const Pokedex = () => {

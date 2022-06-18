@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { titleCase } from "../../../Helpers/Helpers"
-import usePokemon from "../../../Helpers/usePokemon"
+import usePokemon from "../../../CustomHooks/usePokemon"
 import Pokefile from "../../Pages/Pokemon/Pokefile"
 import ReviewList from "./ReviewList"
 import PostForm from "../../Forms/PostForm"
