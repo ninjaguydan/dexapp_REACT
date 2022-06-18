@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/dexapp_REACT/static/css/main.01e9cf25.css",
+    "main.js": "/dexapp_REACT/static/js/main.784d80cb.js",
+    "static/media/pkmn.png": "/dexapp_REACT/static/media/pkmn.d32efd557ae8402a4f10.png",
+    "static/media/pokeball.png": "/dexapp_REACT/static/media/pokeball.84d0aebfef6b6e7c7da1.png",
+    "static/media/2f.png": "/dexapp_REACT/static/media/2f.803d673c11f3564537b3.png",
+    "static/media/1f.png": "/dexapp_REACT/static/media/1f.3d5006101ecd177e9b17.png",
+    "static/media/1m.png": "/dexapp_REACT/static/media/1m.a1866ab38742a301df45.png",
+    "static/media/3f.png": "/dexapp_REACT/static/media/3f.150b98a8c1458771cdf0.png",
+    "static/media/4f.png": "/dexapp_REACT/static/media/4f.fc519be01a9cf43e0e3e.png",
+    "static/media/404.png": "/dexapp_REACT/static/media/404.a30f0571e1fd70e629bc.png",
+    "static/media/3m.png": "/dexapp_REACT/static/media/3m.2679fd505738e62f59aa.png",
+    "static/media/2m.png": "/dexapp_REACT/static/media/2m.70964a2ef4efec89c63d.png",
+    "static/media/4m.png": "/dexapp_REACT/static/media/4m.a0216f243a65c017331f.png",
+    "static/media/dex-logo-w.svg": "/dexapp_REACT/static/media/dex-logo-w.ffe8db3ad48f47ca9286.svg",
+    "index.html": "/dexapp_REACT/index.html",
+    "static/media/dex-icon-4c.svg": "/dexapp_REACT/static/media/dex-icon-4c.659ca90fee95926ba46f.svg",
+    "static/media/dex-icon-w.svg": "/dexapp_REACT/static/media/dex-icon-w.e23251d54b8d41def4ce9c6b9d60d5ee.svg",
+    "main.01e9cf25.css.map": "/dexapp_REACT/static/css/main.01e9cf25.css.map",
+    "main.784d80cb.js.map": "/dexapp_REACT/static/js/main.784d80cb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01e9cf25.css",
+    "static/js/main.784d80cb.js"
+  ]
+}
