@@ -41,7 +41,7 @@ const UserMenuMobile = ({ user, openMenu }) => {
 						</Link>
 					</li>
 					<li>
-						<Link to="/" onClick={openMenu}>
+						<Link to="/dexapp_REACT" onClick={openMenu}>
 							<i className="material-icons">home</i>Home
 						</Link>
 					</li>

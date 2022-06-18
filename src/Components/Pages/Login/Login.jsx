@@ -24,7 +24,7 @@ const Login = () => {
 				type: "users/ON_LOGIN",
 				logUser,
 			})
-			navigate("/")
+			navigate("/dexapp_REACT")
 		} else {
 			setError(true)
 		}

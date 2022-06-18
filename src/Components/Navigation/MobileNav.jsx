@@ -12,7 +12,7 @@ const MobileNav = ({ searchBtn }) => {
 			<ul className="mobile-nav">
 				{/* <li>{searchBtn}</li> */}
 				<li>
-					<Link to="/">
+					<Link to="/dexapp_REACT">
 						<i className="material-icons" aria-hidden="true">
 							home
 						</i>

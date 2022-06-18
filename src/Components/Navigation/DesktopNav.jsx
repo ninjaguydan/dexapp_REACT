@@ -13,7 +13,7 @@ const DesktopNav = ({ searchBtn, openDrop }) => {
 			<ul className="main-nav">
 				<li>{searchBtn}</li>
 				<li>
-					<NavLink to="/">Home</NavLink>
+					<NavLink to="/dexapp_REACT">Home</NavLink>
 				</li>
 				<li>
 					<NavLink to="/dex">Pokedex</NavLink>

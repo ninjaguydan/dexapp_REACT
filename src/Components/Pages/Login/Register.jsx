@@ -39,7 +39,7 @@ const Register = () => {
 			type: "users/REGISTER",
 			newUser,
 		})
-		navigate("/")
+		navigate("/dexapp_REACT")
 	}
 
 	return (

@@ -5,7 +5,7 @@ const PageNotFound = () => {
 	const navigate = useNavigate()
 
 	function goHome() {
-		navigate("/")
+		navigate("/dexapp_REACT")
 	}
 
 	return (
