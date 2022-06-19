@@ -55,7 +55,7 @@ ul.card li.list-group-item img.main-img {
 }
 ul.card li.list-group-item img.main-img.user-img {
 	margin: 45px 0;
-	max-width: 286px;
+	max-width: 150px;
 }
 ul.card li.list-group-item .icon-group {
 	display: flex;
@@ -97,7 +97,7 @@ ul.card li.list-group-item.striped {
 	gap: 0.55rem;
 }
 ul.card li.list-group-item.striped:nth-child(odd) {
-	background-color: #444;
+	background-color: #26262d;
 }
 ul.card li.list-group-item.striped:last-child {
 	justify-content: center;
@@ -149,6 +149,9 @@ ul.card li.list-group-item.striped a:focus img {
 	ul.card {
 		margin: 0 auto;
 	}
+	ul.card li.list-group-item img.main-img.user-img {
+		max-width: 286px;
+	}
 }
 /*---------- 946px BREAK POINT ----------*/
 @media only screen and (min-width: 946px) {
@@ -174,15 +177,15 @@ Post Column Styles
 	background-color: var(--brand-gray1);
 	border-radius: 50%;
 	margin-right: 1rem;
-	/* display: none; */
+}
+.post-column .card img.form-img {
+	display: none;
 }
 .post-column .card .content {
-	/* width: calc(100% - 50px); */
-	width: calc(100% - 104px);
+	width: calc(100% - 56px);
 }
 .post-column .card h4 {
 	font-weight: 700;
-	margin-bottom: 0.75rem;
 	line-height: 1.5rem;
 }
 .post-column .card h4 a:hover {
@@ -190,11 +193,11 @@ Post Column Styles
 	text-decoration: underline;
 }
 .post-column .card h4 span {
-	color: gray;
+	color: #898989;
 	font-weight: 400;
 }
 .post-column .card .rating {
-	color: gray;
+	color: #898989;
 	font-size: 0.85rem;
 	display: inline-block;
 	margin-bottom: 0.75rem;
@@ -207,29 +210,23 @@ Post Column Styles
 	font-size: 14px;
 }
 .post-column .card .date {
-	color: gray;
+	color: #898989;
 	margin-top: 0.25rem;
 	font-style: italic;
 	font-size: 12px;
 }
 .post-column .card .icon-container {
-	width: 2rem;
-	margin-left: 1rem;
 	display: flex;
-	flex-direction: column;
+	margin-top: 0.5rem;
 }
 .post-column .card .icon-container button.fav {
 	background-color: unset;
-	color: gray;
-	margin-bottom: 1rem;
+	color: #898989;
 	transition: transform 0.2s;
 	display: flex;
-	flex-direction: column;
+	margin-right: 2rem;
 	align-items: center;
 	font-size: 12px;
-}
-.post-column .card .icon-container button.fav:last-child {
-	margin-bottom: 0;
 }
 .post-column .card .icon-container button.fav:hover,
 .post-column .card .icon-container button.fav:focus {
@@ -239,7 +236,7 @@ Post Column Styles
 }
 .post-column .card .icon-container button.fav svg {
 	width: 12px;
-	margin-bottom: 5px;
+	margin-right: 5px;
 }
 .post-column .card div:last-child {
 	flex-basis: 100%;
@@ -247,11 +244,14 @@ Post Column Styles
 /*---------- 530px BREAK POINT ----------*/
 @media only screen and (min-width: 530px) {
 	.post-column .card .content {
-		width: calc(100% - 124px);
+		width: calc(100% - 76px);
 	}
 	.post-column .card img {
 		width: 60px;
 		height: 60px;
+	}
+	.post-column .card img.form-img {
+		display: block;
 	}
 }
 /*---------- 946px BREAK POINT ----------*/
@@ -268,7 +268,7 @@ Reply Styles
 }
 .replies .card {
 	flex-wrap: nowrap;
-	background-color: #303030;
+	background-color: var(--brand-gray1);
 }
 .replies .card div:last-child {
 	flex-basis: unset;

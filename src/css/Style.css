@@ -21,8 +21,8 @@ body {
 	--brand-primary: #f12849;
 	--brand-primary-dark: #ca0b2b;
 	--brand-secondary: #009df1;
-	--brand-gray1: #191919;
-	--brand-gray2: #353535;
+	--brand-gray1: #151415;
+	--brand-gray2: #1c1c1f;
 	--brand-gray3: #ced4da;
 	--brand-gray4: #6c757d;
 }
@@ -77,9 +77,10 @@ body {
 }
 .trash {
 	font-size: 12px;
-	margin-left: 0.5rem;
 	color: var(--brand-gray4);
 	background-color: unset;
+	position: absolute;
+	right: 1rem;
 }
 .trash:hover {
 	color: var(--brand-primary);
@@ -367,12 +368,15 @@ Navigation Styles
 .mobile-nav .material-icons {
 	font-size: 30px;
 	position: relative;
-	top: 5px;
+	top: -5px;
 }
 .dex-icon {
 	position: relative;
 	width: 25px;
 	top: 5px;
+}
+.mobile-nav .dex-icon {
+	top: -5px;
 }
 .mobile-nav .material-icons:hover {
 	color: var(--brand-secondary);
@@ -448,7 +452,7 @@ Navigation Styles
 	border-radius: 50%;
 	width: 35px;
 	position: relative;
-	top: 5px;
+	top: -5px;
 }
 li.nav-user-desk {
 	display: flex;
@@ -529,8 +533,6 @@ li.nav-user-desk .btn:hover {
 	top: 50vh;
 	left: 50vw;
 	transform: translate(-50%, -50%);
-}
-.error404 .img-box {
 }
 .error404 img {
 	width: 80%;

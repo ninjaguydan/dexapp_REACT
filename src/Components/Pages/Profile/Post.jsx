@@ -38,24 +38,28 @@ function Post({ post }) {
 					{loggedUser?.id === post.added_by && (
 						<button className="trash" onClick={() => dispatch({ type: "post/DELETE", postId: post.id })}>
 							<FaTrash />
+							<span className="sr-only">delete</span>
 						</button>
 					)}
 				</h4>
 				<p>{post.content}</p>
-			</div>
-			<div className="icon-container">
-				<button className="fav" onClick={() => toggleLike()}>
-					{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
-					{likes.length}
-				</button>
-				<button
-					className="fav"
-					onClick={() => {
-						setRepliesVisible(!repliesVisible)
-					}}
-				>
-					<FaRegCommentAlt /> {replies.length}
-				</button>
+				<div className="icon-container">
+					<button className="fav" onClick={() => toggleLike()}>
+						{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
+						{likes.length}
+						<span className="sr-only">likes</span>
+					</button>
+					<button
+						className="fav"
+						onClick={() => {
+							setRepliesVisible(!repliesVisible)
+						}}
+					>
+						<FaRegCommentAlt />
+						{replies.length}
+						<span className="sr-only">comments</span>
+					</button>
+				</div>
 			</div>
 			<div className="replies">
 				{repliesVisible && <ReplyList replies={replies} user={user.username} kind={{ name: "post", id: post.id }} />}

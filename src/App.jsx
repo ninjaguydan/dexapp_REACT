@@ -26,8 +26,8 @@ function App() {
 
 	return (
 		<MyRouter>
-			{dropdownIsOpen && loggedUser ? <UserMenu username={loggedUser.username} openDrop={() => setDropdownIsOpen(!dropdownIsOpen)} /> : null}
 			<Header openDrop={() => setDropdownIsOpen(!dropdownIsOpen)} />
+			{dropdownIsOpen && loggedUser ? <UserMenu username={loggedUser.username} openDrop={() => setDropdownIsOpen(!dropdownIsOpen)} /> : null}
 			{/* <SearchBar show={showSearchBar} /> */}
 			{loggedUser && <MenuBtn openMenu={() => setMenuIsOpen(!menuIsOpen)} menuIsOpen={menuIsOpen} />}
 			{menuIsOpen && loggedUser ? <UserMenuMobile user={loggedUser} openMenu={() => setMenuIsOpen(!menuIsOpen)} /> : null}

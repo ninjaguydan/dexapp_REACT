@@ -49,6 +49,7 @@ function Team({ team }) {
 				<button className="fav" onClick={() => toggleLike()}>
 					{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
 					{likes.length}
+					<span className="sr-only">likes</span>
 				</button>
 				<button
 					className="fav"
@@ -56,7 +57,9 @@ function Team({ team }) {
 						setRepliesVisible(!repliesVisible)
 					}}
 				>
-					<FaRegCommentAlt /> {replies.length}
+					<FaRegCommentAlt />
+					{replies.length}
+					<span className="sr-only">comments</span>
 				</button>
 			</div>
 			<div className="replies">

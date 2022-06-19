@@ -73,7 +73,7 @@ function PostForm({ btnText, placeholder, type = { name: "POST" } }) {
 
 	return (
 		<div className="card">
-			<img src={getImageByKey(loggedUser.user_img)} alt={"user"} className={loggedUser.bg_color} />
+			<img src={getImageByKey(loggedUser.user_img)} alt={"user"} className={`${loggedUser.bg_color} form-img`} />
 			<form onSubmit={(e) => onSubmit(e)}>
 				<textarea
 					onChange={(e) => setValue(e)}

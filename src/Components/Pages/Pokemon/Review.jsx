@@ -52,6 +52,7 @@ const Review = ({ review, TL_view = false }) => {
 					{loggedUser.id === review.added_by && (
 						<button className="trash" onClick={() => dispatch({ type: "review/DELETE", reviewId: review.id })}>
 							<FaTrash />
+							<span className="sr-only">delete</span>
 						</button>
 					)}
 				</h4>
@@ -65,20 +66,23 @@ const Review = ({ review, TL_view = false }) => {
 					})}
 				</span>
 				<p>{review.content}</p>
-			</div>
-			<div className="icon-container">
-				<button className="fav" onClick={() => toggleLike()}>
-					{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
-					{likes.length}
-				</button>
-				<button
-					className="fav"
-					onClick={() => {
-						setRepliesVisible(!repliesVisible)
-					}}
-				>
-					<FaRegCommentAlt /> {replies.length}
-				</button>
+				<div className="icon-container">
+					<button className="fav" onClick={() => toggleLike()}>
+						{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
+						{likes.length}
+						<span className="sr-only">likes</span>
+					</button>
+					<button
+						className="fav"
+						onClick={() => {
+							setRepliesVisible(!repliesVisible)
+						}}
+					>
+						<FaRegCommentAlt />
+						{replies.length}
+						<span className="sr-only">comments</span>
+					</button>
+				</div>
 			</div>
 			<div className="replies">
 				{repliesVisible && <ReplyList replies={replies} user={user.username} kind={{ name: "review", id: review.id }} />}

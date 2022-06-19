@@ -34,16 +34,18 @@ function Reply({ reply }) {
 					{loggedUser?.id === reply.added_by && (
 						<button className="trash" onClick={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}>
 							<FaTrash />
+							<span className="sr-only">delete</span>
 						</button>
 					)}
 				</h4>
 				<p>{reply.content}</p>
-			</div>
-			<div className="icon-container">
-				<button className="fav" onClick={() => toggleLike()}>
-					{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
-					{likes.length}
-				</button>
+				<div className="icon-container">
+					<button className="fav" onClick={() => toggleLike()}>
+						{loggedUser && likes.find((like) => like.user === loggedUser.id) ? <FaHeart style={{ color: "#009df1" }} /> : <FaRegHeart />}
+						{likes.length}
+						<span className="sr-only">likes</span>
+					</button>
+				</div>
 			</div>
 		</div>
 	)

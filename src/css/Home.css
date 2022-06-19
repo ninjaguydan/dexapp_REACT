@@ -135,7 +135,7 @@ body {
 	}
 }
 /*==========================================================
-Timeline Styles
+Team Styles
 ==========================================================*/
 .profile.main .post-column.main {
 	max-width: 700px;
@@ -144,20 +144,19 @@ Timeline Styles
 	justify-content: end;
 }
 .card .content.team {
-	width: calc(100% - 50px);
+	width: 100%;
 }
-
 .card .content.team .team-container {
 	display: grid;
 	grid-template-columns: repeat(6, minmax(40px, 1fr));
 	gap: 0.5rem;
-	margin-top: 1rem;
+	margin: 1rem 0 0.5rem;
 }
 .card .content.team .team-container img {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	display: block;
-	background-color: #444444;
+	margin: 0;
 	transition: transform 0.2s;
 }
 .card .content.team .team-container img:hover,
@@ -183,6 +182,6 @@ Timeline Styles
 /*---------- 1080px BREAK POINT ----------*/
 @media only screen and (min-width: 1080px) {
 	.card .content.team .team-container {
-		grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+		grid-template-columns: repeat(6, minmax(80px, 1fr));
 	}
 }
