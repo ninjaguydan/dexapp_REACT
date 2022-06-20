@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { titleCase } from "../../../Helpers/Helpers"
 import usePokemon from "../../../CustomHooks/usePokemon"

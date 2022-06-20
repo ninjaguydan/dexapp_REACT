@@ -49,7 +49,7 @@ const Review = ({ review, TL_view = false }) => {
 					<span> {TL_view ? "reviewed" : truncateStr(user.username)}</span>
 					{TL_view && <Link to={`/pokemon/${pkmn.id}`}> {titleCase(pkmn.name)}</Link>}
 					<span className="date"> &#8226; {getTimeDifference(review.created)}</span>
-					{loggedUser.id === review.added_by && (
+					{loggedUser?.id === review.added_by && (
 						<button className="trash" onClick={() => dispatch({ type: "review/DELETE", reviewId: review.id })}>
 							<FaTrash />
 							<span className="sr-only">delete</span>

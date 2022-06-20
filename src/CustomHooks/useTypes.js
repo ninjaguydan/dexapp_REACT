@@ -5,7 +5,7 @@ const useTypes = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		fetch(`http://localhost:8000/api/types/`)
+		fetch(`https://dexapp-api.herokuapp.com/types/`)
 			.then((response) => {
 				if (!response.ok) {
 					throw Error("Could not fetch Type data")

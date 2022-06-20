@@ -5,7 +5,7 @@ const usePokemon = (id = "") => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		fetch(`http://localhost:8000/api/pokemon/${id}`)
+		fetch(`https://dexapp-api.herokuapp.com/pokemon/${id}`)
 			.then((response) => {
 				if (!response.ok) {
 					throw Error("Could not fetch Pokemon data")
