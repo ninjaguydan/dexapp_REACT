@@ -8,9 +8,9 @@ import Loading from "../../Loader/Loading";
 import UserIcon from "../../Layout/UserIcon";
 
 import { getTimeDifference, titleCase, truncateStr } from "../../../Helpers/Helpers";
-import usePokemon from "../../../CustomHooks/usePokemon";
 import { IReview, IPokemon } from "../../../Helpers/Interfaces";
 import { RootState } from "../../../Redux/store";
+import usePokemon from "../../../Hooks/usePokemon";
 
 interface IReviewProps {
   review: IReview;
@@ -29,10 +29,10 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
     state.likes.filter((like) => like.postType === "review" && like.forId === review.id)
   );
   let currentUser = useSelector((state: RootState) => state.loggedUser);
-  const { data: pkmn, isLoading }: { data: IPokemon; isLoading: boolean } = usePokemon(review.pkmn);
+  const { pkmnData, isLoading }: { pkmnData: IPokemon; isLoading: boolean } = usePokemon(`${review.pkmn}`);
 
   function toggleLike() {
-    if (!currentUser) {
+    if (currentUser.id === 0) {
       return;
     }
     if (likes.find((like) => like.user === currentUser.id)) {
@@ -52,8 +52,8 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
     <div className="card">
       {TL_view ? (
         <img
-          src={pkmn.sprite_url}
-          alt={`${pkmn.name}'s official sprite`}
+          src={pkmnData.sprite_url}
+          alt={`${pkmnData.name}'s official sprite`}
           style={{ backgroundColor: "#444" }}
         />
       ) : (
@@ -69,7 +69,7 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
         <h4>
           <Link to={`/profile/${user.username}`}>{TL_view ? truncateStr(user.username) : truncateStr(user.name)}</Link>
           <span> {TL_view ? "reviewed" : truncateStr(user.username)}</span>
-          {TL_view && <Link to={`/pokemon/${pkmn.id}`}> {titleCase(pkmn.name)}</Link>}
+          {TL_view && <Link to={`/pokemon/${pkmnData.id}`}> {titleCase(pkmnData.name)}</Link>}
           <span className="date"> &#8226; {getTimeDifference(review.created)}</span>
           {currentUser?.id === review.added_by && (
             <button

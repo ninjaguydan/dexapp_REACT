@@ -13,7 +13,7 @@ interface IReplyListProps {
 }
 
 function ReplyList({ replies, user, kind }: IReplyListProps) {
-  const loggedUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
   return (
     <>
       {replies.map((reply) => {
@@ -24,7 +24,7 @@ function ReplyList({ replies, user, kind }: IReplyListProps) {
           />
         );
       })}
-      {loggedUser && (
+      {!!currentUser.id && (
         <PostForm
           btnText={"Reply"}
           placeholder={`Replying to ${user}...`}

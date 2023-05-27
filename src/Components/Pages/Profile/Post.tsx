@@ -23,18 +23,18 @@ function Post({ post }: IPostProps) {
   let likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "post" && like.forId === post.id)
   );
-  let loggedUser = useSelector((state: RootState) => state.loggedUser);
+  let currentUser = useSelector((state: RootState) => state.loggedUser);
   let dispatch = useDispatch();
 
   function toggleLike() {
-    if (!loggedUser) {
+    if (currentUser.id === 0) {
       return;
     }
-    if (likes.find((like) => like.user === loggedUser.id)) {
-      let toDel = { name: "post", forId: post.id, user: loggedUser.id };
+    if (likes.find((like) => like.user === currentUser.id)) {
+      let toDel = { name: "post", forId: post.id, user: currentUser.id };
       dispatch({ type: "users/UNLIKE", toDel });
     } else {
-      let newLike = { postType: "post", user: loggedUser.id, forId: post.id };
+      let newLike = { postType: "post", user: currentUser.id, forId: post.id };
       dispatch({ type: "users/LIKE", newLike });
     }
   }
@@ -52,7 +52,7 @@ function Post({ post }: IPostProps) {
           <Link to={`/profile/${truncateStr(user.username)}`}>{truncateStr(user.name)}</Link>
           <span> {truncateStr(user.username)}</span>
           <span className="date"> &#8226; {getTimeDifference(post.created)}</span>
-          {loggedUser?.id === post.added_by && (
+          {currentUser?.id === post.added_by && (
             <button
               className="trash"
               onClick={() => dispatch({ type: "post/DELETE", postId: post.id })}>
@@ -66,7 +66,7 @@ function Post({ post }: IPostProps) {
           <button
             className="fav"
             onClick={() => toggleLike()}>
-            {loggedUser && likes.find((like) => like.user === loggedUser.id) ? (
+            {currentUser && likes.find((like) => like.user === currentUser.id) ? (
               <FaHeart style={{ color: "#009df1" }} />
             ) : (
               <FaRegHeart />

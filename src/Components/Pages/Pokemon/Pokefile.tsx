@@ -7,13 +7,15 @@ import { makeHundreds, getBaseStatTotal } from "../../../Helpers/Helpers";
 import { RootState } from "../../../Redux/store";
 import { IPokemon } from "../../../Helpers/Interfaces";
 import default_img from "../../../media/0.png";
+import usePkmnTotal from "../../../Hooks/usePkmnTotal";
 
 interface IPokefileProps {
   pokemon: IPokemon;
 }
 
 const Pokefile = ({ pokemon }: IPokefileProps) => {
-  // const loggedInUser = useSelector((state: RootState) => state.loggedUser);
+  // const { total } = usePkmnTotal();
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.pkmn === pokemon.id).length);
   const stats: { [key: string]: number } = {
     HP: pokemon.hp,
@@ -26,8 +28,8 @@ const Pokefile = ({ pokemon }: IPokefileProps) => {
 
   let prev;
   let next;
-  pokemon.id === 1 ? (prev = 898) : (prev = pokemon.id - 1);
-  pokemon.id === 898 ? (next = 1) : (next = pokemon.id + 1);
+  pokemon.id === 1 ? (prev = 1010) : (prev = pokemon.id - 1);
+  pokemon.id === 1010 ? (next = 1) : (next = pokemon.id + 1);
 
   function grabImage(num: number) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${num}.png`;

@@ -7,7 +7,7 @@ import ReviewList from "./ReviewList";
 import Loading from "../../Loader/Loading";
 
 import { titleCase } from "../../../Helpers/Helpers";
-import usePokemon from "../../../CustomHooks/usePokemon";
+import usePokemon from "../../../Hooks/usePokemon";
 import { RootState } from "../../../Redux/store";
 import { IPokemon } from "../../../Helpers/Interfaces";
 
@@ -15,7 +15,7 @@ import { IPokemon } from "../../../Helpers/Interfaces";
 
 const Pokemon = () => {
   const { id } = useParams();
-  const { data: pokemon, isLoading }: { data: IPokemon; isLoading: boolean } = usePokemon(id);
+  const { pkmnData, isLoading }: { pkmnData: IPokemon; isLoading: boolean } = usePokemon(id);
   const user = useSelector((state: RootState) => state.loggedUser);
   const reviews = useSelector((state: RootState) =>
     state.reviews.filter((review) => review.pkmn === parseInt(id as string)).reverse()
@@ -27,12 +27,12 @@ const Pokemon = () => {
 
   return (
     <div className="profile">
-      <Pokefile pokemon={pokemon} />
+      <Pokefile pokemon={pkmnData} />
       <div className="post-column">
-        {user && (
+        {!!user.id && (
           <PostForm
             btnText={"Post"}
-            placeholder={`What do you think of ${titleCase(pokemon.name)}?`}
+            placeholder={`What do you think of ${titleCase(pkmnData.name)}?`}
             type={{ name: "REVIEW", id: parseInt(id as string) }}
           />
         )}

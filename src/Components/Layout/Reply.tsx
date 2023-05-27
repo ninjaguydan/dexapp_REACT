@@ -18,17 +18,17 @@ function Reply({ reply }: IReplyProps) {
   let likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "reply" && like.forId === reply.id)
   );
-  let loggedUser = useSelector((state: RootState) => state.loggedUser);
+  let currentUser = useSelector((state: RootState) => state.loggedUser);
 
   function toggleLike() {
-    if (!loggedUser) {
+    if (currentUser.id === 0) {
       return;
     }
-    if (likes.find((like) => like.user === loggedUser.id)) {
-      let toDel = { name: "reply", forId: reply.id, user: loggedUser.id };
+    if (likes.find((like) => like.user === currentUser.id)) {
+      let toDel = { name: "reply", forId: reply.id, user: currentUser.id };
       dispatch({ type: "users/UNLIKE", toDel });
     } else {
-      let newLike = { postType: "reply", user: loggedUser.id, forId: reply.id };
+      let newLike = { postType: "reply", user: currentUser.id, forId: reply.id };
       dispatch({ type: "users/LIKE", newLike });
     }
   }
@@ -46,7 +46,7 @@ function Reply({ reply }: IReplyProps) {
           <Link to={`/profile/${user.username}`}>{truncateStr(user.name)}</Link>
           <span> {truncateStr(user.username)}</span>
           <span className="date"> &#8226; {getTimeDifference(reply.created)}</span>
-          {loggedUser?.id === reply.added_by && (
+          {currentUser?.id === reply.added_by && (
             <button
               className="trash"
               onClick={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}>
@@ -60,7 +60,7 @@ function Reply({ reply }: IReplyProps) {
           <button
             className="fav"
             onClick={() => toggleLike()}>
-            {loggedUser && likes.find((like) => like.user === loggedUser.id) ? (
+            {currentUser && likes.find((like) => like.user === currentUser.id) ? (
               <FaHeart style={{ color: "#009df1" }} />
             ) : (
               <FaRegHeart />

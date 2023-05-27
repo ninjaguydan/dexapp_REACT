@@ -26,7 +26,7 @@ function Team({ team }: ITeamProps) {
   let currentUser = useSelector((state: RootState) => state.loggedUser);
 
   function toggleLike() {
-    if (!currentUser) {
+    if (currentUser.id === 0) {
       return;
     }
     if (likes.find((like) => like.user === currentUser.id)) {

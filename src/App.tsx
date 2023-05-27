@@ -3,7 +3,7 @@ import { Routes, Route, BrowserRouter as MyRouter } from "react-router-dom";
 // Comps
 import Header from "./Components/Layout/Header";
 import MobileNav from "./Components/Layout/MobileNav";
-import useDeviceWidth from "./CustomHooks/useDeviceWidth";
+import useDeviceWidth from "./Hooks/useDeviceWidth";
 
 //Pages
 import Login from "./Components/Pages/Login/Login";
