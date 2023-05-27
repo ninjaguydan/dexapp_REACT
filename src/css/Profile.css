@@ -2,445 +2,449 @@
 Global Styles
 ==========================================================*/
 .profile {
-	display: flex;
-	gap: 1rem;
-	flex-direction: column;
-	max-width: 1080px;
-	margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  max-width: 1080px;
+  margin: 0 auto;
 }
 /*---------- 946px BREAK POINT ----------*/
 @media only screen and (min-width: 946px) {
-	.profile {
-		gap: 1rem;
-		flex-direction: row;
-	}
+  .profile {
+    gap: 1rem;
+    flex-direction: row;
+  }
 }
 /*==========================================================
 Profile column Styles
 ==========================================================*/
 ul.card {
-	padding: 0;
-	border: unset;
-	width: 100%;
-	max-width: 557px;
-	height: fit-content;
+  padding: 0;
+  border: unset;
+  width: 100%;
+  max-width: 557px;
+  height: fit-content;
 }
 ul.card svg {
-	position: relative;
-	top: -2px;
+  position: relative;
+  top: -2px;
 }
 ul.card li.list-group-item {
-	border: 1px solid rgb(255 255 255 / 13%);
-	background-color: var(--brand-gray2);
-	text-align: center;
-	color: var(--brand-gray3);
+  border: 1px solid rgb(255 255 255 / 13%);
+  background-color: var(--brand-gray2);
+  text-align: center;
+  color: var(--brand-gray3);
 }
 ul.card li.list-group-item:first-child {
-	padding: 1.5rem 2.5rem;
+  padding: 1.5rem 2.5rem;
 }
 .list-group-item .header1 {
-	text-transform: capitalize;
-	margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
 }
 .list-group-item .header1 + p {
-	color: #808080;
+  color: #808080;
 }
 ul.card li.list-group-item p.bio {
-	margin: 0 auto 1.5rem;
-	line-height: 1.35rem;
-	max-width: 34ch;
+  margin: 0 auto 1.5rem;
+  line-height: 1.35rem;
+  max-width: 34ch;
 }
 ul.card li.list-group-item img.main-img {
-	width: 90%;
+  width: 90%;
 }
 ul.card li.list-group-item img.main-img.user-img {
-	margin: 45px 0;
-	max-width: 150px;
+  margin: 45px 0;
+  max-width: 150px;
 }
 ul.card li.list-group-item .icon-group {
-	display: flex;
-	justify-content: space-between;
-	width: 60%;
-	margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: 0 auto;
 }
 ul.card li.list-group-item .icon-group p {
-	font-weight: 700;
-	font-size: 1.25rem;
-	display: flex;
-	position: relative;
+  font-weight: 700;
+  font-size: 1.25rem;
+  display: flex;
+  position: relative;
 }
 ul.card li.list-group-item .icon-group svg {
-	position: relative;
-	top: -2px;
-	margin-right: 10px;
+  position: relative;
+  top: -2px;
+  margin-right: 10px;
 }
 ul.card li.list-group-item .followcnt-group {
-	display: flex;
-	justify-content: space-around;
-	font-size: 14px;
-	color: gray;
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  color: gray;
 }
 ul.card li.list-group-item .followcnt-group span {
-	color: var(--brand-gray3);
-	font-weight: 600;
+  color: var(--brand-gray3);
+  font-weight: 600;
 }
 ul.card li.list-group-item.striped.edit-btn {
-	justify-content: center;
+  justify-content: center;
 }
 ul.card li.list-group-item.striped {
-	display: flex;
-	flex-wrap: wrap;
-	font-size: 0.9rem;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0.75rem 2.5rem;
-	gap: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2.5rem;
+  gap: 0.55rem;
 }
 ul.card li.list-group-item.striped:nth-child(odd) {
-	background-color: #26262d;
+  background-color: #26262d;
 }
 ul.card li.list-group-item.striped:last-child {
-	justify-content: center;
+  justify-content: center;
 }
 ul.card li.list-group-item .btn {
-	width: 100%;
-	font-size: 0.9rem;
-	position: relative;
+  width: 100%;
+  font-size: 0.9rem;
+  position: relative;
 }
 ul.card li.list-group-item.striped a {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
 }
 ul.card li.list-group-item.striped a img {
-	width: 60%;
-	margin: 0 10px;
-	border-radius: 50%;
-	background-color: var(--brand-gray1);
-	transition: transform 0.2s;
+  width: 60%;
+  margin: 0 10px;
+  border-radius: 50%;
+  background-color: var(--brand-gray1);
+  transition: transform 0.2s;
 }
 ul.card li.list-group-item.striped a:hover img {
-	transform: scale(1.0625);
+  transform: scale(1.0625);
 }
 ul.card li.list-group-item.striped a:focus {
-	outline: unset;
+  outline: unset;
 }
 ul.card li.list-group-item.striped a:focus img {
-	outline: 2px solid #3196fd40;
+  outline: 2px solid #3196fd40;
 }
 /*---------- 300px BREAK POINT ----------*/
 @media only screen and (min-width: 300px) {
-	ul.card li.list-group-item.striped:last-child {
-		justify-content: space-between;
-	}
+  ul.card li.list-group-item.striped:last-child {
+    justify-content: space-between;
+  }
 }
 /*---------- 416px BREAK POINT ----------*/
 @media only screen and (min-width: 416px) {
-	ul.card li.list-group-item.striped {
-		flex-wrap: nowrap;
-	}
-	ul.card li.list-group-item .btn {
-		width: 50%;
-	}
+  ul.card li.list-group-item.striped {
+    flex-wrap: nowrap;
+  }
+  ul.card li.list-group-item .btn {
+    width: 50%;
+  }
 }
 /*---------- 600px BREAK POINT ----------*/
 @media only screen and (min-width: 600px) {
-	ul.card {
-		margin: 0 auto;
-	}
-	ul.card li.list-group-item img.main-img.user-img {
-		max-width: 286px;
-	}
+  ul.card {
+    margin: 0 auto;
+  }
+  ul.card li.list-group-item img.main-img.user-img {
+    max-width: 286px;
+  }
 }
 /*---------- 946px BREAK POINT ----------*/
 @media only screen and (min-width: 946px) {
-	ul.card {
-		max-width: 400px;
-	}
+  ul.card {
+    max-width: 400px;
+  }
 }
 /*==========================================================
 Post Column Styles
 ==========================================================*/
 .post-column {
-	width: 100%;
-	max-width: 557px;
-	margin: 0 auto;
+  width: 100%;
+  max-width: 557px;
+  margin: 0 auto;
 }
 .post-column .card {
-	flex-direction: row;
-	flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .post-column .card img {
-	width: 40px;
-	height: 40px;
-	background-color: var(--brand-gray1);
-	border-radius: 50%;
-	margin-right: 1rem;
+  width: 40px;
+  height: 40px;
+  background-color: var(--brand-gray1);
+  border-radius: 50%;
+  margin-right: 1rem;
 }
 .post-column .card img.form-img {
-	display: none;
+  display: none;
 }
 .post-column .card .content {
-	width: calc(100% - 56px);
+  width: calc(100% - 56px);
 }
 .post-column .card h4 {
-	font-weight: 700;
-	line-height: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5rem;
 }
 .post-column .card h4 a:hover {
-	color: inherit;
-	text-decoration: underline;
+  color: inherit;
+  text-decoration: underline;
 }
 .post-column .card h4 span {
-	color: #898989;
-	font-weight: 400;
+  color: #898989;
+  font-weight: 400;
 }
 .post-column .card .rating {
-	color: #898989;
-	font-size: 0.85rem;
-	display: inline-block;
-	margin-bottom: 0.75rem;
+  color: #898989;
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-bottom: 0.75rem;
 }
 .post-column .card .rating * {
-	margin-right: 0.25rem;
+  margin-right: 0.25rem;
 }
 .post-column .card p:not(.date) {
-	line-height: 1.35rem;
-	font-size: 14px;
+  line-height: 1.35rem;
+  font-size: 14px;
 }
 .post-column .card .date {
-	color: #898989;
-	margin-top: 0.25rem;
-	font-style: italic;
-	font-size: 12px;
+  color: #898989;
+  margin-top: 0.25rem;
+  font-style: italic;
+  font-size: 12px;
 }
 .post-column .card .icon-container {
-	display: flex;
-	margin-top: 0.5rem;
+  display: flex;
+  margin-top: 0.5rem;
 }
 .post-column .card .icon-container button.fav {
-	background-color: unset;
-	color: #898989;
-	transition: transform 0.2s;
-	display: flex;
-	margin-right: 2rem;
-	align-items: center;
-	font-size: 12px;
+  background-color: unset;
+  color: #898989;
+  transition: transform 0.2s;
+  display: flex;
+  margin-right: 2rem;
+  align-items: center;
+  font-size: 12px;
 }
 .post-column .card .icon-container button.fav:hover,
 .post-column .card .icon-container button.fav:focus {
-	color: var(--brand-secondary);
-	transform: scale(1.1625);
-	outline: none;
+  color: var(--brand-secondary);
+  transform: scale(1.1625);
+  outline: none;
 }
 .post-column .card .icon-container button.fav svg {
-	width: 12px;
-	margin-right: 5px;
+  width: 12px;
+  margin-right: 5px;
 }
 .post-column .card div:last-child {
-	flex-basis: 100%;
+  flex-basis: 100%;
 }
 /*---------- 530px BREAK POINT ----------*/
 @media only screen and (min-width: 530px) {
-	.post-column .card .content {
-		width: calc(100% - 76px);
-	}
-	.post-column .card img {
-		width: 60px;
-		height: 60px;
-	}
-	.post-column .card img.form-img {
-		display: block;
-	}
+  .post-column .card .content {
+    width: calc(100% - 76px);
+  }
+  .post-column .card img {
+    width: 60px;
+    height: 60px;
+  }
+  .post-column .card img.form-img {
+    display: block;
+  }
 }
 /*---------- 946px BREAK POINT ----------*/
 @media only screen and (min-width: 946px) {
-	.post-column {
-		max-width: 650px;
-	}
+  .post-column {
+    max-width: 650px;
+  }
 }
 /*==========================================================
 Reply Styles
 ==========================================================*/
 .replies .card:first-child {
-	margin-top: 1rem;
+  margin-top: 1rem;
 }
 .replies .card {
-	flex-wrap: nowrap;
-	background-color: var(--brand-gray1);
+  flex-wrap: nowrap;
+  background-color: var(--brand-gray1);
 }
 .replies .card div:last-child {
-	flex-basis: unset;
+  flex-basis: unset;
 }
 .replies .card img {
-	width: 30px;
-	height: 30px;
+  width: 30px;
+  height: 30px;
 }
 .post-column .replies .card form {
-	justify-content: end;
+  justify-content: end;
 }
 .post-column .replies .card form .counter {
-	right: 165px;
+  right: 165px;
 }
 /*---------- 530px BREAK POINT ----------*/
 @media only screen and (min-width: 530px) {
-	.post-column .replies .card .content {
-		width: calc(100% - 106px);
-	}
+  .post-column .replies .card .content {
+    width: calc(100% - 106px);
+  }
 }
 /*==========================================================
 Post Form Styles
 ==========================================================*/
 .post-column .card form {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .post-column .card textarea {
-	color: var(--brand-gray3);
+  color: var(--brand-gray3);
 }
 .post-column .card select {
-	margin-top: 1rem;
-	width: 3rem;
+  margin-top: 1rem;
+  width: 3rem;
 }
 .post-column .card form .btn {
-	margin-top: 1rem;
-	padding: 0.25rem 2rem;
-	width: 7rem;
+  margin-top: 1rem;
+  padding: 0.25rem 2rem;
+  width: 7rem;
+}
+.post-column .card form .btn:disabled {
+  color: #a80019;
+  border-color: var(--brand-primary);
 }
 .post-column .card form .counter {
-	position: absolute;
-	font-size: 12px;
-	color: gray;
-	bottom: 25px;
-	right: 145px;
+  position: absolute;
+  font-size: 12px;
+  color: gray;
+  bottom: 25px;
+  right: 145px;
 }
 .post-column .card form .counter.caution {
-	color: orange;
+  color: orange;
 }
 .post-column .card form .counter.error {
-	color: var(--brand-primary);
+  color: var(--brand-primary);
 }
 /*---------- 530px BREAK POINT ----------*/
 @media only screen and (min-width: 530px) {
-	.post-column .card form {
-		width: calc(100% - 76px);
-	}
+  .post-column .card form {
+    width: calc(100% - 76px);
+  }
 }
 /*==========================================================
 Edit Profile Styles
 ==========================================================*/
 .modal-bg {
-	/* display: none; */
-	padding: 1rem;
-	background-color: rgb(0, 0, 0, 0.8);
-	position: fixed;
-	z-index: 11;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
+  /* display: none; */
+  padding: 1rem;
+  background-color: rgb(0, 0, 0, 0.8);
+  position: fixed;
+  z-index: 11;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 .edit-profile-modal {
-	width: 100%;
-	max-width: 500px;
-	margin: auto;
-	padding: 2rem;
-	background-color: var(--brand-gray2);
-	border-radius: 5px;
-	animation: zoom 0.3s forwards;
-	-webkit-animation: zoom 0.3s forwards;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 2rem;
+  background-color: var(--brand-gray2);
+  border-radius: 5px;
+  animation: zoom 0.3s forwards;
+  -webkit-animation: zoom 0.3s forwards;
 }
 .modal-head {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .modal-head .close {
-	background-color: unset;
-	color: var(--brand-gray3);
-	font-size: 1.5rem;
+  background-color: unset;
+  color: var(--brand-gray3);
+  font-size: 1.5rem;
 }
 .modal-head .close:hover {
-	color: var(--brand-secondary);
+  color: var(--brand-secondary);
 }
 .edit-profile-modal h3 {
-	margin-bottom: 1.55rem;
+  margin-bottom: 1.55rem;
 }
 .edit-profile-modal .img-container {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 .edit-profile-modal button {
-	background-color: unset;
-	transition: transform 0.2s;
+  background-color: unset;
+  transition: transform 0.2s;
 }
 .edit-profile-modal button.selected {
-	outline: 3px solid #71b8fe80;
+  outline: 3px solid #71b8fe80;
 }
 .edit-profile-modal button:hover,
 .edit-profile-modal button:focus {
-	transform: scale(1.0625);
+  transform: scale(1.0625);
 }
 .edit-profile-modal img {
-	width: 100%;
+  width: 100%;
 }
 .edit-profile-modal .colors {
-	grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 }
 .edit-profile-modal .colors button {
-	width: 100%;
-	border-radius: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
 }
 .edit-profile-modal .colors button::after {
-	content: "";
-	display: block;
-	padding-bottom: 100%;
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 .edit-profile-modal .btn {
-	width: 100%;
+  width: 100%;
 }
 .edit-profile-modal .btn.primary {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 /*---------- Modal animation ----------*/
 @keyframes zoom {
-	from {
-		transform: scale(0);
-	}
-	to {
-		transform: scale(1);
-	}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 @-webkit-keyframes zoom {
-	from {
-		transform: scale(0);
-	}
-	to {
-		transform: scale(1);
-	}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 /*==========================================================
 BACKGROUND COLORS
 ==========================================================*/
 .gray {
-	background-color: #000 !important;
+  background-color: #000 !important;
 }
 .red {
-	background-color: var(--brand-primary) !important;
+  background-color: var(--brand-primary) !important;
 }
 .blue {
-	background-color: var(--brand-secondary) !important;
+  background-color: var(--brand-secondary) !important;
 }
 .yellow {
-	background-color: yellow !important;
+  background-color: yellow !important;
 }
 .green {
-	background-color: green !important;
+  background-color: green !important;
 }
 .purple {
-	background-color: rgb(127, 47, 184) !important;
+  background-color: rgb(127, 47, 184) !important;
 }
