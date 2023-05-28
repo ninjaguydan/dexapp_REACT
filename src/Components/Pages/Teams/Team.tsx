@@ -44,7 +44,7 @@ function Team({ team }: ITeamProps) {
         <h4>
           <Link to={`/profile/${user.username}`}>{user.username}</Link>
           <span> created the team, </span>
-          <Link to={""}> {team.name}</Link>
+          <Link to={`/team/${team.name}`}> {team.name}</Link>
           <span className="date"> &#8226; {getTimeDifference(team.created)}</span>
         </h4>
         <span className="team-container">
@@ -63,7 +63,7 @@ function Team({ team }: ITeamProps) {
         <button
           className="fav"
           onClick={() => toggleLike()}>
-          {currentUser && likes.find((like) => like.user === currentUser.id) ? (
+          {!!currentUser.id && likes.find((like) => like.user === currentUser.id) ? (
             <FaHeart style={{ color: "#009df1" }} />
           ) : (
             <FaRegHeart />

@@ -8,7 +8,7 @@ import dex_icon from "../../media/dex-icon-w.svg";
 import { RootState } from "../../Redux/store";
 
 const MobileNav = () => {
-  const user = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
 
   return (
     <nav>
@@ -38,11 +38,11 @@ const MobileNav = () => {
           </Link>
         </li>
         <li>
-          {user ? (
+          {!!currentUser.id ? (
             <UserIcon
-              userImg={user.user_img}
-              userName={user.username}
-              userColor={user.bg_color}
+              userImg={currentUser.user_img}
+              userName={currentUser.username}
+              userColor={currentUser.bg_color}
               mobileNav={"nav-user-icon"}
             />
           ) : (

@@ -40,6 +40,7 @@ export interface ITeam {
   likes: (string | number)[];
   added_by: number | string;
   created: number;
+  [key: string]: any;
 }
 export interface ILike {
   postType: string;
@@ -60,15 +61,25 @@ export interface IPokemon {
   sp_defense: number;
   speed: number;
   favorited_by: (string | number)[];
-  weak_to: (string | number)[];
-  resists: (string | number)[];
-  immune_to: (string | number)[];
+  weak_to: string[];
+  resists: string[];
+  immune_to: string[];
 }
 export interface IType {
   id: number;
   name: string;
-  pkmn: number[];
-  weak_to: (string | number)[];
-  resists: (string | number)[];
-  immune_to: (string | number)[];
+  pkmn?: number[];
+  weak_to: string[];
+  resists: string[];
+  immune_to: string[];
+}
+export interface IRTable {
+  [key: string]: {
+    weak: number;
+    resist: number;
+    immune: number;
+  };
+}
+export interface ISTable {
+  [key: string]: number;
 }

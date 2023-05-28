@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 
-import { IPokemon } from "../Helpers/Interfaces";
+import { IPokemon, ITeam } from "../Helpers/Interfaces";
 import { setGen } from "../Helpers/setGen";
-import { setPkmnType } from "../Helpers/setPkmnType";
+import { setPkmnType, setRelations } from "../Helpers/setPkmnType";
+import useTypes from "./useTypes";
 
-const usePokemon = (id: string = "1") => {
+const usePokemon = (pkmnID: string = "1", teamArray: number[] = []) => {
+  const { typeData, typeDataIsLoading } = useTypes();
   const [pkmnData, setPkmnData] = useState<IPokemon>({} as IPokemon);
+  const [teamData, setTeamData] = useState<IPokemon[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const promiseData: Promise<IPokemon>[] = [];
 
   useEffect(() => {
-    const fetchPokemon = async () => {
+    if (typeDataIsLoading) {
+      return;
+    }
+    const fetchPokemon = async (id: string) => {
       const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
       const pokemon = await data.json();
-      setPkmnData({
+      let tempPokemon = {
         id: pokemon["id"],
         name: pokemon["name"],
         gen: setGen(pokemon["id"]),
@@ -26,17 +33,30 @@ const usePokemon = (id: string = "1") => {
         sp_defense: pokemon["stats"][4]["base_stat"],
         speed: pokemon["stats"][5]["base_stat"],
         favorited_by: [],
-        weak_to: [],
-        resists: [],
-        immune_to: [],
-      });
-      setIsLoading(false);
+        weak_to: setRelations(setPkmnType(pokemon["types"]), typeData).weaknesses,
+        resists: setRelations(setPkmnType(pokemon["types"]), typeData).resistances,
+        immune_to: setRelations(setPkmnType(pokemon["types"]), typeData).immunities,
+      };
+      return tempPokemon;
     };
-    fetchPokemon().catch((error) => {
-      console.error(error.message);
-    });
-  }, [id]);
+    if (teamArray.length !== 0) {
+      teamArray.forEach(async (member) => promiseData.push(fetchPokemon(`${member}`)));
+      Promise.all(promiseData).then((values) => {
+        setTeamData(values);
+        setIsLoading(false);
+      });
+    } else {
+      fetchPokemon(pkmnID)
+        .then((value) => {
+          setPkmnData(value);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    }
+  }, [pkmnID, typeDataIsLoading]);
 
-  return { pkmnData, isLoading };
+  return { pkmnData, teamData, isLoading };
 };
 export default usePokemon;

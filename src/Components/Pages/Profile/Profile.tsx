@@ -13,7 +13,7 @@ interface IProfileProps {
 function Profile({ user, openEdit }: IProfileProps) {
   const postCnt = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).length);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.added_by === user.id).length);
-  const loggedInUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
 
   return (
     <ul className="card">
@@ -37,7 +37,7 @@ function Profile({ user, openEdit }: IProfileProps) {
           </p>
         </div>
       </li>
-      {loggedInUser?.id === user.id && (
+      {currentUser?.id === user.id && (
         <li className="list-group-item striped edit-btn">
           <button
             onClick={openEdit}

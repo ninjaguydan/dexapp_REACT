@@ -4,16 +4,16 @@ import { FaStar, FaHeart } from "react-icons/fa";
 
 import Loading from "../../Loader/Loading";
 
-import useTopTen from "../../../Hooks/useTopTen";
-import { getRandomInt, titleCase } from "../../../Helpers/Helpers";
+import { getRandomInt, getRandomFloat, titleCase } from "../../../Helpers/Helpers";
 import { IPokemon } from "../../../Helpers/Interfaces";
+import usePokemon from "../../../Hooks/usePokemon";
 
 function TopTenList() {
   let arr = [];
   while (arr.length < 10) {
-    arr.push(getRandomInt(1, 899));
+    arr.push(getRandomInt(1, 1010));
   }
-  const { data: pkmn, isLoading }: { data: IPokemon[]; isLoading: boolean } = useTopTen(arr);
+  const { teamData: pkmn, isLoading } = usePokemon("", arr);
 
   if (isLoading) {
     return <Loading />;
@@ -40,7 +40,7 @@ function TopTenList() {
                 <h6 className="bold">{titleCase(item.name)}</h6>
                 <div className="icon-group">
                   <p>
-                    <FaHeart /> 1.2k
+                    <FaHeart /> {getRandomFloat(1, 99)}k
                   </p>
                   <p>
                     <FaStar /> 10

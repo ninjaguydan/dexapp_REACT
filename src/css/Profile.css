@@ -215,11 +215,11 @@ Post Column Styles
   font-style: italic;
   font-size: 12px;
 }
-.post-column .card .icon-container {
+.card .icon-container {
   display: flex;
   margin-top: 0.5rem;
 }
-.post-column .card .icon-container button.fav {
+.card .icon-container button.fav {
   background-color: unset;
   color: #898989;
   transition: transform 0.2s;
@@ -228,18 +228,31 @@ Post Column Styles
   align-items: center;
   font-size: 12px;
 }
-.post-column .card .icon-container button.fav:hover,
-.post-column .card .icon-container button.fav:focus {
+.card .icon-container button.fav:hover,
+.card .icon-container button.fav:focus {
   color: var(--brand-secondary);
   transform: scale(1.1625);
   outline: none;
 }
-.post-column .card .icon-container button.fav svg {
+.card .icon-container button.fav svg {
   width: 12px;
   margin-right: 5px;
 }
 .post-column .card div:last-child {
   flex-basis: 100%;
+}
+/* team fav icons */
+.team-card .icon-container {
+  justify-content: center;
+  margin-top: 1rem;
+}
+.team-card .icon-container button.fav {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.team-card .icon-container button.fav svg {
+  top: 0;
+  width: 1.25rem;
 }
 /*---------- 530px BREAK POINT ----------*/
 @media only screen and (min-width: 530px) {

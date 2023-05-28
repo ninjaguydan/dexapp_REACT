@@ -1,3 +1,5 @@
+import { IRTable } from "../Helpers/Interfaces";
+
 export const TYPES = [
   "normal",
   "fighting",
@@ -18,3 +20,9 @@ export const TYPES = [
   "dark",
   "fairy",
 ];
+
+export const rTable: IRTable = {};
+
+TYPES.forEach((type) => {
+  rTable[type] = { weak: 0, resist: 0, immune: 0 };
+});

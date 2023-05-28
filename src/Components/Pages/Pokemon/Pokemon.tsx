@@ -1,25 +1,31 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Pokefile from "./Pokefile";
 import PostForm from "../../Forms/PostForm";
 import ReviewList from "./ReviewList";
 import Loading from "../../Loader/Loading";
 
+import { RootState } from "../../../Redux/store";
 import { titleCase } from "../../../Helpers/Helpers";
 import usePokemon from "../../../Hooks/usePokemon";
-import { RootState } from "../../../Redux/store";
 import { IPokemon } from "../../../Helpers/Interfaces";
 
-//TODO: rework pokemon fetching to exclude django API
-
 const Pokemon = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { pkmnData, isLoading }: { pkmnData: IPokemon; isLoading: boolean } = usePokemon(id);
   const user = useSelector((state: RootState) => state.loggedUser);
   const reviews = useSelector((state: RootState) =>
     state.reviews.filter((review) => review.pkmn === parseInt(id as string)).reverse()
   );
+
+  useEffect(() => {
+    if (parseInt(id as string) > 1010) {
+      navigate("/not-found");
+    }
+  }, [id]);
 
   if (isLoading) {
     return <Loading />;

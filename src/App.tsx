@@ -11,6 +11,7 @@ import Register from "./Components/Pages/Login/Register";
 import Home from "./Components/Pages/Home/Home";
 import Pokemon from "./Components/Pages/Pokemon/Pokemon";
 import User from "./Components/Pages/Profile/User";
+import TeamSummary from "./Components/Pages/Teams/TeamSummary";
 import Pokedex from "./Components/Pages/Search/Pokedex";
 import PageNotFound from "./Components/Pages/Error404/PageNotFound";
 
@@ -46,6 +47,14 @@ function App() {
           <Route
             path="/profile/:username"
             element={<User />}
+          />
+          <Route
+            path="/team/:teamName"
+            element={<TeamSummary />}
+          />
+          <Route
+            path="/not-found"
+            element={<PageNotFound />}
           />
           <Route
             path="*"

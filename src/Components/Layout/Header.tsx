@@ -22,7 +22,7 @@ const Header = () => {
 
       {breakpoint !== "MOBILE" && <DesktopNav />}
 
-      {breakpoint === "MOBILE" && currentUser.id && (
+      {breakpoint === "MOBILE" && !!currentUser.id && (
         <>
           <MenuBtn
             openMenu={() => {
