@@ -83,3 +83,9 @@ export interface IRTable {
 export interface ISTable {
   [key: string]: number;
 }
+export interface IRegistrationObject {
+  name: string;
+  username: string;
+  password: string;
+  confirm?: string;
+}

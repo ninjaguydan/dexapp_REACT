@@ -6,16 +6,17 @@ import { v4 as uuidv4 } from "uuid";
 import FormInput from "../../Forms/FormInput";
 
 import { validator, checkIfValues, checkIfEmpty, confirmPasswordMatch } from "../../../Helpers/Validator";
+import { IRegistrationObject } from "../../../Helpers/Interfaces";
 import pk_ball from "../../../media/pokeball.png";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<IRegistrationObject>({
     name: "",
     username: "",
     password: "",
-    confirm: "",
+    // confirm: "",
   });
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState(values);
@@ -44,6 +45,11 @@ const Register = () => {
     });
     navigate("/dexapp_REACT");
   }
+
+  console.log(errors);
+  console.log(checkIfEmpty(errors));
+  console.log(values);
+  console.log(checkIfValues(values));
 
   return (
     <div className="log-res-wrapper">
@@ -81,7 +87,7 @@ const Register = () => {
             type="password"
             value={confirm}
             handleChange={handleConfirm}
-            error={errors.confirm}
+            error={errors.confirm as string}
           />
           <div className="btn-container">
             <button
