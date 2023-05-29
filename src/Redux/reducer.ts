@@ -1,7 +1,7 @@
 const initState = {
   loggedUser: {
     id: 10,
-    bio: "I am an anonymous user. Change whatevr you like, or make a new account!",
+    bio: "I am an anonymous user. Change whatever you like, or make a new account!",
     location: "",
     pronouns: "",
     name: "John Doe",
