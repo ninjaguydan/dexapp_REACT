@@ -34,7 +34,7 @@ const initState = {
     { id: 3, name: "Kelsey J", username: "k_sheesh", password: "gggg", user_img: "f3", bg_color: "yellow" },
     {
       id: 10,
-      bio: "I am an anonymous user. Change whatevr you like, or make a new account!",
+      bio: "I am an anonymous user. Change whatever you like, or make a new account!",
       location: "",
       pronouns: "",
       name: "John Doe",
