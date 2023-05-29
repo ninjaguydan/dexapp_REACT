@@ -50,7 +50,7 @@ const UserMenuMobile = ({ user, openMenu }: IUserMobileMenuProps) => {
           </li>
           <li>
             <Link
-              to="/dex"
+              to="/dexapp_REACT"
               onClick={openMenu}>
               <img
                 src={dex_icon_w as unknown as string}
