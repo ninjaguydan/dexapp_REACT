@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 import FormInput from "../../Forms/FormInput";
@@ -8,28 +9,32 @@ import FormInput from "../../Forms/FormInput";
 import { validator, checkIfValues, checkIfEmpty, confirmPasswordMatch } from "../../../Helpers/Validator";
 import { IRegistrationObject } from "../../../Helpers/Interfaces";
 import pk_ball from "../../../media/pokeball.png";
+import { RootState } from "../../../Redux/store";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
   const [values, setValues] = useState<IRegistrationObject>({
     name: "",
     username: "",
     password: "",
-    // confirm: "",
+    confirm: "",
   });
-  const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState(values);
   const handleChange = (event: any) => {
     setValues({ ...values, [event.target.id]: event.target.value });
   };
-  const handleConfirm = (event: any) => {
-    setConfirm(event.target.value);
-  };
 
   useEffect(() => {
-    setErrors({ ...errors, ...validator(values), confirm: confirmPasswordMatch(confirm, values.password) });
-  }, [values, confirm]);
+    if (!!currentUser.id) {
+      navigate("/dexapp_REACT");
+    }
+  }, []);
+
+  useEffect(() => {
+    setErrors({ ...errors, ...validator(values), confirm: confirmPasswordMatch(values.confirm as string, values.password) });
+  }, [values]);
 
   function onSubmit(event: any) {
     event.preventDefault();
@@ -45,11 +50,6 @@ const Register = () => {
     });
     navigate("/dexapp_REACT");
   }
-
-  console.log(errors);
-  console.log(checkIfEmpty(errors));
-  console.log(values);
-  console.log(checkIfValues(values));
 
   return (
     <div className="log-res-wrapper">
@@ -85,8 +85,8 @@ const Register = () => {
             label="Confirm Password"
             name="confirm"
             type="password"
-            value={confirm}
-            handleChange={handleConfirm}
+            value={values.confirm as string}
+            handleChange={handleChange}
             error={errors.confirm as string}
           />
           <div className="btn-container">
