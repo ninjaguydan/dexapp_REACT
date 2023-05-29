@@ -1,14 +1,14 @@
 const initState = {
   loggedUser: {
-    id: 0,
-    bio: "",
+    id: 10,
+    bio: "I am an anonymous user. Change whatevr you like, or make a new account!",
     location: "",
     pronouns: "",
-    name: "",
-    username: "",
-    password: "",
-    user_img: "",
-    bg_color: "",
+    name: "John Doe",
+    username: "anon10",
+    password: "password",
+    user_img: "dfault",
+    bg_color: "gray",
   },
   users: [
     {
@@ -25,13 +25,24 @@ const initState = {
     {
       id: 2,
       bio: "This is a bio. I can put anything here. Gotta be respectful tho",
-      name: "John Doe",
-      username: "longjonsilver",
+      name: "Josh Virgil",
+      username: "joshwick420",
       password: "1234",
       user_img: "m2",
       bg_color: "green",
     },
     { id: 3, name: "Kelsey J", username: "k_sheesh", password: "gggg", user_img: "f3", bg_color: "yellow" },
+    {
+      id: 10,
+      bio: "I am an anonymous user. Change whatevr you like, or make a new account!",
+      location: "",
+      pronouns: "",
+      name: "John Doe",
+      username: "anon10",
+      password: "password",
+      user_img: "dfault",
+      bg_color: "gray",
+    },
   ],
   posts: [
     { id: 1, content: "What a cool site. Just missing some friends!", created: 1604322329404, added_by: 1, likes: [] },
