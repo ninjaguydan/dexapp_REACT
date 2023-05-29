@@ -1,0 +1,118 @@
+/* Weakness Rating Styles */
+.chart-container {
+  padding: 0;
+}
+.chart-container table {
+  margin: 0;
+  color: white;
+}
+.chart-container table thead tr,
+.chart-container table tbody tr:nth-of-type(even) {
+  background-color: #26262d;
+}
+.chart-container table thead tr:first-child {
+  border-bottom: 1px solid rgb(255 255 255 / 13%);
+}
+.chart-container table tbody tr {
+  border: transparent;
+}
+.chart-container table tbody tr td:not(.not-zero) {
+  color: #a7a7a7;
+}
+.chart-container table tbody th {
+  text-transform: capitalize;
+}
+.chart-container table tr th:first-child {
+  text-align: left;
+  padding-left: 2rem;
+}
+.chart-container table th,
+.chart-container table td {
+  vertical-align: middle;
+  padding: 0.75rem 0.5rem;
+}
+.chart-container table svg {
+  position: relative;
+  top: 1px;
+}
+.weak:not(td),
+.high.weak {
+  color: #f3506b;
+}
+.resist:not(td),
+.high.resist {
+  color: #2bc07b;
+}
+.immune {
+  color: gray;
+}
+.high {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+.card .list-group-item .btn.toggle-btn {
+  width: 100%;
+  padding: 0.75rem 0;
+}
+.card .list-group-item .btn.toggle-btn:hover,
+.card .list-group-item .btn.toggle-btn:focus {
+  background-color: #343442;
+  box-shadow: 0 0 2px var(--brand-secondary);
+}
+/*----------------- Team Grid Styles -----------------*/
+.team-page {
+  /* flex-direction: column-reverse; */
+}
+.team-grid {
+  display: grid;
+  row-gap: 40px;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+.card.team-grid a {
+  text-align: center;
+  width: 100%;
+}
+
+.card.team-grid a img {
+  background-color: #222227;
+  width: 50%;
+  height: auto;
+  border-radius: 10%;
+  margin: 0;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s;
+}
+.card.team-grid a img:hover {
+  transform: scale(1.0625);
+}
+.type-container {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  row-gap: 0.75rem;
+}
+.type {
+  font-size: 0.5em;
+  border-radius: 1rem;
+  padding: 5px;
+  margin: 0 auto;
+  text-align: center;
+  width: 90%;
+  margin-bottom: 0.5rem;
+}
+.card.team-grid .type {
+  font-size: 0.75rem;
+}
+/*---------- 1080px BREAK POINT ----------*/
+@media only screen and (min-width: 1080px) {
+  .team-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .card.team-grid a img {
+    width: 75%;
+  }
+}
