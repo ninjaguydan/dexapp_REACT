@@ -15,10 +15,6 @@ function TopTenList() {
   }
   const { teamData: pkmn, isLoading } = usePokemon("", arr);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <ol
       className="card list-group"
@@ -27,29 +23,33 @@ function TopTenList() {
         <h5 className="bold header1">Top 10</h5>
       </li>
       {pkmn.map((item, index) => {
-        return (
-          <li
-            className="list-group-item"
-            key={item.id}>
-            <Link to={`/pokemon/${item.id}`}>
-              <img
-                src={item.art_url}
-                alt={`${item.name}'s official art`}
-              />
-              <div className="info">
-                <h6 className="bold">{titleCase(item.name)}</h6>
-                <div className="icon-group">
-                  <p>
-                    <FaHeart /> {getRandomFloat(1, 99)}k
-                  </p>
-                  <p>
-                    <FaStar /> 10
-                  </p>
+        if (isLoading) {
+          return <Loading key={item.id} />;
+        } else {
+          return (
+            <li
+              className="list-group-item"
+              key={item.id}>
+              <Link to={`/pokemon/${item.id}`}>
+                <img
+                  src={item.art_url}
+                  alt={`${item.name}'s official art`}
+                />
+                <div className="info">
+                  <h6 className="bold">{titleCase(item.name)}</h6>
+                  <div className="icon-group">
+                    <p>
+                      <FaHeart /> {getRandomFloat(1, 99)}k
+                    </p>
+                    <p>
+                      <FaStar /> 10
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          </li>
-        );
+              </Link>
+            </li>
+          );
+        }
       })}
     </ol>
   );

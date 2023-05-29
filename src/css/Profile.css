@@ -18,7 +18,8 @@ Global Styles
 /*==========================================================
 Profile column Styles
 ==========================================================*/
-ul.card {
+ul.card,
+aside {
   padding: 0;
   border: unset;
   width: 100%;
@@ -146,7 +147,8 @@ ul.card li.list-group-item.striped a:focus img {
 }
 /*---------- 600px BREAK POINT ----------*/
 @media only screen and (min-width: 600px) {
-  ul.card {
+  ul.card,
+  aside {
     margin: 0 auto;
   }
   ul.card li.list-group-item img.main-img.user-img {
@@ -155,7 +157,8 @@ ul.card li.list-group-item.striped a:focus img {
 }
 /*---------- 946px BREAK POINT ----------*/
 @media only screen and (min-width: 946px) {
-  ul.card {
+  ul.card,
+  aside {
     max-width: 400px;
   }
 }
@@ -238,7 +241,7 @@ Post Column Styles
   width: 12px;
   margin-right: 5px;
 }
-.post-column .card div:last-child {
+.post-column .card div:last-child:not(.content) {
   flex-basis: 100%;
 }
 /* team fav icons */

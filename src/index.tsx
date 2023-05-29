@@ -8,6 +8,7 @@ import "./css/Style.css";
 import "./css/Login-Registration.css";
 import "./css/Search.css";
 import "./css/Profile.css";
+import "./css/Team.css";
 // Comps
 import App from "./App";
 

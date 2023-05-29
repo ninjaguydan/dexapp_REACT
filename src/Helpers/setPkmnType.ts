@@ -39,8 +39,8 @@ export function setRelations(types: string[], typeData: IType[]) {
       // if type2's weakness is in resistances[], remove the resistance
       if (resistances.includes(weakness)) {
         resistances = resistances.filter((resistance) => resistance !== weakness);
-      } // if type2's weakness isn't in immunities[], add weakness to weaknesses[]
-      else if (!immunities.includes(weakness)) {
+      } // if type2's weakness isn't in immunities[], and the weakness is not already there, add weakness to weaknesses[]
+      else if (!immunities.includes(weakness) && !weaknesses.includes(weakness)) {
         weaknesses.push(weakness);
       }
     }
@@ -49,8 +49,8 @@ export function setRelations(types: string[], typeData: IType[]) {
       //if type2's resistance is in weaknesses[], remove the weakness
       if (weaknesses.includes(resistance)) {
         weaknesses = weaknesses.filter((weakness) => weakness !== resistance);
-      } // if type2's resistance is not in weaknesses[], add resistance to resistances[]
-      else if (!weaknesses.includes(resistance)) {
+      } // if type2's resistance is not in weaknesses[], and the resistance is not already there, add resistance to resistances[]
+      else if (!weaknesses.includes(resistance) && !resistances.includes(resistance)) {
         resistances.push(resistance);
       }
     }

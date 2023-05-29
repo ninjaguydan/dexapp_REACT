@@ -27,7 +27,7 @@ const MobileNav = () => {
           </Link>
         </li>
         <li>
-          <Link to="/dex">
+          <Link to="/dexapp_REACT">
             <img
               className="dex-icon nav-icon"
               src={dex_icon as unknown as string}

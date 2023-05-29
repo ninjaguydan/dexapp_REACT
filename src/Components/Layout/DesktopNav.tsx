@@ -23,7 +23,7 @@ const DesktopNav = () => {
           <NavLink to="/dexapp_REACT">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/dex">Pokedex</NavLink>
+          <NavLink to="/dexapp_REACT">Pokedex</NavLink>
         </li>
         {user.id ? (
           <li className="nav-user-desk">

@@ -4,19 +4,22 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 import { RootState } from "../../../Redux/store";
 import { ITeam, IUser, ILike, IRTable, ISTable, IPokemon } from "../../../Helpers/Interfaces";
+import { useState } from "react";
 
-interface ITeamSummaryProps {
+interface ITeamStatsProps {
   currentUser: IUser;
   team: ITeam;
   stats: ISTable;
+  user: string;
 }
 
-export default function TeamSummary({ currentUser, team, stats }: ITeamSummaryProps) {
+export default function TeamStats({ currentUser, team, stats, user }: ITeamStatsProps) {
+  const [showStats, setShowStats] = useState(true);
   const dispatch = useDispatch();
   const teamLikes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
   );
-  const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
+  // const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
 
   function toggleLike() {
     if (currentUser.id === 0) {
@@ -36,7 +39,7 @@ export default function TeamSummary({ currentUser, team, stats }: ITeamSummaryPr
       <li className="list-group-item">
         <h2 className="header1">{team.name}</h2>
         <p>
-          by <Link to={`/profile/${created_by.username}`}>{created_by.username}</Link>
+          by <Link to={`/profile/${user}`}>{user}</Link>
         </p>
         <div className="icon-container">
           <button
@@ -52,18 +55,29 @@ export default function TeamSummary({ currentUser, team, stats }: ITeamSummaryPr
           </button>
         </div>
       </li>
-
-      {Object.keys(stats).map((stat) => (
-        <li className="list-group-item striped">
-          <p className="bold">{stat}</p>
-          <span>{stats[stat]}</span>
-        </li>
-      ))}
+      {showStats && (
+        <>
+          {Object.keys(stats).map((stat, i) => (
+            <li
+              key={i}
+              className="list-group-item striped">
+              <p className="bold">{stat}</p>
+              <span>{stats[stat]}</span>
+            </li>
+          ))}
+        </>
+      )}
 
       <li
         className="list-group-item"
         id="toggle-stats">
-        <p>Hide/Display Team Stats</p>
+        <button
+          className="btn toggle-btn"
+          onClick={() => {
+            setShowStats(!showStats);
+          }}>
+          Hide/Display Team Stats
+        </button>
       </li>
     </ul>
   );
