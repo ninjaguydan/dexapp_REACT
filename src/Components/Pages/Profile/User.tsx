@@ -1,13 +1,14 @@
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from "../../../Redux/store";
 
-import Profile from "./Profile";
-import EditProfile from "./EditProfile";
-import PostForm from "../../Forms/PostForm";
-import PostList from "./PostList";
-import { IUser } from "../../../Helpers/Interfaces";
+import PostForm from "components/common/forms/PostForm";
+import Profile from "components/pages/profile/Profile";
+import EditProfile from "components/pages/profile/EditProfile";
+import PostList from "components/pages/profile/PostList";
+
+import { IUser } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 const User = () => {
   const { username } = useParams();

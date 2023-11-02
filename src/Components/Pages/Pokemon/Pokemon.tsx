@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
-import Pokefile from "./Pokefile";
-import PostForm from "../../Forms/PostForm";
-import ReviewList from "./ReviewList";
-import Loading from "../../Loader/Loading";
+import PostForm from "components/common/forms/PostForm";
+import Loading from "components//common/loader/Loading";
+import Pokefile from "components/pages/pokemon/Pokefile";
+import ReviewList from "components/pages/pokemon/ReviewList";
 
-import { RootState } from "../../../Redux/store";
-import { titleCase } from "../../../Helpers/Helpers";
-import usePokemon from "../../../Hooks/usePokemon";
-import { IPokemon } from "../../../Helpers/Interfaces";
+import { RootState } from "redux/store";
+import { titleCase } from "utils/Helpers";
+import usePokemon from "hooks/usePokemon";
+import { IPokemon } from "utils/Interfaces";
 
 const Pokemon = () => {
   const navigate = useNavigate();

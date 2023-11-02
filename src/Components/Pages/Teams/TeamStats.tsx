@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
 
-import { RootState } from "../../../Redux/store";
-import { ITeam, IUser, ILike, IRTable, ISTable, IPokemon } from "../../../Helpers/Interfaces";
-import { useState } from "react";
+import { HeartOutline, Heart } from "components/common/icons/index";
+
+import { ITeam, IUser, ILike, IRTable, ISTable, IPokemon } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 interface ITeamStatsProps {
   currentUser: IUser;
@@ -46,9 +47,9 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
             className="fav"
             onClick={() => toggleLike()}>
             {currentUser && teamLikes.find((like) => like.user === currentUser.id) ? (
-              <FaHeart style={{ color: "#009df1" }} />
+              <Heart style={{ color: "#009df1" }} />
             ) : (
-              <FaRegHeart />
+              <HeartOutline />
             )}
             {teamLikes.length}
             <span className="sr-only">likes</span>

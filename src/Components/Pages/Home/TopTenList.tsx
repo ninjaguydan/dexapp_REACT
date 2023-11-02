@@ -2,11 +2,11 @@ import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaStar, FaHeart } from "react-icons/fa";
 
-import Loading from "../../Loader/Loading";
+import Loading from "components/common/loader/Loading";
 
-import { getRandomInt, getRandomFloat, titleCase } from "../../../Helpers/Helpers";
-import { IPokemon } from "../../../Helpers/Interfaces";
-import usePokemon from "../../../Hooks/usePokemon";
+import { getRandomInt, getRandomFloat, titleCase } from "utils/Helpers";
+import { IPokemon } from "utils/Interfaces";
+import usePokemon from "hooks/usePokemon";
 
 function TopTenList() {
   let arr = [];

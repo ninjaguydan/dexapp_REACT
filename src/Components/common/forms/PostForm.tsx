@@ -1,11 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { IReply, IReview } from "../../Helpers/Interfaces";
-import { RootState } from "../../Redux/store";
-import getImageByKey from "../../Helpers/getImageByKey";
+import { IReply, IReview } from "utils/Interfaces";
+import { RootState } from "redux/store";
+import getImageByKey from "utils/getImageByKey";
 
 interface IPostFormProps {
   btnText: string;

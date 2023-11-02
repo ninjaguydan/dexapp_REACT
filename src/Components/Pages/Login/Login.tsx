@@ -1,11 +1,14 @@
+//dependencies
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import FormInput from "../../Forms/FormInput";
+//comps
+import FormInput from "components/common/inputs/FormInput";
 
-import pkmn_img from "../../../media/pkmn.png";
-import { RootState } from "../../../Redux/store";
+//utility
+import pkmn_img from "media/pkmn.png";
+import { RootState } from "redux/store";
 
 const Login = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
-import Post from "../Profile/Post";
-import Review from "../Pokemon/Review";
-import Team from "../Teams/Team";
+import Post from "components/pages/profile/Post";
+import Review from "components/pages/pokemon/Review";
+import Team from "components/pages/teams/Team";
 
-import { IPost, IReview, ITeam } from "../../../Helpers/Interfaces";
+import { IPost, IReview, ITeam } from "utils/Interfaces";
 
 interface ITimelineCardProps {
   review: boolean;

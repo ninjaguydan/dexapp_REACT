@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import getImageByKey from "../../Helpers/getImageByKey";
+import getImageByKey from "utils/getImageByKey";
 
-interface IUserIconProps {
+interface IAvatarProps {
   userImg: string;
   userName: string;
   userColor: string;
   mobileNav: string;
 }
 
-function UserIcon({ userImg, userName, userColor, mobileNav }: IUserIconProps) {
+function Avatar({ userImg, userName, userColor, mobileNav }: IAvatarProps) {
   return (
     <Link to={`/profile/${userName}`}>
       <img
@@ -20,4 +20,4 @@ function UserIcon({ userImg, userName, userColor, mobileNav }: IUserIconProps) {
   );
 }
 
-export default UserIcon;
+export default Avatar;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import debounce from "../Helpers/debounce";
+import debounce from "../utils/debounce";
 
 const useDeviceWidth = () => {
   const [breakpoint, setBreakpoint] = useState<string>("MOBILE");

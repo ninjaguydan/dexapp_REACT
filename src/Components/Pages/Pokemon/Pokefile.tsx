@@ -1,13 +1,16 @@
-import "../../../css/Pkmn_types.css";
+//dependencies
 import { useSelector } from "react-redux";
 import { FaStar, FaHeart, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import { makeHundreds, getBaseStatTotal } from "../../../Helpers/Helpers";
-import { RootState } from "../../../Redux/store";
-import { IPokemon } from "../../../Helpers/Interfaces";
-import default_img from "../../../media/0.png";
-import usePkmnTotal from "../../../Hooks/usePkmnTotal";
+//assets
+import { IPokemon } from "utils/Interfaces";
+import default_img from "media/0.png";
+
+//utility
+import { makeHundreds, getBaseStatTotal } from "utils/Helpers";
+import { RootState } from "redux/store";
+import usePkmnTotal from "hooks/usePkmnTotal";
 
 interface IPokefileProps {
   pokemon: IPokemon;

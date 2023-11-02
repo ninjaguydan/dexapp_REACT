@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 
-import Reply from "./Reply";
-import PostForm from "../Forms/PostForm";
+import ReplyCard from "components/common/cards/ReplyCard";
+import PostForm from "components/common/forms/PostForm";
 
-import { IReply } from "../../Helpers/Interfaces";
-import { RootState } from "../../Redux/store";
+import { IReply } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 interface IReplyListProps {
   replies: IReply[];
@@ -18,7 +18,7 @@ function ReplyList({ replies, user, kind }: IReplyListProps) {
     <>
       {replies.map((reply) => {
         return (
-          <Reply
+          <ReplyCard
             reply={reply}
             key={reply.id}
           />

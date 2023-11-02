@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { IType } from "../Helpers/Interfaces";
+import { IType } from "../utils/Interfaces";
 import { TYPES } from "../data/typeManager";
 
 const useTypes = () => {

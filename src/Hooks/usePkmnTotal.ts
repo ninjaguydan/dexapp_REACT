@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { IPokemon } from "../Helpers/Interfaces";
-import { setGen } from "../Helpers/setGen";
-import { setPkmnType } from "../Helpers/setPkmnType";
+import { IPokemon } from "../utils/Interfaces";
+import { setGen } from "../utils/setGen";
+import { setPkmnType } from "../utils/setPkmnType";
 
 const usePkmnTotal = () => {
   const [total, setTotal] = useState<number>(0);

@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 
-import getImageByKey from "../../../Helpers/getImageByKey";
-
-import { RootState } from "../../../Redux/store";
-import { IUser } from "../../../Helpers/Interfaces";
+import getImageByKey from "utils/getImageByKey";
+import { IUser } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 interface IProfileProps {
   user: IUser;

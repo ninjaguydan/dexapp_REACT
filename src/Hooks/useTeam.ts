@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import usePokemon from "./usePokemon";
-import { getBaseStatTotal } from "../Helpers/Helpers";
-import { IRTable, ISTable } from "../Helpers/Interfaces";
+import { getBaseStatTotal } from "../utils/Helpers";
+import { IRTable, ISTable } from "../utils/Interfaces";
 
 const useTeam = (teamArray: number[]) => {
   const { teamData, isLoading } = usePokemon("", teamArray);

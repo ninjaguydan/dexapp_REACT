@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import DesktopNav from "./DesktopNav";
-import MenuBtn from "../Buttons/MenuBtn";
-import UserMenuMobile from "./UserMenuMobile";
+import MenuBtn from "components/common/buttons/MenuBtn";
+import DesktopNav from "components/common/navigation/DesktopNav";
+import UserMenuMobile from "components/common/navigation/UserMenuMobile";
 
-import useDeviceWidth from "../../Hooks/useDeviceWidth";
+import useDeviceWidth from "hooks/useDeviceWidth";
 
 const Header = () => {
   const currentUser = useSelector((state: any) => state.loggedUser);

@@ -1,15 +1,18 @@
+//dependencies
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
-import FormInput from "../../Forms/FormInput";
+//comps
+import FormInput from "components/common/inputs/FormInput";
 
-import { validator, checkIfValues, checkIfEmpty, confirmPasswordMatch } from "../../../Helpers/Validator";
-import { IRegistrationObject } from "../../../Helpers/Interfaces";
-import pk_ball from "../../../media/pokeball.png";
-import { RootState } from "../../../Redux/store";
+//utility
+import { validator, checkIfValues, checkIfEmpty, confirmPasswordMatch } from "utils/Validator";
+import { IRegistrationObject } from "utils/Interfaces";
+import pk_ball from "media/pokeball.png";
+import { RootState } from "redux/store";
 
 const Register = () => {
   const dispatch = useDispatch();

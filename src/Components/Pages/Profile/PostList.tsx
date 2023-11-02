@@ -1,6 +1,6 @@
-import Post from "./Post";
+import Post from "components/pages/profile/Post";
 
-import { IPost } from "../../../Helpers/Interfaces";
+import { IPost } from "utils/Interfaces";
 
 interface IPostListProps {
   posts: IPost[];

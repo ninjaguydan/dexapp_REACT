@@ -1,6 +1,7 @@
-import dex_icon from "../../media/dex-icon-w.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
+import dex_icon from "media/dex-icon-w.svg";
 
 interface IUserMenu {
   username: string;

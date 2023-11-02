@@ -1,7 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeartCirclePlus, faHeartCircleMinus, faShield, faHeart } from "@fortawesome/free-solid-svg-icons";
-import { IRTable } from "../../../Helpers/Interfaces";
 import { useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { HeartPlus, HeartMinus, Shield } from "components/common/icons/index";
+import { IRTable } from "utils/Interfaces";
 
 interface ITeamResistanceProps {
   rTable: IRTable;
@@ -23,17 +24,17 @@ export default function TeamResistance({ rTable }: ITeamResistanceProps) {
               <th
                 scope="col"
                 className="weak">
-                <FontAwesomeIcon icon={faHeartCircleMinus} />
+                <FontAwesomeIcon icon={HeartMinus} />
               </th>
               <th
                 scope="col"
                 className="resist">
-                <FontAwesomeIcon icon={faHeartCirclePlus} />
+                <FontAwesomeIcon icon={HeartPlus} />
               </th>
               <th
                 scope="col"
                 className="immune">
-                <FontAwesomeIcon icon={faShield} />
+                <FontAwesomeIcon icon={Shield} />
               </th>
             </tr>
           </thead>

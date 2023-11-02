@@ -1,10 +1,12 @@
+//dependencies
 import { createPortal } from "react-dom";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { IUser } from "../../Helpers/Interfaces";
-import getImageByKey from "../../Helpers/getImageByKey";
-import dex_icon_w from "../../media/dex-icon-w.svg";
+//utility
+import dex_icon_w from "media/dex-icon-w.svg";
+import { IUser } from "utils/Interfaces";
+import getImageByKey from "utils/getImageByKey";
 
 interface IUserMobileMenuProps {
   user: IUser;

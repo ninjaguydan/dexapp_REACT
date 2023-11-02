@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FaRegHeart, FaHeart, FaRegCommentAlt, FaTrash } from "react-icons/fa";
 
-import ReplyList from "../../Layout/ReplyList";
-import UserIcon from "../../Layout/UserIcon";
+import UserIcon from "components/common/buttons/Avatar";
+import ReplyList from "components/common/cards/ReplyList";
+import { HeartOutline, Heart, ChatOutline, Trash } from "components/common/icons/index";
 
-import { getTimeDifference, truncateStr } from "../../../Helpers/Helpers";
-import { IPost } from "../../../Helpers/Interfaces";
-import { RootState } from "../../../Redux/store";
+import { getTimeDifference, truncateStr } from "utils/Helpers";
+import { IPost } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 interface IPostProps {
   post: IPost;
@@ -56,7 +56,7 @@ function Post({ post }: IPostProps) {
             <button
               className="trash"
               onClick={() => dispatch({ type: "post/DELETE", postId: post.id })}>
-              <FaTrash />
+              <Trash />
               <span className="sr-only">delete</span>
             </button>
           )}
@@ -67,9 +67,9 @@ function Post({ post }: IPostProps) {
             className="fav"
             onClick={() => toggleLike()}>
             {currentUser && likes.find((like) => like.user === currentUser.id) ? (
-              <FaHeart style={{ color: "#009df1" }} />
+              <Heart style={{ color: "#009df1" }} />
             ) : (
-              <FaRegHeart />
+              <HeartOutline />
             )}
             {likes.length}
             <span className="sr-only">likes</span>
@@ -79,7 +79,7 @@ function Post({ post }: IPostProps) {
             onClick={() => {
               setRepliesVisible(!repliesVisible);
             }}>
-            <FaRegCommentAlt />
+            <ChatOutline />
             {replies.length}
             <span className="sr-only">comments</span>
           </button>

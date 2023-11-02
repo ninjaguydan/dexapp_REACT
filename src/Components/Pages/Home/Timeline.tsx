@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 
-import TimelineCard from "./TimelineCard";
-import PostForm from "../../Forms/PostForm";
+import PostForm from "components/common/forms/PostForm";
+import TimelineCard from "components/pages/home/TimelineCard";
 
-import generateTimeline from "../../../Helpers/generateTimeline";
-import { RootState } from "../../../Redux/store";
+import generateTimeline from "utils/generateTimeline";
+import { RootState } from "redux/store";
 
 function Timeline() {
   const posts = useSelector((state: RootState) => state.posts);

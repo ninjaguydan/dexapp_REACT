@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { makeHundreds } from "../../Helpers/Helpers";
+import { makeHundreds } from "utils/Helpers";
 
 interface IResultCardProps {
   id: number;

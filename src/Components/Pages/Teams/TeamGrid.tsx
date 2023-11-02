@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import { IPokemon } from "../../../Helpers/Interfaces";
-import placeholder from "../../../media/0.png";
+import { IPokemon } from "utils/Interfaces";
+import placeholder from "media/0.png";
 
 export default function TeamGrid({ team }: { team: IPokemon[] }) {
   return (

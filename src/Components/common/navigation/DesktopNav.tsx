@@ -2,12 +2,12 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import UserIcon from "./UserIcon";
-import UserMenu from "./UserMenu";
-import SearchBtn from "../Buttons/SearchBtn";
+import UserIcon from "components/common/buttons/Avatar";
+import SearchBtn from "components/common//buttons/SearchBtn";
+import UserMenu from "components/common/navigation/UserMenu";
+import { FaAngleDown } from "components/common/icons/index";
 
-import { FaAngleDown } from "react-icons/fa";
-import { truncateStr } from "../../Helpers/Helpers";
+import { truncateStr } from "utils/Helpers";
 
 const DesktopNav = () => {
   const user = useSelector((state: any) => state.loggedUser);

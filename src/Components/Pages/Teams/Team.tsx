@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FaRegHeart, FaHeart, FaRegCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import ReplyList from "../../Layout/ReplyList";
+import ReplyList from "components/common/cards/ReplyList";
+import { HeartOutline, Heart, ChatOutline } from "components/common/icons/index";
 
-import { getTimeDifference } from "../../../Helpers/Helpers";
-import { ITeam } from "../../../Helpers/Interfaces";
-import { RootState } from "../../../Redux/store";
+import { getTimeDifference } from "utils/Helpers";
+import { ITeam } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 interface ITeamProps {
   team: ITeam;
@@ -64,9 +64,9 @@ function Team({ team }: ITeamProps) {
           className="fav"
           onClick={() => toggleLike()}>
           {!!currentUser.id && likes.find((like) => like.user === currentUser.id) ? (
-            <FaHeart style={{ color: "#009df1" }} />
+            <Heart style={{ color: "#009df1" }} />
           ) : (
-            <FaRegHeart />
+            <HeartOutline />
           )}
           {likes.length}
           <span className="sr-only">likes</span>
@@ -76,7 +76,7 @@ function Team({ team }: ITeamProps) {
           onClick={() => {
             setRepliesVisible(!repliesVisible);
           }}>
-          <FaRegCommentAlt />
+          <ChatOutline />
           {replies.length}
           <span className="sr-only">comments</span>
         </button>

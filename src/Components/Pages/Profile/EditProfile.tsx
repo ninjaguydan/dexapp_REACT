@@ -1,19 +1,56 @@
-import { RootState } from "../../../Redux/store";
+import React from "react";
+import { RootState } from "redux/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ProfileIcon from "../../Buttons/ProfileIcon";
-import ProfileColor from "../../Buttons/ProfileColor";
-import FormInput from "../../Forms/FormInput";
+import SelectAvatar from "components/common/buttons/SelectAvatar";
+import SelectColor from "components/common/buttons/SelectColor";
+import FormInput from "components/common/inputs/FormInput";
 
 interface IEditProfileProps {
   closeEdit: () => void;
+}
+interface initForm {
+  name: string;
+  location: string;
+  bio: string;
+  user_img: string;
+  bg_color: string;
+}
+const avatarOptions = ["m1", "m4", "m2", "m3", "f1", "f4", "f2", "f3"];
+const colorOptions = ["gray", "red", "blue", "green", "yellow", "purple"];
+function clickIcon(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
+  switch (event.target.tagName) {
+    case "BUTTON": //when clicked with keyboard "ENTER"
+      action({
+        ...state,
+        [event.target.children[0].name]: event.target.children[0].id,
+      });
+      break;
+    default: // when clicked with mouse
+      action({
+        ...state,
+        [event.target.name]: event.target.id,
+      });
+  }
+}
+function clickColor(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
+  action({
+    ...state,
+    [event.target.name]: event.target.id,
+  });
+}
+function handleChange(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
+  action({
+    ...state,
+    [event.target.id]: event.target.value,
+  });
 }
 
 function EditProfile({ closeEdit }: IEditProfileProps) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.loggedUser);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<initForm>({
     name: user.name,
     location: user?.location,
     bio: user?.bio,
@@ -25,33 +62,6 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
     event.preventDefault();
     closeEdit();
     dispatch({ type: "users/UPDATE", formData, userId: user.id });
-  }
-  function handleChange(event: any) {
-    setFormData({
-      ...formData,
-      [event.target.id]: event.target.value,
-    });
-  }
-  function clickIcon(event: any) {
-    switch (event.target.tagName) {
-      case "BUTTON": //when clicked with keyboard "ENTER"
-        setFormData({
-          ...formData,
-          [event.target.children[0].name]: event.target.children[0].id,
-        });
-        break;
-      default: // when clicked with mouse
-        setFormData({
-          ...formData,
-          [event.target.name]: event.target.id,
-        });
-    }
-  }
-  function clickColor(event: any) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.id,
-    });
   }
 
   return (
@@ -73,7 +83,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             value={formData.name}
             error={""}
             type="text"
-            handleChange={handleChange}
+            handleChange={(e) => handleChange(e, formData, setFormData)}
           />
           <FormInput
             name="location"
@@ -81,7 +91,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             value={formData.location || ""}
             error={""}
             type="text"
-            handleChange={handleChange}
+            handleChange={(e) => handleChange(e, formData, setFormData)}
           />
           <FormInput
             name="bio"
@@ -89,85 +99,30 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             type="textArea"
             value={formData.bio || ""}
             error={""}
-            handleChange={handleChange}
+            handleChange={(e) => handleChange(e, formData, setFormData)}
           />
           <hr />
           <h3>Choose profile photo</h3>
           <div className="img-container">
-            <ProfileIcon
-              click={clickIcon}
-              id="m1"
-              selected={formData.user_img === "m1"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="m4"
-              selected={formData.user_img === "m4"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="m2"
-              selected={formData.user_img === "m2"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="m3"
-              selected={formData.user_img === "m3"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="f1"
-              selected={formData.user_img === "f1"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="f4"
-              selected={formData.user_img === "f4"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="f2"
-              selected={formData.user_img === "f2"}
-            />
-            <ProfileIcon
-              click={clickIcon}
-              id="f3"
-              selected={formData.user_img === "f3"}
-            />
+            {avatarOptions.map((option) => (
+              <SelectAvatar
+                key={option}
+                click={(e) => clickIcon(e, formData, setFormData)}
+                id={option}
+                selected={formData.user_img === option}
+              />
+            ))}
           </div>
           <hr />
           <h3>Choose background color</h3>
           <div className="img-container colors">
-            <ProfileColor
-              color="gray"
-              click={clickColor}
-              selected={formData.bg_color === "gray"}
-            />
-            <ProfileColor
-              color="red"
-              click={clickColor}
-              selected={formData.bg_color === "red"}
-            />
-            <ProfileColor
-              color="blue"
-              click={clickColor}
-              selected={formData.bg_color === "blue"}
-            />
-            <ProfileColor
-              color="green"
-              click={clickColor}
-              selected={formData.bg_color === "green"}
-            />
-            <ProfileColor
-              color="yellow"
-              click={clickColor}
-              selected={formData.bg_color === "yellow"}
-            />
-            <ProfileColor
-              color="purple"
-              click={clickColor}
-              selected={formData.bg_color === "purple"}
-            />
+            {colorOptions.map((option) => (
+              <SelectColor
+                color={option}
+                click={(e) => clickColor(e, formData, setFormData)}
+                selected={formData.bg_color === option}
+              />
+            ))}
           </div>
           <hr />
           <br />

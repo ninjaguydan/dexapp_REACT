@@ -1,6 +1,6 @@
-import "../../../css/Home.css";
-import TopTenList from "./TopTenList";
-import Timeline from "./Timeline";
+//comps
+import TopTenList from "components/pages/home/TopTenList";
+import Timeline from "components/pages/home/Timeline";
 
 const Home = () => {
   return (

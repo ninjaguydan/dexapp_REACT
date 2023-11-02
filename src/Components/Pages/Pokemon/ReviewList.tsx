@@ -1,5 +1,6 @@
-import { IReview } from "../../../Helpers/Interfaces";
-import Review from "./Review";
+import Review from "components/pages/pokemon/Review";
+
+import { IReview } from "utils/Interfaces";
 
 interface IReviewListProps {
   reviews: IReview[];

@@ -1,5 +1,4 @@
-import React from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle } from "components/common/icons/index";
 
 interface IFormInputProps {
   label: string;

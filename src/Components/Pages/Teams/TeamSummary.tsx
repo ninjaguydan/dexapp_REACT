@@ -1,17 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faHeartCirclePlus, faHeartCircleMinus, faShield, faHeart } from "@fortawesome/free-solid-svg-icons";
+import ReplyList from "components/common/cards/ReplyList";
+import Loading from "components/common/loader/Loading";
+import TeamStats from "components/pages/teams/TeamStats";
+import TeamResistance from "components/pages/teams/TeamResistance";
+import TeamGrid from "components/pages/teams/TeamGrid";
 
-import { RootState } from "../../../Redux/store";
-import { ITeam, IUser, ILike } from "../../../Helpers/Interfaces";
-import useTeam from "../../../Hooks/useTeam";
-import Loading from "../../Loader/Loading";
-import TeamStats from "./TeamStats";
-import TeamResistance from "./TeamResistance";
-import ReplyList from "../../Layout/ReplyList";
-import TeamGrid from "./TeamGrid";
+import useTeam from "hooks/useTeam";
+import { ITeam, IUser, ILike } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 export default function TeamSummary() {
   const { teamName } = useParams();

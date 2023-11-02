@@ -1,12 +1,12 @@
-import getImageByKey from "../../Helpers/getImageByKey";
+import getImageByKey from "utils/getImageByKey";
 
-interface IProfileIconProps {
+interface ISelectAvatarProps {
   selected: boolean;
   click: (e: any) => void;
   id: string;
 }
 
-const ProfileIcon = ({ click, id, selected }: IProfileIconProps) => {
+const SelectAvatar = ({ click, id, selected }: ISelectAvatarProps) => {
   return (
     <button
       onClick={(event) => click(event)}
@@ -22,4 +22,4 @@ const ProfileIcon = ({ click, id, selected }: IProfileIconProps) => {
   );
 };
 
-export default ProfileIcon;
+export default SelectAvatar;

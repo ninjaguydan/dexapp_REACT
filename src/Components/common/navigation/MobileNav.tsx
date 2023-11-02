@@ -1,11 +1,14 @@
+//dependencies
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import UserIcon from "./UserIcon";
-// import SearchBtn from "../Buttons/SearchBtn";
+//comps
+import UserIcon from "components/common/buttons/Avatar";
+import dex_icon from "media/dex-icon-w.svg";
+// import SearchBtn from "components/common/buttons/SearchBtn";
 
-import dex_icon from "../../media/dex-icon-w.svg";
-import { RootState } from "../../Redux/store";
+//utility
+import { RootState } from "redux/store";
 
 const MobileNav = () => {
   const currentUser = useSelector((state: RootState) => state.loggedUser);

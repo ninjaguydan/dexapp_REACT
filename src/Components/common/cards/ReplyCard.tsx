@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FaRegHeart, FaHeart, FaTrash } from "react-icons/fa";
+import { Heart, HeartOutline, Trash } from "components/common/icons/index";
 
-import UserIcon from "./UserIcon";
+import Avatar from "components/common/buttons/Avatar";
 
-import { getTimeDifference, truncateStr } from "../../Helpers/Helpers";
-import { IReply } from "../../Helpers/Interfaces";
-import { RootState } from "../../Redux/store";
+import { getTimeDifference, truncateStr } from "utils/Helpers";
+import { IReply } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 interface IReplyProps {
   reply: IReply;
 }
 
-function Reply({ reply }: IReplyProps) {
+function ReplyCard({ reply }: IReplyProps) {
   let dispatch = useDispatch();
   let user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
   let likes = useSelector((state: RootState) =>
@@ -35,7 +35,7 @@ function Reply({ reply }: IReplyProps) {
 
   return (
     <div className="card">
-      <UserIcon
+      <Avatar
         userImg={user.user_img}
         userName={user.username}
         userColor={user.bg_color}
@@ -50,7 +50,7 @@ function Reply({ reply }: IReplyProps) {
             <button
               className="trash"
               onClick={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}>
-              <FaTrash />
+              <Trash />
               <span className="sr-only">delete</span>
             </button>
           )}
@@ -61,9 +61,9 @@ function Reply({ reply }: IReplyProps) {
             className="fav"
             onClick={() => toggleLike()}>
             {currentUser && likes.find((like) => like.user === currentUser.id) ? (
-              <FaHeart style={{ color: "#009df1" }} />
+              <Heart style={{ color: "#009df1" }} />
             ) : (
-              <FaRegHeart />
+              <HeartOutline />
             )}
             {likes.length}
             <span className="sr-only">likes</span>
@@ -74,4 +74,4 @@ function Reply({ reply }: IReplyProps) {
   );
 }
 
-export default Reply;
+export default ReplyCard;

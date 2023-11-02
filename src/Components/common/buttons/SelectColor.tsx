@@ -1,10 +1,10 @@
-interface IProfileColorProps {
+interface ISelectColorProps {
   selected: boolean;
   click: (e: any) => void;
   color: string;
 }
 
-const ProfileColor = ({ selected, click, color }: IProfileColorProps) => {
+const SelectColor = ({ selected, click, color }: ISelectColorProps) => {
   return (
     <button
       type="button"
@@ -15,4 +15,4 @@ const ProfileColor = ({ selected, click, color }: IProfileColorProps) => {
   );
 };
 
-export default ProfileColor;
+export default SelectColor;

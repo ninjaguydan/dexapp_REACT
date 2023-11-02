@@ -1,3 +1,10 @@
+@import url("./reset.css");
+@import url("./pkmn_types.css");
+@import url("../components/pages/home/home.css");
+@import url("../components/pages/login/login-registration.css");
+@import url("../components/pages/search/search.css");
+@import url("../components/pages/profile/profile.css");
+@import url("../components/pages/teams/team.css");
 /*==========================================================
 0 - Global Styles
 ==========================================================*/

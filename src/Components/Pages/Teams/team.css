@@ -63,7 +63,7 @@
 .team-page {
   /* flex-direction: column-reverse; */
 }
-.team-grid {
+.card.team-grid {
   display: grid;
   row-gap: 40px;
   width: 100%;
@@ -106,7 +106,7 @@
 }
 /*---------- 1080px BREAK POINT ----------*/
 @media only screen and (min-width: 1080px) {
-  .team-grid {
+  .card.team-grid {
     grid-template-columns: 1fr 1fr 1fr;
   }
   .card.team-grid a img {

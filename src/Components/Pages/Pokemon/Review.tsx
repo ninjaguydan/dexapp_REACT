@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaStar, FaRegStar, FaHeart, FaRegHeart, FaRegCommentAlt, FaTrash } from "react-icons/fa";
 
-import ReplyList from "../../Layout/ReplyList";
-import Loading from "../../Loader/Loading";
-import UserIcon from "../../Layout/UserIcon";
+import UserIcon from "components/common/buttons/Avatar";
+import ReplyList from "components/common/cards/ReplyList";
+import { StarOutline, Star, HeartOutline, Heart, ChatOutline, Trash } from "components/common/icons/index";
+import Loading from "components/common/loader/Loading";
 
-import { getTimeDifference, titleCase, truncateStr } from "../../../Helpers/Helpers";
-import { IReview, IPokemon } from "../../../Helpers/Interfaces";
-import { RootState } from "../../../Redux/store";
-import usePokemon from "../../../Hooks/usePokemon";
+import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
+import { IReview, IPokemon } from "utils/Interfaces";
+import { RootState } from "redux/store";
+import usePokemon from "hooks/usePokemon";
 
 interface IReviewProps {
   review: IReview;
@@ -75,7 +75,7 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
             <button
               className="trash"
               onClick={() => dispatch({ type: "review/DELETE", reviewId: review.id })}>
-              <FaTrash />
+              <Trash />
               <span className="sr-only">delete</span>
             </button>
           )}
@@ -83,9 +83,9 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
         <span className="rating">
           {arr.map((value, index) => {
             if (review.rating < index + 1) {
-              return <FaRegStar key={index} />;
+              return <StarOutline key={index} />;
             } else {
-              return <FaStar key={index} />;
+              return <Star key={index} />;
             }
           })}
         </span>
@@ -95,9 +95,9 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
             className="fav"
             onClick={() => toggleLike()}>
             {currentUser && likes.find((like) => like.user === currentUser.id) ? (
-              <FaHeart style={{ color: "#009df1" }} />
+              <Heart style={{ color: "#009df1" }} />
             ) : (
-              <FaRegHeart />
+              <HeartOutline />
             )}
             {likes.length}
             <span className="sr-only">likes</span>
@@ -107,7 +107,7 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
             onClick={() => {
               setRepliesVisible(!repliesVisible);
             }}>
-            <FaRegCommentAlt />
+            <ChatOutline />
             {replies.length}
             <span className="sr-only">comments</span>
           </button>

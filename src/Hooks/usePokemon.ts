@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { IPokemon, ITeam } from "../Helpers/Interfaces";
-import { setGen } from "../Helpers/setGen";
-import { setPkmnType, setRelations } from "../Helpers/setPkmnType";
+import { IPokemon, ITeam } from "../utils/Interfaces";
+import { setGen } from "../utils/setGen";
+import { setPkmnType, setRelations } from "../utils/setPkmnType";
 import useTypes from "./useTypes";
 
 const usePokemon = (pkmnID: string = "1", teamArray: number[] = []) => {

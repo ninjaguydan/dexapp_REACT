@@ -1,19 +1,19 @@
 import { Routes, Route, BrowserRouter as MyRouter } from "react-router-dom";
 
 // Comps
-import Header from "./Components/Layout/Header";
-import MobileNav from "./Components/Layout/MobileNav";
-import useDeviceWidth from "./Hooks/useDeviceWidth";
+import Header from "components/common/navigation/Header";
+import MobileNav from "components/common/navigation/MobileNav";
+import useDeviceWidth from "hooks/useDeviceWidth";
 
 //Pages
-import Login from "./Components/Pages/Login/Login";
-import Register from "./Components/Pages/Login/Register";
-import Home from "./Components/Pages/Home/Home";
-import Pokemon from "./Components/Pages/Pokemon/Pokemon";
-import User from "./Components/Pages/Profile/User";
-import TeamSummary from "./Components/Pages/Teams/TeamSummary";
-import Pokedex from "./Components/Pages/Search/Pokedex";
-import PageNotFound from "./Components/Pages/Error404/PageNotFound";
+import Login from "components/pages/login/Login";
+import Register from "components/pages/login/Register";
+import Home from "components/pages/home/Home";
+import Pokemon from "components/pages/pokemon/Pokemon";
+import User from "components/pages/profile/User";
+import TeamSummary from "components/pages/teams/TeamSummary";
+import Pokedex from "components/pages/search/Pokedex";
+import PageNotFound from "components/pages/error404/PageNotFound";
 
 function App() {
   const [breakpoint] = useDeviceWidth();
