@@ -73,19 +73,29 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
           <span className="date"> &#8226; {getTimeDifference(review.created)}</span>
           {currentUser?.id === review.added_by && (
             <button
+              aria-label="delete"
               className="trash"
               onClick={() => dispatch({ type: "review/DELETE", reviewId: review.id })}>
               <Trash />
-              <span className="sr-only">delete</span>
             </button>
           )}
         </h4>
-        <span className="rating">
+        <span className="rating flex text-sm my-2 text-gray3">
           {arr.map((value, index) => {
             if (review.rating < index + 1) {
-              return <StarOutline key={index} />;
+              return (
+                <StarOutline
+                  key={index}
+                  className="mr-1"
+                />
+              );
             } else {
-              return <Star key={index} />;
+              return (
+                <Star
+                  key={index}
+                  className="mr-1"
+                />
+              );
             }
           })}
         </span>

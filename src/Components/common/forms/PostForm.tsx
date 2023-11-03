@@ -80,23 +80,25 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
   }
 
   return (
-    <div className="card">
+    <div className="card relative">
       <img
         src={getImageByKey(currentUser.user_img)}
         alt={"user"}
         className={`${currentUser.bg_color} form-img`}
       />
-      <form onSubmit={(e) => onSubmit(e)}>
+      <form
+        onSubmit={(e) => onSubmit(e)}
+        className="w-full flex flex-col flex-1 gap-y-4">
         <textarea
           onChange={(e) => setValue(e)}
           value={formData.content}
           id="content"
-          className="form-control form-control-custom"
+          className="form-control form-control-custom text-gray5"
           rows={2}
           placeholder={placeholder}></textarea>
         {type.name === "REVIEW" && (
           <select
-            className="form-control-custom"
+            className="form-control-custom w-12"
             id="rating"
             value={formData.rating}
             onChange={(e) => setValue(e)}>
@@ -113,11 +115,16 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
           </select>
         )}
         <button
-          className="btn primary"
+          className="py-1 px-8 w-28 rounded bg-primary text-white disabled:opacity-50"
           disabled={enableButton() ? false : true}>
           {btnText}
         </button>
-        <span className={`counter ${counter > 140 && "error"} ${counter > 100 && "caution"}`}>{counter}/140</span>
+        <span
+          className={`counter absolute text-xs text-gray-500 right-4 bottom-6 ${counter > 140 && "text-primary"} ${
+            counter > 100 && "text-yellow-600"
+          }`}>
+          {counter}/140
+        </span>
       </form>
     </div>
   );

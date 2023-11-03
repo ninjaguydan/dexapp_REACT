@@ -199,15 +199,7 @@ Post Column Styles
   color: #898989;
   font-weight: 400;
 }
-.post-column .card .rating {
-  color: #898989;
-  font-size: 0.85rem;
-  display: inline-block;
-  margin-bottom: 0.75rem;
-}
-.post-column .card .rating * {
-  margin-right: 0.25rem;
-}
+
 .post-column .card p:not(.date) {
   line-height: 1.35rem;
   font-size: 14px;
@@ -296,59 +288,13 @@ Reply Styles
 .post-column .replies .card form {
   justify-content: end;
 }
-.post-column .replies .card form .counter {
-  right: 165px;
-}
 /*---------- 530px BREAK POINT ----------*/
 @media only screen and (min-width: 530px) {
   .post-column .replies .card .content {
     width: calc(100% - 106px);
   }
 }
-/*==========================================================
-Post Form Styles
-==========================================================*/
-.post-column .card form {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.post-column .card textarea {
-  color: var(--brand-gray3);
-}
-.post-column .card select {
-  margin-top: 1rem;
-  width: 3rem;
-}
-.post-column .card form .btn {
-  margin-top: 1rem;
-  padding: 0.25rem 2rem;
-  width: 7rem;
-}
-.post-column .card form .btn:disabled {
-  color: #a80019;
-  border-color: var(--brand-primary);
-}
-.post-column .card form .counter {
-  position: absolute;
-  font-size: 12px;
-  color: gray;
-  bottom: 25px;
-  right: 145px;
-}
-.post-column .card form .counter.caution {
-  color: orange;
-}
-.post-column .card form .counter.error {
-  color: var(--brand-primary);
-}
-/*---------- 530px BREAK POINT ----------*/
-@media only screen and (min-width: 530px) {
-  .post-column .card form {
-    width: calc(100% - 76px);
-  }
-}
+
 /*==========================================================
 Edit Profile Styles
 ==========================================================*/

@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import url("./reset.css");
 @import url("./pkmn_types.css");
 @import url("../components/pages/home/home.css");
@@ -30,12 +33,9 @@ body {
   --brand-secondary: #009df1;
   --brand-gray1: #151415;
   --brand-gray2: #1c1c1f;
-  --brand-gray3: #ced4da;
   --brand-gray4: #6c757d;
-}
-.app-container {
-  padding: 5.625rem 0;
-  position: relative;
+  --brand-gray5: #898989;
+  --brand-gray3: #ced4da;
 }
 .bold,
 .header1.bold {

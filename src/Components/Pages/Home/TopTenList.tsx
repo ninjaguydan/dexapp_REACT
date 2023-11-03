@@ -20,7 +20,7 @@ function TopTenList() {
       className="card list-group"
       id="style-4">
       <li className="list-group-item">
-        <h5 className="bold header1">Top 10</h5>
+        <h5 className="font-bold text-3xl">Top 10</h5>
       </li>
       {pkmn.map((item, index) => {
         if (isLoading) {

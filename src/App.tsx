@@ -22,7 +22,7 @@ function App() {
     <MyRouter>
       <Header />
       {breakpoint === "MOBILE" && <MobileNav />}
-      <div className="app-container">
+      <div className="py-24">
         <Routes>
           <Route
             path="/dexapp_REACT"
