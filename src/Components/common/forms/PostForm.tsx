@@ -2,35 +2,46 @@ import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Card from "components/common/cards/Card";
+import Avatar from "components/common/buttons/Avatar";
+
 import { IReply, IReview } from "utils/Interfaces";
 import { RootState } from "redux/store";
-import getImageByKey from "utils/getImageByKey";
 
-interface IPostFormProps {
+interface Props {
   btnText: string;
   placeholder: string;
   type: { name: string; [key: string]: any };
+  classList?: string;
 }
+
 const empty = {
   content: "",
   rating: 1,
 };
 
-function PostForm({ btnText, placeholder, type }: IPostFormProps) {
+function enableButton(count: number) {
+  if (count > 1 && count < 141) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function PostForm({ btnText, placeholder, type, classList }: Props) {
   const [counter, setCounter] = useState(0);
   const [formData, setFormData] = useState(empty);
   const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const avatar = {
+    img: currentUser.user_img,
+    name: currentUser.username,
+    color: currentUser.bg_color,
+    classList: "hidden sm:block h-16 w-16",
+  };
   const dispatch = useDispatch();
 
   function setValue(event: any) {
     setFormData({ ...formData, [event.target.id]: event.target.value });
-  }
-  function enableButton() {
-    if (counter > 1 && counter < 141) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   useEffect(() => {
@@ -79,13 +90,9 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
     setFormData(empty);
   }
 
-  return (
-    <div className="card relative">
-      <img
-        src={getImageByKey(currentUser.user_img)}
-        alt={"user"}
-        className={`${currentUser.bg_color} form-img`}
-      />
+  let node = (
+    <>
+      <Avatar user={avatar} />
       <form
         onSubmit={(e) => onSubmit(e)}
         className="w-full flex flex-col flex-1 gap-y-4">
@@ -116,7 +123,7 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
         )}
         <button
           className="py-1 px-8 w-28 rounded bg-primary text-white disabled:opacity-50"
-          disabled={enableButton() ? false : true}>
+          disabled={enableButton(counter) ? false : true}>
           {btnText}
         </button>
         <span
@@ -126,7 +133,14 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
           {counter}/140
         </span>
       </form>
-    </div>
+    </>
+  );
+
+  return (
+    <Card
+      children={node}
+      classList={classList}
+    />
   );
 }
 

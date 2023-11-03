@@ -8,7 +8,7 @@ const initState = {
     username: "anon10",
     password: "password",
     user_img: "dfault",
-    bg_color: "gray",
+    bg_color: "bg-black",
   },
   users: [
     {
@@ -19,7 +19,7 @@ const initState = {
       username: "danboy",
       password: "password",
       user_img: "m1",
-      bg_color: "red",
+      bg_color: "bg-primary",
       location: "Jackson, MS",
     },
     {
@@ -29,9 +29,9 @@ const initState = {
       username: "joshwick420",
       password: "1234",
       user_img: "m2",
-      bg_color: "green",
+      bg_color: "bg-green",
     },
-    { id: 3, name: "Kelsey J", username: "k_sheesh", password: "gggg", user_img: "f3", bg_color: "yellow" },
+    { id: 3, name: "Kelsey J", username: "k_sheesh", password: "gggg", user_img: "f3", bg_color: "bg-yellow" },
     {
       id: 10,
       bio: "I am an anonymous user. Change whatever you like, or make a new account!",
@@ -41,7 +41,7 @@ const initState = {
       username: "anon10",
       password: "password",
       user_img: "dfault",
-      bg_color: "gray",
+      bg_color: "bg-black",
     },
   ],
   posts: [

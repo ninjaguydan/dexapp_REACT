@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //comps
-import UserIcon from "components/common/buttons/Avatar";
+import Avatar from "components/common/buttons/Avatar";
 import dex_icon from "media/dex-icon-w.svg";
 // import SearchBtn from "components/common/buttons/SearchBtn";
 
@@ -12,6 +12,12 @@ import { RootState } from "redux/store";
 
 const MobileNav = () => {
   const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const avatar = {
+    img: currentUser.user_img,
+    name: currentUser.username,
+    color: currentUser.bg_color,
+    classList: "nav-user-icon",
+  };
 
   return (
     <nav>
@@ -42,12 +48,7 @@ const MobileNav = () => {
         </li>
         <li>
           {!!currentUser.id ? (
-            <UserIcon
-              userImg={currentUser.user_img}
-              userName={currentUser.username}
-              userColor={currentUser.bg_color}
-              mobileNav={"nav-user-icon"}
-            />
+            <Avatar user={avatar} />
           ) : (
             <Link to="/login">
               <i

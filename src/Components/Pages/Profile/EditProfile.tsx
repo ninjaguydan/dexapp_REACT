@@ -18,7 +18,8 @@ interface initForm {
   bg_color: string;
 }
 const avatarOptions = ["m1", "m4", "m2", "m3", "f1", "f4", "f2", "f3"];
-const colorOptions = ["gray", "red", "blue", "green", "yellow", "purple"];
+const colorOptions = ["bg-black", "bg-primary", "bg-secondary", "bg-green", "bg-yellow", "bg-purple"];
+
 function clickIcon(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
   switch (event.target.tagName) {
     case "BUTTON": //when clicked with keyboard "ENTER"
@@ -34,12 +35,14 @@ function clickIcon(event: any, state: initForm, action: React.Dispatch<React.Set
       });
   }
 }
+
 function clickColor(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
   action({
     ...state,
     [event.target.name]: event.target.id,
   });
 }
+
 function handleChange(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
   action({
     ...state,
@@ -65,18 +68,20 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
   }
 
   return (
-    <div className="modal-bg">
-      <div className="edit-profile-modal">
-        <div className="modal-head">
-          <h2 className="header1">Edit Profile</h2>
+    <div className="p-4 bg-black_80 fixed z-20 top-0 left-0 w-full h-full overflow-auto">
+      <div className="bg-gray2 max-w-lg m-auto p-4 sm:p-8 rounded">
+        <header className="flex justify-between pb-1">
+          <h2 className="text-3xl font-medium">Edit Profile</h2>
           <button
             onClick={closeEdit}
-            className="close">
+            className="text-gray5 text-2xl px-1 rounded hover:bg-gray3">
             &#10005;
           </button>
-        </div>
+        </header>
         <hr />
-        <form onSubmit={(e) => updateProfile(e)}>
+        <form
+          onSubmit={(e) => updateProfile(e)}
+          className="flex flex-col gap-y-3 mt-4">
           <FormInput
             name="name"
             label="Name"
@@ -103,7 +108,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
           />
           <hr />
           <h3>Choose profile photo</h3>
-          <div className="img-container">
+          <div className="grid grid-cols-4 gap-y-5 gap-x-5">
             {avatarOptions.map((option) => (
               <SelectAvatar
                 key={option}
@@ -115,7 +120,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
           </div>
           <hr />
           <h3>Choose background color</h3>
-          <div className="img-container colors">
+          <div className="colors grid grid-cols-6 gap-x-5">
             {colorOptions.map((option) => (
               <SelectColor
                 color={option}
@@ -125,10 +130,11 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             ))}
           </div>
           <hr />
-          <br />
-          <button className="btn primary">Update</button>
+          <button className="py-1 px-8 w-full rounded bg-primary text-white disabled:opacity-50 hover:bg-primaryDark">
+            Update
+          </button>
         </form>
-        <button className="btn secondary btn-del">Delete Profile</button>
+        <button className="btn-del py-1 px-8 w-full rounded border border-solid mt-4 hover:bg-gray3">Delete Profile</button>
       </div>
     </div>
   );

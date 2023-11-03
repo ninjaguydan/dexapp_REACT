@@ -11,7 +11,7 @@ const SelectAvatar = ({ click, id, selected }: ISelectAvatarProps) => {
     <button
       onClick={(event) => click(event)}
       type="button"
-      className={`${selected && "selected"}`}>
+      className={`rounded ${selected && "bg-gray3 ring-2 ring-white"}`}>
       <img
         src={getImageByKey(`${id}`)}
         id={id}

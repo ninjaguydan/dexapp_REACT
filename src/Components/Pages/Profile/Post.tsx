@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import UserIcon from "components/common/buttons/Avatar";
+import Avatar from "components/common/buttons/Avatar";
+import IconBtn from "components/common/buttons/IconBtn";
+import Card from "components/common/cards/Card";
 import ReplyList from "components/common/cards/ReplyList";
-import { HeartOutline, Heart, ChatOutline, Trash } from "components/common/icons/index";
 
+import { ICON_KEY } from "data/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IPost } from "utils/Interfaces";
 import { RootState } from "redux/store";
@@ -26,6 +28,33 @@ function Post({ post }: IPostProps) {
   let currentUser = useSelector((state: RootState) => state.loggedUser);
   let dispatch = useDispatch();
 
+  const avatar = {
+    img: user.user_img,
+    name: user.username,
+    color: user.bg_color,
+    classList: "h-16 w-16",
+  };
+  const deleteBtnData = {
+    label: ICON_KEY.DELETE,
+    content: "",
+    action: () => dispatch({ type: "post/DELETE", postId: post.id }),
+    state: true,
+  };
+  const likeBtnData = {
+    label: ICON_KEY.LIKES,
+    content: likes.length,
+    action: () => toggleLike(),
+    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
+  };
+  const commentBtnData = {
+    label: ICON_KEY.COMMENTS,
+    content: replies.length,
+    action: () => {
+      setRepliesVisible(!repliesVisible);
+    },
+    state: false,
+  };
+
   function toggleLike() {
     if (currentUser.id === 0) {
       return;
@@ -39,53 +68,27 @@ function Post({ post }: IPostProps) {
     }
   }
 
-  return (
-    <div className="card">
-      <UserIcon
-        userImg={user.user_img}
-        userName={user.username}
-        userColor={user.bg_color}
-        mobileNav={""}
-      />
-      <div className="content">
-        <h4>
-          <Link to={`/profile/${truncateStr(user.username)}`}>{truncateStr(user.name)}</Link>
-          <span> {truncateStr(user.username)}</span>
-          <span className="date"> &#8226; {getTimeDifference(post.created)}</span>
-          {currentUser?.id === post.added_by && (
-            <button
-              className="trash"
-              onClick={() => dispatch({ type: "post/DELETE", postId: post.id })}>
-              <Trash />
-              <span className="sr-only">delete</span>
-            </button>
-          )}
+  let node = (
+    <>
+      <Avatar user={avatar} />
+      <div className="flex flex-col gap-y-1">
+        <h4 className="font-bold ">
+          <Link
+            to={`/profile/${truncateStr(user.username)}`}
+            className="hover:underline">
+            {truncateStr(user.name)}
+          </Link>
+          <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
+          <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(post.created)}</span>
+          {currentUser?.id === post.added_by && <IconBtn btnData={deleteBtnData} />}
         </h4>
-        <p>{post.content}</p>
-        <div className="icon-container">
-          <button
-            className="fav"
-            onClick={() => toggleLike()}>
-            {currentUser && likes.find((like) => like.user === currentUser.id) ? (
-              <Heart style={{ color: "#009df1" }} />
-            ) : (
-              <HeartOutline />
-            )}
-            {likes.length}
-            <span className="sr-only">likes</span>
-          </button>
-          <button
-            className="fav"
-            onClick={() => {
-              setRepliesVisible(!repliesVisible);
-            }}>
-            <ChatOutline />
-            {replies.length}
-            <span className="sr-only">comments</span>
-          </button>
+        <p className="text-sm">{post.content}</p>
+        <div className="flex gap-x-8">
+          <IconBtn btnData={likeBtnData} />
+          <IconBtn btnData={commentBtnData} />
         </div>
       </div>
-      <div className="replies">
+      <div className="w-full">
         {repliesVisible && (
           <ReplyList
             replies={replies}
@@ -94,8 +97,10 @@ function Post({ post }: IPostProps) {
           />
         )}
       </div>
-    </div>
+    </>
   );
+
+  return <Card children={node} />;
 }
 
 export default Post;

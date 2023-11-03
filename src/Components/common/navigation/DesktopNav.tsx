@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import UserIcon from "components/common/buttons/Avatar";
+import Avatar from "components/common/buttons/Avatar";
 import SearchBtn from "components/common//buttons/SearchBtn";
 import UserMenu from "components/common/navigation/UserMenu";
 import { FaAngleDown } from "components/common/icons/index";
@@ -12,6 +12,12 @@ import { truncateStr } from "utils/Helpers";
 const DesktopNav = () => {
   const user = useSelector((state: any) => state.loggedUser);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const avatar = {
+    img: user.user_img,
+    name: user.username,
+    color: user.bg_color,
+    classList: "w-9 relative top-1",
+  };
 
   return (
     <nav>
@@ -27,12 +33,7 @@ const DesktopNav = () => {
         </li>
         {user.id ? (
           <li className="nav-user-desk">
-            <UserIcon
-              userImg={user.user_img}
-              userName={user.username}
-              userColor={user.bg_color}
-              mobileNav={"nav-user-icon"}
-            />
+            <Avatar user={avatar} />
             <button
               className="btn"
               onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>

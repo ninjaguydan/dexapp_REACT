@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import UserIcon from "components/common/buttons/Avatar";
+import Avatar from "components/common/buttons/Avatar";
 import ReplyList from "components/common/cards/ReplyList";
 import { StarOutline, Star, HeartOutline, Heart, ChatOutline, Trash } from "components/common/icons/index";
 import Loading from "components/common/loader/Loading";
@@ -30,6 +30,12 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
   );
   let currentUser = useSelector((state: RootState) => state.loggedUser);
   const { pkmnData, isLoading }: { pkmnData: IPokemon; isLoading: boolean } = usePokemon(`${review.pkmn}`);
+  const avatar = {
+    img: user.user_img,
+    name: user.username,
+    color: user.bg_color,
+    classList: "h-16 w-16",
+  };
 
   function toggleLike() {
     if (currentUser.id === 0) {
@@ -57,12 +63,7 @@ const Review = ({ review, TL_view = false }: IReviewProps) => {
           style={{ backgroundColor: "#444" }}
         />
       ) : (
-        <UserIcon
-          userImg={user.user_img}
-          userName={user.username}
-          userColor={user.bg_color}
-          mobileNav=""
-        />
+        <Avatar user={avatar} />
       )}
 
       <div className="content">

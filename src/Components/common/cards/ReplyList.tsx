@@ -29,6 +29,7 @@ function ReplyList({ replies, user, kind }: IReplyListProps) {
           btnText={"Reply"}
           placeholder={`Replying to ${user}...`}
           type={{ name: "REPLY", for: { name: kind.name, id: kind.id } }}
+          classList={"first:mt-4 bg-gray1"}
         />
       )}
     </>
