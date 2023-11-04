@@ -134,7 +134,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             Update
           </button>
         </form>
-        <button className="btn-del py-1 px-8 w-full rounded border border-solid mt-4 hover:bg-gray3">Delete Profile</button>
+        <button className="py-1 px-8 w-full rounded border border-solid mt-4 hover:bg-gray3">Delete Profile</button>
       </div>
     </div>
   );

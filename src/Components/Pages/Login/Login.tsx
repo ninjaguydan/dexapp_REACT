@@ -36,12 +36,14 @@ const Login = () => {
     }
   }
   return (
-    <div className="log-res-wrapper">
-      <div className="login-registration">
-        <h2 className="header1">Login</h2>
+    <div className="w-full">
+      <div className="bg-gray2 w-full max-w-lg mt-8 mx-auto p-6 rounded-lg flex flex-col gap-y-3">
+        <h1 className="text-3xl font-medium">Login</h1>
         <hr />
-        {error && <strong className="error">Email or password does not match our records</strong>}
-        <form onSubmit={(e) => onSubmit(e)}>
+        {error && <p className="text-red-500">Email or password does not match our records</p>}
+        <form
+          onSubmit={(e) => onSubmit(e)}
+          className="flex flex-col gap-y-3">
           <FormInput
             label="Username"
             name="username"
@@ -58,18 +60,20 @@ const Login = () => {
             type="password"
             error={""}
           />
-          <div className="btn-container">
-            <button className="btn primary">Log In</button>
+          <div className="flex flex-col gap-y-3 sm:flex-row gap-x-3">
+            <button className="py-1 px-8 w-full rounded bg-primary text-white disabled:opacity-50 hover:bg-primaryDark">
+              Log In
+            </button>
             <Link
               to="/register"
-              className="btn secondary">
+              className="py-1 px-4 w-full rounded border border-solid hover:bg-gray3 text-center">
               Create New Account
             </Link>
           </div>
         </form>
       </div>
-      <div className="tag-line">
-        <h2 className="header1">Welcome Back!</h2>
+      <div className="mt-8 w-full text-center max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold">Welcome Back!</h2>
         <img
           src={pkmn_img as unknown as string}
           alt="pokemon trainer with 6 pokemon"

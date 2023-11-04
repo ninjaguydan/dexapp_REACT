@@ -13,7 +13,7 @@ const useDeviceWidth = () => {
     } else {
       setBreakpoint("TABLET");
     }
-  }, 150);
+  }, 10);
 
   useEffect(() => {
     updateBreakpoint();

@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter as MyRouter } from "react-router-dom";
 
 // Comps
-import Header from "components/common/navigation/Header";
+import SiteHeader from "components/common/navigation/SiteHeader";
 import MobileNav from "components/common/navigation/MobileNav";
 import useDeviceWidth from "hooks/useDeviceWidth";
 
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <MyRouter>
-      <Header />
+      <SiteHeader />
       {breakpoint === "MOBILE" && <MobileNav />}
       <main className="py-24 profile main flex items-center flex-col gap-x-4 max-w-5xl mx-auto lg:flex-row-reverse lg:items-start">
         <Routes>

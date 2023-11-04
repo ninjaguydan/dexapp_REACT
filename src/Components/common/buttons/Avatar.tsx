@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import getImageByKey from "utils/getImageByKey";
 
 interface Props {
-  user: { img: string; name: string; color: string; classList: string };
+  user: { img: string; name: string; color: string; classList?: string };
 }
 
 function Avatar({ user: { img, name, color, classList } }: Props) {

@@ -3,7 +3,6 @@
 @tailwind utilities;
 @import url("./reset.css");
 @import url("./pkmn_types.css");
-@import url("../components/pages/login/login-registration.css");
 @import url("../components/pages/search/search.css");
 @import url("../components/pages/profile/profile.css");
 @import url("../components/pages/teams/team.css");
@@ -40,18 +39,18 @@ button {
   --brand-gray5: #898989;
   --brand-gray3: #ced4da;
 }
-.bold,
+/* .bold,
 .header1.bold {
   font-weight: 700;
-}
-.card {
+} */
+/* .card {
   display: flex;
   background-color: var(--brand-gray2);
   padding: 1rem;
   border-radius: 0.25rem;
   border: 1px solid rgb(255 255 255 / 13%);
-}
-.header1 {
+} */
+/* .header1 {
   font-size: 1.75rem;
   font-weight: 500;
   line-height: 2rem;
@@ -68,7 +67,10 @@ button {
   font-weight: 300;
   line-height: 1.5rem;
   margin: 1rem;
-}
+} */
+/*==========================================================
+Loader
+==========================================================*/
 .loading {
   margin: 3rem auto;
 }
@@ -117,11 +119,78 @@ Top 10 Styles
 #style-4::-webkit-scrollbar-thumb:hover {
   background-color: #090909;
 }
-
+/*==========================================================
+Menu Button Styles
+==========================================================*/
+.menu-btn {
+  width: 30px;
+  height: 30px;
+  background: unset;
+  border: unset;
+  position: fixed;
+  right: 30px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  transition: all 0.1s ease-in-out;
+}
+.menu-btn_burger {
+  width: 30px;
+  height: 2px;
+  background: white;
+  transition: all 0.1s ease-in-out;
+}
+.menu-btn_burger::before,
+.menu-btn_burger::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  left: 0;
+  background: white;
+  transition: all 0.1s ease-in-out;
+}
+.menu-btn_burger::before {
+  transform: translateY(-10px);
+  transform-origin: left, top;
+}
+.menu-btn_burger::after {
+  transform: translateY(10px);
+  transform-origin: left, bottom;
+}
+.menu-btn.open .menu-btn_burger {
+  background: transparent;
+}
+.menu-btn.open .menu-btn_burger::before {
+  background-color: var(--brand-secondary);
+  transform: rotate(45deg);
+}
+.menu-btn.open .menu-btn_burger::after {
+  background-color: var(--brand-secondary);
+  transform: rotate(-45deg);
+}
+/*==========================================================
+Slider Menu Animation
+==========================================================*/
+/* Slider Menu Overlay */
+.slider {
+  animation: overlay 0.3s forwards;
+}
+@keyframes overlay {
+  from {
+    opacity: 0;
+    transform: translateX(300px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 /*==========================================================
 Button Styles
 ==========================================================*/
-.btn {
+/* .btn {
   color: white;
   padding: 0.25rem 1rem;
 }
@@ -141,7 +210,7 @@ Button Styles
 .btn.secondary:focus {
   background-color: var(--brand-gray4);
   color: white;
-}
+} */
 /*==========================================================
 Form Styles
 ==========================================================*/
@@ -269,301 +338,7 @@ select.form-control-custom option {
     top: 15px;
   }
 }
-/*==========================================================
-Header Styles
-==========================================================*/
-.site-header {
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-  border-bottom: 1px solid var(--brand-gray1);
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--brand-gray2);
-}
-.site-header .header-logo {
-  background: url("../media/dex-icon-4c.svg") no-repeat center center;
-  background-size: contain;
-  width: 40px;
-  height: 40px;
-}
-.search-icon {
-  all: unset;
-  cursor: pointer;
-}
-.search-icon:hover {
-  color: var(--brand-secondary);
-}
-.search-icon:focus-visible {
-  outline: -webkit-focus-ring-color auto 1px;
-}
-/*---------- 550px BREAK POINT ----------*/
-@media only screen and (min-width: 550px) {
-  .site-header {
-    padding: 1rem 2rem;
-  }
-}
-/*---------- 800px BREAK POINT ----------*/
-@media only screen and (min-width: 800px) {
-  .nav-icon.search-icon {
-    display: none;
-  }
-}
-/*---------- 1080px BREAK POINT ----------*/
-@media only screen and (min-width: 1080px) {
-  .app-container {
-    padding-top: 6.25rem;
-  }
-  .site-header .header-logo {
-    background: url("../media/dex-logo-w.svg") no-repeat center center;
-    background-size: contain;
-    width: 150px;
-    height: 50px;
-  }
-}
 
-/*==========================================================
-Menu Button Styles
-==========================================================*/
-.menu-btn {
-  width: 30px;
-  height: 30px;
-  background: unset;
-  border: unset;
-  position: fixed;
-  right: 30px;
-  top: 20px;
-  display: flex;
-  align-items: center;
-  z-index: 10;
-  transition: all 0.1s ease-in-out;
-}
-.menu-btn_burger {
-  width: 30px;
-  height: 2px;
-  background: white;
-  transition: all 0.1s ease-in-out;
-}
-.menu-btn_burger::before,
-.menu-btn_burger::after {
-  content: "";
-  position: absolute;
-  width: 30px;
-  height: 2px;
-  left: 0;
-  background: white;
-  transition: all 0.1s ease-in-out;
-}
-.menu-btn_burger::before {
-  transform: translateY(-10px);
-  transform-origin: left, top;
-}
-.menu-btn_burger::after {
-  transform: translateY(10px);
-  transform-origin: left, bottom;
-}
-.menu-btn.open .menu-btn_burger {
-  background: transparent;
-}
-.menu-btn.open .menu-btn_burger::before {
-  background-color: var(--brand-secondary);
-  transform: rotate(45deg);
-}
-.menu-btn.open .menu-btn_burger::after {
-  background-color: var(--brand-secondary);
-  transform: rotate(-45deg);
-}
-/*---------- 550px BREAK POINT ----------*/
-@media only screen and (min-width: 550px) {
-  .menu-btn {
-    display: none;
-  }
-}
-/*==========================================================
-Navigation Styles
-==========================================================*/
-.main-nav {
-  display: none;
-}
-.mobile-nav {
-  bottom: 0;
-  margin: 0;
-  padding: 20px;
-  z-index: 1;
-  width: 100%;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border-top: 1px solid var(--brand-gray1);
-  background-color: var(--brand-gray2);
-}
-.mobile-nav li {
-  position: relative;
-}
-.mobile-nav .material-icons {
-  font-size: 30px;
-  position: relative;
-  top: -5px;
-}
-.dex-icon {
-  position: relative;
-  width: 25px;
-  top: 5px;
-}
-.mobile-nav .dex-icon {
-  top: -5px;
-}
-.mobile-nav .material-icons:hover {
-  color: var(--brand-secondary);
-}
-/* Slider Menu Overlay | Only visible when user is logged in */
-.mobile-nav-slider {
-  position: fixed;
-  z-index: 2;
-  right: 0;
-  top: 0;
-  background-color: var(--brand-gray1);
-  border-left: 1px solid gray;
-  border-radius: 0.5rem 0 0 0.5rem;
-  width: 80vw;
-  height: 100%;
-  padding: 30px;
-  animation: overlay 0.3s forwards;
-}
-.mobile-nav-slider.hidden {
-  display: none;
-}
-.mobile-nav-slider .user-img {
-  width: 70px;
-  height: 70px;
-  margin-bottom: 10px;
-}
-.mobile-nav-slider .username {
-  color: gray;
-  margin-top: 5px;
-}
-.mobile-nav-slider .follow-cnt {
-  display: flex;
-  margin-top: 1.3rem;
-  justify-content: flex-start;
-}
-.mobile-nav-slider .follow-cnt p {
-  color: gray;
-  margin-right: 1rem;
-}
-.mobile-nav-slider .follow-cnt p span {
-  color: var(--brand-gray3);
-}
-.mobile-nav-slider ul {
-  margin-top: 30px;
-}
-.mobile-nav-slider li {
-  height: 3rem;
-  display: flex;
-  margin-bottom: 1rem;
-}
-.mobile-nav-slider li button {
-  background-color: unset;
-  color: var(--brand-gray3);
-}
-.mobile-nav-slider li button:hover {
-  color: var(--brand-secondary);
-}
-.mobile-nav-slider ul li a {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-.mobile-nav-slider ul li a i {
-  position: relative;
-  top: -2px;
-  margin-right: 1rem;
-}
-.mobile-nav-slider li a img {
-  width: 1.5rem;
-  margin-right: 1rem;
-}
-.nav-user-icon {
-  border-radius: 50%;
-  width: 35px;
-  position: relative;
-  top: -5px;
-}
-li.nav-user-desk {
-  /* display: flex; */
-}
-li.nav-user-desk img {
-  /* top: 0; */
-}
-li.nav-user-desk .btn:hover {
-  /* color: var(--brand-secondary); */
-}
-li.nav-user-desk .btn:focus {
-  /* box-shadow: 0 0 6px var(--brand-secondary); */
-}
-.dropdown-menu-dark {
-  background-color: var(--brand-gray1);
-}
-.dropdown-menu.dropdown-nav {
-  display: none;
-  position: fixed;
-  top: 4rem;
-  right: 1rem;
-  box-shadow: -2px 2px 2px rgba(39, 39, 39, 0.6);
-}
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-.dropdown-item i {
-  margin-right: 10px;
-}
-.dropdown-item .dex-icon {
-  width: 20px;
-  margin-right: 12px;
-  margin-left: 2px;
-  top: unset;
-}
-
-/*---------- 550px BREAK POINT ----------*/
-@media only screen and (min-width: 550px) {
-  .main-nav {
-    display: flex;
-    justify-content: space-between;
-    width: 400px;
-    margin: 0;
-    align-items: center;
-  }
-  .main-nav a:hover {
-    color: var(--brand-secondary);
-  }
-  .mobile-nav {
-    display: none;
-  }
-  .mobile-nav-slider {
-    display: none;
-  }
-  .dropdown-menu.dropdown-nav {
-    display: block;
-  }
-}
-/*---------- Mobile Menu Animation ----------*/
-@keyframes overlay {
-  from {
-    opacity: 0;
-    transform: translateX(300px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 /*==========================================================
 404 Styles
 ==========================================================*/

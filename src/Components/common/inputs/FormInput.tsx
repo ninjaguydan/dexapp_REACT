@@ -34,8 +34,8 @@ const FormInput = ({ label, name, type = "text", value, handleChange, error = ""
           }}
         />
       )}
-      {error && <strong className="error">{error}</strong>}
-      {!error && value ? <FaCheckCircle className="success" /> : null}
+      {error && <p className="text-red-500">{error}</p>}
+      {!error && value ? <FaCheckCircle className="success text-secondary absolute right-2 top-8 text-xl" /> : null}
     </div>
   );
 };

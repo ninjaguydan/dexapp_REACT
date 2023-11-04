@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 
 import dex_icon from "media/dex-icon-w.svg";
 
-interface IUserMenu {
+interface IDesktopMenu {
   username: string;
   openDrop: () => void;
 }
 
-const UserMenu = ({ username, openDrop }: IUserMenu) => {
+const DesktopMenu = ({ username, openDrop }: IDesktopMenu) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -43,4 +43,4 @@ const UserMenu = ({ username, openDrop }: IUserMenu) => {
   );
 };
 
-export default UserMenu;
+export default DesktopMenu;

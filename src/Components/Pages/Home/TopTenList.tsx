@@ -17,7 +17,7 @@ function TopTenList() {
 
   return (
     <ol
-      className="relative flex w-full max-w-2xl overflow-auto bg-gray2 rounded border border-white border-solid border-opacity-10 lg:flex-col lg:max-w-sm"
+      className="relative flex w-full max-w-2xl overflow-auto lg:overflow-visible bg-gray2 rounded border border-white border-solid border-opacity-10 lg:flex-col lg:max-w-sm"
       id="style-4">
       <li className="flex items-center border border-white border-solid border-opacity-10 p-4">
         <h2 className="font-bold text-3xl whitespace-nowrap">Top 10</h2>
@@ -28,7 +28,7 @@ function TopTenList() {
         } else {
           return (
             <li
-              className="list-group-item flex items-center gap-x-4 border border-white border-solid border-opacity-10 p-4 min-w-max"
+              className="list-group-item flex items-center gap-x-4 border border-white border-solid border-opacity-10 p-4 min-w-max lg:min-w-0"
               key={item.id}>
               <Link
                 to={`/pokemon/${item.id}`}
