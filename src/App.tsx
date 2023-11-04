@@ -22,7 +22,7 @@ function App() {
     <MyRouter>
       <Header />
       {breakpoint === "MOBILE" && <MobileNav />}
-      <div className="py-24">
+      <main className="py-24 profile main flex items-center flex-col gap-x-4 max-w-5xl mx-auto lg:flex-row-reverse lg:items-start">
         <Routes>
           <Route
             path="/dexapp_REACT"
@@ -61,7 +61,7 @@ function App() {
             element={<PageNotFound />}
           />
         </Routes>
-      </div>
+      </main>
     </MyRouter>
   );
 }

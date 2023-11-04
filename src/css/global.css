@@ -3,7 +3,6 @@
 @tailwind utilities;
 @import url("./reset.css");
 @import url("./pkmn_types.css");
-@import url("../components/pages/home/home.css");
 @import url("../components/pages/login/login-registration.css");
 @import url("../components/pages/search/search.css");
 @import url("../components/pages/profile/profile.css");
@@ -26,6 +25,7 @@ body {
   color: var(--brand-gray3);
   background-color: var(--brand-gray1);
   position: relative;
+  counter-reset: rank-counter;
 }
 button {
   transition: transform 0.2s;
@@ -76,6 +76,9 @@ button {
   color: var(--brand-gray4);
   margin: auto;
 }
+/*==========================================================
+For Screen Reader
+==========================================================*/
 .sr-only {
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
@@ -85,26 +88,36 @@ button {
   padding: 0;
   position: absolute;
 }
-.trash {
-  /* font-size: 12px; */
-  /* color: var(--brand-gray4); */
-  /* background-color: unset; */
-  /* position: absolute; */
-  /* right: 1rem; */
+/*==========================================================
+Top 10 Styles
+==========================================================*/
+.list-group-item::before {
+  counter-increment: rank-counter 1;
+  content: counter(rank-counter) "";
+  font-size: 1.75em;
+  font-weight: 700;
+  color: gray;
 }
-.trash:hover {
-  /* color: var(--brand-primary); */
+.list-group-item a:hover img {
+  transform: scale(1.0625);
 }
-.user-img {
-  /* border-radius: 50%; */
-  /* background-color: var(--brand-gray2); */
+/*==========================================================
+ Scroll bar styles
+/*========================================================*/
+#style-4::-webkit-scrollbar {
+  height: 8px;
+  background-color: #444444;
 }
-/*---------- 550px BREAK POINT ----------*/
-@media only screen and (min-width: 550px) {
-  .app-container {
-    padding: 5.625rem 1rem;
-  }
+#style-4::-webkit-scrollbar-thumb {
+  background-color: #191919;
+  border: 1px solid #444444;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
+#style-4::-webkit-scrollbar-thumb:hover {
+  background-color: #090909;
+}
+
 /*==========================================================
 Button Styles
 ==========================================================*/
@@ -481,16 +494,16 @@ Navigation Styles
   top: -5px;
 }
 li.nav-user-desk {
-  display: flex;
+  /* display: flex; */
 }
 li.nav-user-desk img {
-  top: 0;
+  /* top: 0; */
 }
 li.nav-user-desk .btn:hover {
-  color: var(--brand-secondary);
+  /* color: var(--brand-secondary); */
 }
 li.nav-user-desk .btn:focus {
-  box-shadow: 0 0 6px var(--brand-secondary);
+  /* box-shadow: 0 0 6px var(--brand-secondary); */
 }
 .dropdown-menu-dark {
   background-color: var(--brand-gray1);

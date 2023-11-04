@@ -14,7 +14,7 @@ function Timeline() {
   const timeline = generateTimeline(posts, reviews, teams);
 
   return (
-    <div className="post-column main">
+    <div className="post-column main w-full max-w-2xl lg:max-w-none">
       {!!currentUser.id && (
         <PostForm
           btnText={"Post"}

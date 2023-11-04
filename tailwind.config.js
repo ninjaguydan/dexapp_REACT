@@ -17,6 +17,7 @@ module.exports = {
         gray5: "#ced4da",
         black_80: "#000000cc",
       },
+      gridTemplateColumns: {},
     },
     screens: {
       sm: "550px",

@@ -120,7 +120,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
           </div>
           <hr />
           <h3>Choose background color</h3>
-          <div className="colors grid grid-cols-6 gap-x-5">
+          <div className="grid grid-cols-6 gap-x-5">
             {colorOptions.map((option) => (
               <SelectColor
                 color={option}

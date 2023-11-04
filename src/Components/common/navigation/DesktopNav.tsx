@@ -16,15 +16,15 @@ const DesktopNav = () => {
     img: user.user_img,
     name: user.username,
     color: user.bg_color,
-    classList: "w-9 relative top-1",
+    classList: "w-9 relative",
   };
 
   return (
     <nav>
-      <ul className="main-nav">
-        {/* <li>
+      <ul className="main-nav flex justify-between w-[400px]">
+        <li>
           <SearchBtn />
-        </li> */}
+        </li>
         <li>
           <NavLink to="/dexapp_REACT">Home</NavLink>
         </li>
@@ -32,10 +32,10 @@ const DesktopNav = () => {
           <NavLink to="/dexapp_REACT">Pokedex</NavLink>
         </li>
         {user.id ? (
-          <li className="nav-user-desk">
+          <li className="nav-user-desk flex items-center gap-x-1">
             <Avatar user={avatar} />
             <button
-              className="btn"
+              className="flex items-center gap-x-2 px-3 py-1 hover:text-secondary"
               onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
               {truncateStr(user.username)}
               <FaAngleDown />

@@ -1,6 +1,6 @@
 import Post from "components/pages/profile/Post";
 import Review from "components/pages/pokemon/Review";
-import Team from "components/pages/teams/Team";
+import Team from "components/pages/teams/TeamCard";
 
 import { IPost, IReview, ITeam } from "utils/Interfaces";
 

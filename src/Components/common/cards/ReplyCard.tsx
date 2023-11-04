@@ -82,7 +82,7 @@ function ReplyCard({ reply }: IReplyProps) {
   return (
     <Card
       children={node}
-      classList="first:mt-4 bg-gray1"
+      classList="first:mt-4 !bg-gray1"
     />
   );
 }

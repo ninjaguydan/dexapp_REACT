@@ -72,7 +72,7 @@ function Post({ post }: IPostProps) {
     <>
       <Avatar user={avatar} />
       <div className="flex flex-col gap-y-1">
-        <h4 className="font-bold ">
+        <h2 className="font-bold ">
           <Link
             to={`/profile/${truncateStr(user.username)}`}
             className="hover:underline">
@@ -81,7 +81,7 @@ function Post({ post }: IPostProps) {
           <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(post.created)}</span>
           {currentUser?.id === post.added_by && <IconBtn btnData={deleteBtnData} />}
-        </h4>
+        </h2>
         <p className="text-sm">{post.content}</p>
         <div className="flex gap-x-8">
           <IconBtn btnData={likeBtnData} />

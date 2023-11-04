@@ -5,7 +5,7 @@ Global Styles
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  max-width: 1080px;
+  /* max-width: 1080px; */
   margin: 0 auto;
 }
 /*---------- 946px BREAK POINT ----------*/
@@ -166,15 +166,15 @@ ul.card li.list-group-item.striped a:focus img {
 Post Column Styles
 ==========================================================*/
 .post-column {
-  width: 100%;
-  max-width: 557px;
+  /* width: 100%; */
+  /* max-width: 557px; */
   margin: 0 auto;
 }
 
 /*---------- 946px BREAK POINT ----------*/
 @media only screen and (min-width: 946px) {
   .post-column {
-    max-width: 650px;
+    /* max-width: 650px; */
   }
 }
 
