@@ -2,35 +2,46 @@ import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Card from "components/common/cards/Card";
+import Avatar from "components/common/buttons/Avatar";
+
 import { IReply, IReview } from "utils/Interfaces";
 import { RootState } from "redux/store";
-import getImageByKey from "utils/getImageByKey";
 
-interface IPostFormProps {
+interface Props {
   btnText: string;
   placeholder: string;
   type: { name: string; [key: string]: any };
+  classList?: string;
 }
+
 const empty = {
   content: "",
   rating: 1,
 };
 
-function PostForm({ btnText, placeholder, type }: IPostFormProps) {
+function enableButton(count: number) {
+  if (count > 1 && count < 141) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function PostForm({ btnText, placeholder, type, classList }: Props) {
   const [counter, setCounter] = useState(0);
   const [formData, setFormData] = useState(empty);
   const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const avatar = {
+    img: currentUser.user_img,
+    name: currentUser.username,
+    color: currentUser.bg_color,
+    classList: "hidden sm:block h-16 w-16",
+  };
   const dispatch = useDispatch();
 
   function setValue(event: any) {
     setFormData({ ...formData, [event.target.id]: event.target.value });
-  }
-  function enableButton() {
-    if (counter > 1 && counter < 141) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   useEffect(() => {
@@ -79,24 +90,22 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
     setFormData(empty);
   }
 
-  return (
-    <div className="card">
-      <img
-        src={getImageByKey(currentUser.user_img)}
-        alt={"user"}
-        className={`${currentUser.bg_color} form-img`}
-      />
-      <form onSubmit={(e) => onSubmit(e)}>
+  let node = (
+    <>
+      <Avatar user={avatar} />
+      <form
+        onSubmit={(e) => onSubmit(e)}
+        className="w-full flex flex-col flex-1 gap-y-4">
         <textarea
           onChange={(e) => setValue(e)}
           value={formData.content}
           id="content"
-          className="form-control form-control-custom"
+          className="form-control-custom text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded"
           rows={2}
           placeholder={placeholder}></textarea>
         {type.name === "REVIEW" && (
           <select
-            className="form-control-custom"
+            className="form-control-custom text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded w-12"
             id="rating"
             value={formData.rating}
             onChange={(e) => setValue(e)}>
@@ -113,13 +122,25 @@ function PostForm({ btnText, placeholder, type }: IPostFormProps) {
           </select>
         )}
         <button
-          className="btn primary"
-          disabled={enableButton() ? false : true}>
+          className="py-1 px-8 w-28 rounded bg-primary text-white disabled:opacity-50"
+          disabled={enableButton(counter) ? false : true}>
           {btnText}
         </button>
-        <span className={`counter ${counter > 140 && "error"} ${counter > 100 && "caution"}`}>{counter}/140</span>
+        <span
+          className={`absolute text-xs text-gray-500 right-4 bottom-6 ${counter > 140 && "text-primary"} ${
+            counter > 100 && "text-yellow-600"
+          }`}>
+          {counter}/140
+        </span>
       </form>
-    </div>
+    </>
+  );
+
+  return (
+    <Card
+      children={node}
+      classList={classList}
+    />
   );
 }
 

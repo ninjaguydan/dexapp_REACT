@@ -2,9 +2,9 @@ import Spinner from "react-spinkit";
 
 const Loading = () => {
   return (
-    <div className="loading">
+    <div className="my-12 mx-auto">
       <Spinner
-        name="circle"
+        name="ball-scale-multiple"
         style={{ width: 50, height: 50 }}
       />
     </div>

@@ -1,0 +1,89 @@
+import { useSelector } from "react-redux";
+
+import getImageByKey from "utils/getImageByKey";
+import { IUser } from "utils/Interfaces";
+import { RootState } from "redux/store";
+import Avatar from "components/common/buttons/Avatar";
+
+interface Props {
+  user: IUser;
+  openEdit: () => void;
+}
+
+function UserSummary({ user, openEdit }: Props) {
+  const postCnt = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).length);
+  const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.added_by === user.id).length);
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const avatar = {
+    img: user.user_img,
+    name: user.username,
+    color: user.bg_color,
+    classList: "w-full block max-w-[200px] sm:max-w-[120px]",
+  };
+
+  return (
+    <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
+      <li className="border-b border-white border-opacity-10 border-solid p-6 text-center flex flex-col gap-y-4 items-center">
+        <div>
+          <h1 className="font-bold uppercase">{user.name}</h1>
+          <p className="text-gray4">{user.username}</p>
+        </div>
+        <Avatar user={avatar} />
+        {user?.bio && <p className="bio max-w-[30ch] text-sm">{user.bio}</p>}
+        <div className="flex gap-x-4">
+          <p className="text-gray4 ">
+            <span className="font-bold text-gray5">0 </span>
+            Following
+          </p>
+          <p className="text-gray4">
+            <span className="font-bold text-gray5">0 </span>
+            Followers
+          </p>
+        </div>
+      </li>
+      {currentUser?.id === user.id && (
+        <li className="border-b border-white border-opacity-10 border-solid p-6">
+          <button
+            onClick={openEdit}
+            className="py-1 px-4 w-full rounded border border-solid hover:bg-gray3 text-center">
+            Edit Profile
+          </button>
+        </li>
+      )}
+      {user?.location && (
+        <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+          <p className="font-bold">Location</p>
+          <span>{user.location}</span>
+        </li>
+      )}
+      {user?.pronouns && (
+        <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+          <p className="font-bold">Pronouns</p>
+          <span>He/Him</span>
+        </li>
+      )}
+      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+        <p className="font-bold">Joined</p>
+        <span>June 2022</span>
+      </li>
+      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+        <p className="font-bold">Posts</p>
+        <span>{postCnt}</span>
+      </li>
+      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+        <p className="font-bold">Reviews</p>
+        <span>{reviewCnt}</span>
+      </li>
+      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+        <p className="font-bold">Favorites</p>
+        <span>0</span>
+      </li>
+      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+        <p className="font-bold">Teams</p>
+        <span>0</span>
+      </li>
+    </ul>
+  );
+}
+
+export default UserSummary;

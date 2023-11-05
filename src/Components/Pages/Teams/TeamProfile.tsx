@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import ReplyList from "components/common/cards/ReplyList";
-import Loading from "components/common/loader/Loading";
+
 import TeamStats from "components/pages/teams/TeamStats";
 import TeamResistance from "components/pages/teams/TeamResistance";
 import TeamGrid from "components/pages/teams/TeamGrid";
@@ -11,7 +11,7 @@ import useTeam from "hooks/useTeam";
 import { ITeam, IUser, ILike } from "utils/Interfaces";
 import { RootState } from "redux/store";
 
-export default function TeamSummary() {
+export default function TeamProfile() {
   const { teamName } = useParams();
   const team = useSelector((state: RootState) => state.teams.filter((team: ITeam) => team.name === teamName)[0]);
   const currentUser = useSelector((state: RootState) => state.loggedUser);
@@ -21,13 +21,9 @@ export default function TeamSummary() {
   );
   const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
 
-  if (loadingSummary) {
-    return <Loading />;
-  }
-
   return (
-    <div className="profile team-page">
-      <aside>
+    <div className="flex flex-col w-full gap-4 md:flex-row">
+      <aside className="flex flex-col sm:flex-row gap-x-2 md:w-6/12 md:flex-col">
         <TeamStats
           currentUser={currentUser}
           team={team}
@@ -38,8 +34,11 @@ export default function TeamSummary() {
         <TeamResistance rTable={summary.resistanceTable} />
       </aside>
 
-      <div className="post-column">
-        <TeamGrid team={summary.teamData} />
+      <div className="flex flex-col w-full gap-4">
+        <TeamGrid
+          team={summary.teamData}
+          isLoading={loadingSummary}
+        />
         <ReplyList
           replies={replies}
           user={created_by.username}

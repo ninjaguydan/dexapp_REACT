@@ -1,17 +1,17 @@
 import { createPortal } from "react-dom";
 
-interface IMenuBtnProps {
-  menuIsOpen: boolean;
-  openMenu: () => void;
+interface Props {
+  data: { action: () => void; isOpen: boolean; isVisible: boolean };
 }
 
-const MenuBtn = ({ menuIsOpen, openMenu }: IMenuBtnProps) => {
+const MenuBtn = ({ data: { action, isOpen, isVisible } }: Props) => {
+  if (!isVisible) return <></>;
   return createPortal(
     <>
       <button
         id="menu-btn"
-        className={`menu-btn ${menuIsOpen && "open"}`}
-        onClick={openMenu}>
+        className={`menu-btn ${isOpen ? "open" : ""}`}
+        onClick={action}>
         <div className="menu-btn_burger"></div>
       </button>
     </>,

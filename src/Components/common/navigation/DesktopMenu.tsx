@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 
 import dex_icon from "media/dex-icon-w.svg";
 
-interface IUserMenu {
+interface IDesktopMenu {
   username: string;
   openDrop: () => void;
 }
 
-const UserMenu = ({ username, openDrop }: IUserMenu) => {
+const DesktopMenu = ({ username, openDrop }: IDesktopMenu) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,10 +18,10 @@ const UserMenu = ({ username, openDrop }: IUserMenu) => {
     navigate("/login");
   };
   return (
-    <ul className="dropdown-menu dropdown-menu-dark dropdown-nav">
+    <ul className=" fixed top-16 right-4 shadow-sm bg-gray1 py-2 min-w-[10rem] text-left rounded-md">
       <li>
         <Link
-          className="dropdown-item"
+          className="w-full flex items-center gap-x-2 px-4 py-2 hover:bg-gray2"
           to={`/profile/${username}`}
           onClick={openDrop}>
           <i className="material-icons">account_circle</i>Profile
@@ -33,11 +33,8 @@ const UserMenu = ({ username, openDrop }: IUserMenu) => {
 				</Link>
 			</li> */}
       <li>
-        <hr className="dropdown-divider" />
-      </li>
-      <li>
         <button
-          className="dropdown-item"
+          className="flex items-center px-4 py-2 hover:text-secondary hover:bg-gray2 w-full"
           onClick={() => onLogout()}>
           Logout
         </button>
@@ -46,4 +43,4 @@ const UserMenu = ({ username, openDrop }: IUserMenu) => {
   );
 };
 
-export default UserMenu;
+export default DesktopMenu;

@@ -11,12 +11,12 @@ interface IFormInputProps {
 //TODO: change the way errors are handled
 const FormInput = ({ label, name, type = "text", value, handleChange, error = "" }: IFormInputProps) => {
   return (
-    <div className="form-row">
+    <div className="relative">
       <label htmlFor={name}>{label}</label>
       {type === "textArea" ? (
         <textarea
           id={name}
-          className="form-control"
+          className="w-full py-1 px-3 rounded text-gray2 border border-solid border-gray-300"
           rows={5}
           onChange={(e) => {
             handleChange(e);
@@ -26,7 +26,7 @@ const FormInput = ({ label, name, type = "text", value, handleChange, error = ""
         <input
           type={type}
           id={name}
-          className="form-control"
+          className="w-full py-1 px-3 rounded text-gray2 border border-solid border-gray-300"
           placeholder={label}
           value={value}
           onChange={(e) => {
@@ -34,8 +34,8 @@ const FormInput = ({ label, name, type = "text", value, handleChange, error = ""
           }}
         />
       )}
-      {error && <strong className="error">{error}</strong>}
-      {!error && value ? <FaCheckCircle className="success" /> : null}
+      {error && <p className="text-red-500">{error}</p>}
+      {!error && value ? <FaCheckCircle className="success text-secondary absolute right-2 top-8 text-xl" /> : null}
     </div>
   );
 };

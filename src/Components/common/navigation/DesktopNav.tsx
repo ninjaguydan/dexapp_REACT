@@ -2,9 +2,9 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import UserIcon from "components/common/buttons/Avatar";
+import Avatar from "components/common/buttons/Avatar";
 import SearchBtn from "components/common//buttons/SearchBtn";
-import UserMenu from "components/common/navigation/UserMenu";
+import DesktopMenu from "components/common/navigation/DesktopMenu";
 import { FaAngleDown } from "components/common/icons/index";
 
 import { truncateStr } from "utils/Helpers";
@@ -12,51 +12,61 @@ import { truncateStr } from "utils/Helpers";
 const DesktopNav = () => {
   const user = useSelector((state: any) => state.loggedUser);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const avatar = {
+    img: user.user_img,
+    name: user.username,
+    color: user.bg_color,
+    classList: "w-9 relative",
+  };
+  let menuNode = !!user.id ? (
+    <div className="nav-user-desk flex items-center gap-x-1">
+      <Avatar user={avatar} />
+      <button
+        className="flex items-center gap-x-2 px-3 py-1 hover:text-secondary"
+        onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
+        {truncateStr(user.username)}
+        <FaAngleDown />
+      </button>
+      {dropdownIsOpen && (
+        <DesktopMenu
+          username={user.username}
+          openDrop={() => setDropdownIsOpen(!dropdownIsOpen)}
+        />
+      )}
+    </div>
+  ) : (
+    <>
+      <NavLink
+        to="/register"
+        className={"hover:text-secondary font-bold"}>
+        Sign Up
+      </NavLink>
+
+      <NavLink
+        to="/login"
+        className={"hover:text-secondary font-bold"}>
+        Login
+      </NavLink>
+    </>
+  );
 
   return (
-    <nav>
-      <ul className="main-nav">
-        {/* <li>
-          <SearchBtn />
-        </li> */}
-        <li>
-          <NavLink to="/dexapp_REACT">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/dexapp_REACT">Pokedex</NavLink>
-        </li>
-        {user.id ? (
-          <li className="nav-user-desk">
-            <UserIcon
-              userImg={user.user_img}
-              userName={user.username}
-              userColor={user.bg_color}
-              mobileNav={"nav-user-icon"}
-            />
-            <button
-              className="btn"
-              onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
-              {truncateStr(user.username)}
-              <FaAngleDown />
-            </button>
-            {dropdownIsOpen && (
-              <UserMenu
-                username={user.username}
-                openDrop={() => setDropdownIsOpen(!dropdownIsOpen)}
-              />
-            )}
-          </li>
-        ) : (
-          <>
-            <li className="bold">
-              <NavLink to="/register">Sign Up</NavLink>
-            </li>
-            <li className="bold">
-              <NavLink to="/login">Login</NavLink>
-            </li>
-          </>
-        )}
-      </ul>
+    <nav className="flex justify-between items-center w-[400px]">
+      <SearchBtn />
+
+      <NavLink
+        to="/dexapp_REACT"
+        className={"hover:text-secondary"}>
+        Home
+      </NavLink>
+
+      <NavLink
+        to="/dexapp_REACT"
+        className={"hover:text-secondary"}>
+        Pokedex
+      </NavLink>
+
+      {menuNode}
     </nav>
   );
 };

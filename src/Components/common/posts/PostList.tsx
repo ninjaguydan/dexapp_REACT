@@ -1,4 +1,4 @@
-import Post from "components/pages/profile/Post";
+import Post from "components/common/posts/Post";
 
 import { IPost } from "utils/Interfaces";
 

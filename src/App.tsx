@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter as MyRouter } from "react-router-dom";
 
 // Comps
-import Header from "components/common/navigation/Header";
+import SiteHeader from "components/common/navigation/SiteHeader";
 import MobileNav from "components/common/navigation/MobileNav";
 import useDeviceWidth from "hooks/useDeviceWidth";
 
@@ -9,9 +9,9 @@ import useDeviceWidth from "hooks/useDeviceWidth";
 import Login from "components/pages/login/Login";
 import Register from "components/pages/login/Register";
 import Home from "components/pages/home/Home";
-import Pokemon from "components/pages/pokemon/Pokemon";
-import User from "components/pages/profile/User";
-import TeamSummary from "components/pages/teams/TeamSummary";
+import PokemonProfile from "components/pages/pokemon/PokemonProfile";
+import UserProfile from "components/pages/profile/UserProfile";
+import TeamProfile from "components/pages/teams/TeamProfile";
 import Pokedex from "components/pages/search/Pokedex";
 import PageNotFound from "components/pages/error404/PageNotFound";
 
@@ -20,9 +20,9 @@ function App() {
 
   return (
     <MyRouter>
-      <Header />
+      <SiteHeader />
       {breakpoint === "MOBILE" && <MobileNav />}
-      <div className="app-container">
+      <main className="py-24 profile main flex items-center flex-col gap-x-4 max-w-5xl mx-auto lg:flex-row-reverse lg:items-start">
         <Routes>
           <Route
             path="/dexapp_REACT"
@@ -42,15 +42,15 @@ function App() {
           />
           <Route
             path="/pokemon/:id"
-            element={<Pokemon />}
+            element={<PokemonProfile />}
           />
           <Route
             path="/profile/:username"
-            element={<User />}
+            element={<UserProfile />}
           />
           <Route
             path="/team/:teamName"
-            element={<TeamSummary />}
+            element={<TeamProfile />}
           />
           <Route
             path="/not-found"
@@ -61,7 +61,7 @@ function App() {
             element={<PageNotFound />}
           />
         </Routes>
-      </div>
+      </main>
     </MyRouter>
   );
 }

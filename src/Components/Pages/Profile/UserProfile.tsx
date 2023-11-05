@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import PostForm from "components/common/forms/PostForm";
-import Profile from "components/pages/profile/Profile";
+import UserSummary from "components/pages/profile/UserSummary";
 import EditProfile from "components/pages/profile/EditProfile";
-import PostList from "components/pages/profile/PostList";
+import PostList from "components/common/posts/PostList";
 
 import { IUser } from "utils/Interfaces";
 import { RootState } from "redux/store";
 
-const User = () => {
+const UserProfile = () => {
   const { username } = useParams();
   const user = useSelector((state: RootState) => state.users.filter((u) => u.username === username)[0]);
   const posts = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).reverse());
@@ -18,13 +18,13 @@ const User = () => {
   const [editForm, setEditForm] = useState<boolean>(false);
 
   return (
-    <div className="profile">
+    <div className="flex flex-col w-full gap-x-4 gap-y-4 sm:flex-row">
       {editForm && <EditProfile closeEdit={() => setEditForm(false)} />}
-      <Profile
+      <UserSummary
         user={user as IUser}
         openEdit={() => setEditForm(true)}
       />
-      <div className="post-column main">
+      <div className="w-full">
         {currentUser.id === user.id ? (
           <PostForm
             btnText={"Post"}
@@ -32,10 +32,16 @@ const User = () => {
             type={{ name: "POST" }}
           />
         ) : null}
-        {posts.length !== 0 ? <PostList posts={posts} /> : <div className="card">No posts yet!!</div>}
+        {posts.length !== 0 ? (
+          <PostList posts={posts} />
+        ) : (
+          <div className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid p-4">
+            No posts yet!!
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default User;
+export default UserProfile;

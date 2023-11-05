@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Heart, HeartOutline, Trash } from "components/common/icons/index";
+// import { Heart, HeartOutline, Trash } from "components/common/icons/index";
 
 import Avatar from "components/common/buttons/Avatar";
+import IconBtn from "components/common/buttons/IconBtn";
+import Card from "components/common/cards/Card";
 
+import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IReply } from "utils/Interfaces";
 import { RootState } from "redux/store";
@@ -33,44 +36,54 @@ function ReplyCard({ reply }: IReplyProps) {
     }
   }
 
-  return (
-    <div className="card">
-      <Avatar
-        userImg={user.user_img}
-        userName={user.username}
-        userColor={user.bg_color}
-        mobileNav={""}
-      />
-      <div className="content">
-        <h4>
-          <Link to={`/profile/${user.username}`}>{truncateStr(user.name)}</Link>
-          <span> {truncateStr(user.username)}</span>
-          <span className="date"> &#8226; {getTimeDifference(reply.created)}</span>
-          {currentUser?.id === reply.added_by && (
-            <button
-              className="trash"
-              onClick={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}>
-              <Trash />
-              <span className="sr-only">delete</span>
-            </button>
-          )}
+  const avatar = {
+    img: user.user_img,
+    name: user.username,
+    color: user.bg_color,
+    classList: "w-10 h-10",
+  };
+
+  const deleteBtnData = {
+    label: ICON_KEY.DELETE,
+    content: "",
+    action: () => dispatch({ type: "reply/DELETE", replyId: reply.id }),
+    state: true,
+  };
+
+  const likeBtnData = {
+    label: ICON_KEY.LIKES,
+    content: likes.length,
+    action: () => toggleLike(),
+    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
+  };
+
+  let node = (
+    <>
+      <Avatar user={avatar} />
+      <div className="flex flex-col gap-y-1">
+        <h4 className="font-bold">
+          <Link
+            to={`/profile/${user.username}`}
+            className="hover:underline">
+            {truncateStr(user.name)}
+          </Link>
+          <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
+          <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(reply.created)}</span>
+          {currentUser?.id === reply.added_by && <IconBtn btnData={deleteBtnData} />}
         </h4>
-        <p>{reply.content}</p>
-        <div className="icon-container">
-          <button
-            className="fav"
-            onClick={() => toggleLike()}>
-            {currentUser && likes.find((like) => like.user === currentUser.id) ? (
-              <Heart style={{ color: "#009df1" }} />
-            ) : (
-              <HeartOutline />
-            )}
-            {likes.length}
-            <span className="sr-only">likes</span>
-          </button>
+        <p className="text-sm">{reply.content}</p>
+        <div className="flex gap-x-8">
+          <IconBtn btnData={likeBtnData} />
         </div>
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <Card
+      children={node}
+      classList="first:mt-4 !bg-gray1"
+    />
   );
 }
 
