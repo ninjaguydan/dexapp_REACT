@@ -100,12 +100,12 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           onChange={(e) => setValue(e)}
           value={formData.content}
           id="content"
-          className="form-control form-control-custom text-gray5"
+          className="form-control-custom text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded"
           rows={2}
           placeholder={placeholder}></textarea>
         {type.name === "REVIEW" && (
           <select
-            className="form-control-custom w-12"
+            className="form-control-custom text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded w-12"
             id="rating"
             value={formData.rating}
             onChange={(e) => setValue(e)}>
@@ -127,7 +127,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           {btnText}
         </button>
         <span
-          className={`counter absolute text-xs text-gray-500 right-4 bottom-6 ${counter > 140 && "text-primary"} ${
+          className={`absolute text-xs text-gray-500 right-4 bottom-6 ${counter > 140 && "text-primary"} ${
             counter > 100 && "text-yellow-600"
           }`}>
           {counter}/140

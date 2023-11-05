@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 @import url("./reset.css");
-@import url("./pkmn_types.css");
-@import url("../components/pages/search/search.css");
-@import url("../components/pages/profile/profile.css");
-@import url("../components/pages/teams/team.css");
 /*==========================================================
 0 - Global Styles
 ==========================================================*/
@@ -39,41 +35,9 @@ button {
   --brand-gray5: #898989;
   --brand-gray3: #ced4da;
 }
-/* .bold,
-.header1.bold {
-  font-weight: 700;
-} */
-/* .card {
-  display: flex;
-  background-color: var(--brand-gray2);
-  padding: 1rem;
-  border-radius: 0.25rem;
-  border: 1px solid rgb(255 255 255 / 13%);
-} */
-/* .header1 {
-  font-size: 1.75rem;
-  font-weight: 500;
-  line-height: 2rem;
-}
-.header1 span.bold {
-  color: var(--brand-secondary);
-}
-.header1.title {
-  text-align: center;
-  margin: 2rem;
-}
-.header2 {
-  text-align: center;
-  font-weight: 300;
-  line-height: 1.5rem;
-  margin: 1rem;
-} */
 /*==========================================================
 Loader
 ==========================================================*/
-.loading {
-  margin: 3rem auto;
-}
 .sk-circle.sk-spinner {
   color: var(--brand-gray4);
   margin: auto;
@@ -171,12 +135,13 @@ Menu Button Styles
   transform: rotate(-45deg);
 }
 /*==========================================================
-Slider Menu Animation
+Animation
 ==========================================================*/
 /* Slider Menu Overlay */
 .slider {
   animation: overlay 0.3s forwards;
 }
+/*---------- Menu Slide in animation ----------*/
 @keyframes overlay {
   from {
     opacity: 0;
@@ -187,155 +152,21 @@ Slider Menu Animation
     transform: translateX(0);
   }
 }
-/*==========================================================
-Button Styles
-==========================================================*/
-/* .btn {
-  color: white;
-  padding: 0.25rem 1rem;
-}
-.btn.primary {
-  background-color: var(--brand-primary);
-}
-.btn.primary:hover,
-.btn.primary:focus {
-  background-color: var(--brand-primary-dark);
-  border-color: var(--brand-primary-dark);
-  color: white;
-}
-.btn.secondary {
-  border: 1px solid var(--brand-gray4);
-}
-.btn.secondary:hover,
-.btn.secondary:focus {
-  background-color: var(--brand-gray4);
-  color: white;
-} */
-/*==========================================================
-Form Styles
-==========================================================*/
-.form-control {
-  /* display: block; */
-  /* width: 100%; */
-  /* padding: 0.375rem 0.75rem; */
-  /* font-size: 1rem; */
-  /* font-weight: 400; */
-  /* line-height: 1.5; */
-  /* color: #212529; */
-  /* background-color: #fff; */
-  /* background-clip: padding-box; */
-  /* border: 1px solid #ced4da; */
-  /* appearance: none; */
-  /* border-radius: 0.375rem; */
-  /* transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
-}
-.form-row {
-  /* position: relative; */
-}
-.form-control:focus {
-  /* border-color: #e58494; */
-  /* box-shadow: 0 0 0 0.25rem rgb(253 49 88 / 25%); */
-}
-.form-control-custom {
-  padding-left: 0;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid var(--brand-gray3);
-  color: var(--brand-gray3);
-  border-radius: 0.25rem;
-}
-select.form-control-custom option {
-  color: var(--brand-gray2);
-}
-.form-control-custom:focus {
-  box-shadow: none;
-  border-color: none;
-  background-color: transparent;
-}
-
-/*Search Form Styles*/
-.search-form {
-  display: flex;
-  z-index: 1;
-  position: fixed;
-  bottom: 75px;
-  flex-direction: row;
-  width: 100%;
-  padding: 10px;
-  background-color: var(--brand-gray2);
-  border-top: 2px solid var(--brand-gray1);
-}
-.search-form select {
-  border-radius: 1rem 0 0 1rem;
-  padding-left: 10px;
-  padding-right: 5px;
-  background-color: #282828;
-  color: var(--brand-gray3);
-  border: none;
-}
-.search-form input {
-  background-color: #2c2c2c;
-  border: none;
-  border-radius: 1rem 0 0 1rem;
-  color: var(--brand-gray3);
-}
-.search-form input:focus {
-  box-shadow: none;
-  background-color: #2c2c2c;
-  color: var(--brand-gray3);
-}
-.search-form button {
-  width: 40px;
-  border: none;
-  border-radius: 0 1rem 1rem 0;
-  background-color: #2c2c2c;
-  color: var(--brand-gray3);
-  position: relative;
-  cursor: pointer;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.search-form button i {
-  position: absolute;
-  top: 6px;
-  left: 0;
-}
-.search-form button i:hover {
-  color: var(--brand-secondary);
-}
-.search-form.hidden {
-  display: none;
-}
-/*---------- 550px BREAK POINT ----------*/
-@media only screen and (min-width: 550px) {
-  .search-form {
-    z-index: 1;
-    bottom: unset;
-    top: 71px;
-    width: 100%;
-    border-top: unset;
-    border-bottom: 10px solid var(--secondary);
+/*---------- Modal Zoom in animation ----------*/
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
   }
 }
-/*---------- 800px BREAK POINT ----------*/
-@media only screen and (min-width: 800px) {
-  .search-icon {
-    opacity: 0;
+@-webkit-keyframes zoom {
+  from {
+    transform: scale(0);
   }
-  .search-form {
-    display: flex !important;
-    top: 10px;
-    width: 42%;
-    right: 408px;
-    background-color: transparent;
-    border-bottom: unset;
-    z-index: 2;
-  }
-}
-/*---------- 1080px BREAK POINT ----------*/
-@media only screen and (min-width: 1080px) {
-  .search-form {
-    top: 15px;
+  to {
+    transform: scale(1);
   }
 }
 

@@ -1,5 +1,5 @@
 import { HeartOutline, Heart, StarOutline, Star, ChatOutline, Trash } from "components/common/icons/index";
-import { ICON_KEY } from "data/iconKey";
+import { ICON_KEY } from "utils/iconKey";
 
 type Props = {
   btnData: { label: string; content: string | number; action: () => void; state: boolean };

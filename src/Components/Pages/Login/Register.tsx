@@ -47,7 +47,7 @@ const Register = () => {
       ...values,
       id: uuidv4(),
       user_img: "dfault",
-      bg_color: "gray",
+      bg_color: "bg-black",
     };
     dispatch({
       type: "users/REGISTER",

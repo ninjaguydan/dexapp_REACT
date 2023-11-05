@@ -8,7 +8,7 @@ import Card from "components/common/cards/Card";
 import ReplyList from "components/common/cards/ReplyList";
 import Loading from "components/common/loader/Loading";
 
-import { ICON_KEY } from "data/iconKey";
+import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
 import { IReview, IPokemon } from "utils/Interfaces";
 import { RootState } from "redux/store";
@@ -107,11 +107,13 @@ const Review = ({ review, TL_view = false }: Props) => {
   let node = (
     <>
       {TL_view ? (
-        <img
-          src={pkmnData.sprite_url}
-          alt={`${pkmnData.name}'s official sprite`}
-          className="bg-gray1 rounded-full w-16 h-16"
-        />
+        <Link to={`/pokemon/${pkmnData.id}`}>
+          <img
+            src={pkmnData.sprite_url}
+            alt={`${pkmnData.name}'s official sprite`}
+            className="bg-gray1 rounded-full w-16 h-16"
+          />
+        </Link>
       ) : (
         <Avatar user={avatar} />
       )}

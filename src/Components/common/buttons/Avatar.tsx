@@ -7,11 +7,13 @@ interface Props {
 
 function Avatar({ user: { img, name, color, classList } }: Props) {
   return (
-    <Link to={`/profile/${name}`}>
+    <Link
+      to={`/profile/${name}`}
+      className={classList}>
       <img
         src={getImageByKey(img)}
         alt={"user profile"}
-        className={`${color} rounded-full ${classList}`}
+        className={`${color} rounded-full`}
       />
     </Link>
   );

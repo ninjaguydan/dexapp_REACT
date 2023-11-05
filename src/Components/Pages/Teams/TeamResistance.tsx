@@ -11,45 +11,51 @@ interface ITeamResistanceProps {
 export default function TeamResistance({ rTable }: ITeamResistanceProps) {
   const [showTable, setShowTable] = useState(true);
   return (
-    <ul className="card">
-      <li className="list-group-item">
-        <h5 className="bold">Type Resistance</h5>
+    <ul className="w-full h-[fit-content] relative bg-gray2 rounded border border-white border-opacity-10 border-solid">
+      <li className="border-b border-white border-opacity-10 border-solid p-6 text-center">
+        <h2 className="font-bold uppercase">Type Resistance</h2>
       </li>
-
-      <li className="list-group-item chart-container">
-        <table className="table">
+      <li className="chart-container">
+        <table className="w-full">
           <thead>
-            <tr>
-              <th scope="col">Types</th>
+            <tr className="border-b border-solid border-gray3">
               <th
                 scope="col"
-                className="weak">
+                className="pl-8">
+                Types
+              </th>
+              <th
+                scope="col"
+                className="text-red-500 px-3 py-2">
                 <FontAwesomeIcon icon={HeartMinus} />
               </th>
               <th
                 scope="col"
-                className="resist">
+                className="text-greenLight px-3 py-2">
                 <FontAwesomeIcon icon={HeartPlus} />
               </th>
               <th
                 scope="col"
-                className="immune">
+                className="text-gray4 px-3 py-2">
                 <FontAwesomeIcon icon={Shield} />
               </th>
             </tr>
           </thead>
           {showTable && (
-            <tbody>
+            <tbody className="[&_tr:nth-child(odd)]:bg-gray6">
               {Object.keys(rTable).map((pkmnType: string, i) => (
                 <tr key={i}>
-                  <th scope="row">{pkmnType}</th>
+                  <th
+                    scope="row"
+                    className="capitalize pl-8">
+                    {pkmnType}
+                  </th>
                   {Object.values(rTable[pkmnType]).map((value, i) => (
                     <td
                       key={i}
-                      className={`${value !== 0 && "not-zero"} 
-                       ${value > 3 && "high"} 
-                       ${i === 1 && "resist"} 
-                       ${i === 0 && "weak"}`}>
+                      className={`text-gray4 px-3 py-2 ${value > 3 ? "font-bold text-xl" : ""} ${
+                        i === 1 && value > 2 ? "text-greenLight" : ""
+                      } ${i === 0 && value > 2 ? "text-red-500" : ""} ${value > 0 ? "text-gray5" : ""}`}>
                       {value === 0 ? "-" : value}
                     </td>
                     // <td>{rTable.pkmnType[i]}</td>
@@ -61,10 +67,10 @@ export default function TeamResistance({ rTable }: ITeamResistanceProps) {
         </table>
       </li>
       <li
-        className="list-group-item"
+        className="border-b border-white border-opacity-10 border-solid p-6 text-center"
         id="toggle-weakness">
         <button
-          className="btn toggle-btn"
+          className="py-1 px-8 w-full rounded border border-solid hover:bg-gray3 text-xs"
           onClick={() => {
             setShowTable(!showTable);
           }}>

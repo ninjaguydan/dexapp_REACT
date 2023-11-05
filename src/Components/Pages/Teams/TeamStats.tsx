@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { HeartOutline, Heart } from "components/common/icons/index";
+import IconBtn from "components/common/buttons/IconBtn";
 
+import { ICON_KEY } from "utils/iconKey";
 import { ITeam, IUser, ILike, IRTable, ISTable, IPokemon } from "utils/Interfaces";
 import { RootState } from "redux/store";
 
@@ -35,25 +37,24 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
     }
   }
 
+  const likeBtnData = {
+    label: ICON_KEY.LIKES,
+    content: teamLikes.length,
+    action: () => toggleLike(),
+    state: currentUser && !!teamLikes.find((like) => like.user === currentUser.id),
+  };
+
   return (
-    <ul className="card team-card">
-      <li className="list-group-item">
-        <h2 className="header1">{team.name}</h2>
-        <p>
-          by <Link to={`/profile/${user}`}>{user}</Link>
-        </p>
+    <ul className="w-full h-[fit-content] relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
+      <li className="border-b border-white border-opacity-10 border-solid p-6 text-center flex flex-col gap-y-4 items-center">
+        <div>
+          <h2 className="font-bold uppercase">{team.name}</h2>
+          <p className="text-gray4">
+            by <Link to={`/profile/${user}`}>{user}</Link>
+          </p>
+        </div>
         <div className="icon-container">
-          <button
-            className="fav"
-            onClick={() => toggleLike()}>
-            {currentUser && teamLikes.find((like) => like.user === currentUser.id) ? (
-              <Heart style={{ color: "#009df1" }} />
-            ) : (
-              <HeartOutline />
-            )}
-            {teamLikes.length}
-            <span className="sr-only">likes</span>
-          </button>
+          <IconBtn btnData={likeBtnData} />
         </div>
       </li>
       {showStats && (
@@ -61,7 +62,7 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
           {Object.keys(stats).map((stat, i) => (
             <li
               key={i}
-              className="list-group-item striped">
+              className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
               <p className="bold">{stat}</p>
               <span>{stats[stat]}</span>
             </li>
@@ -70,10 +71,10 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
       )}
 
       <li
-        className="list-group-item"
+        className="border-b border-white border-opacity-10 border-solid p-6 text-center"
         id="toggle-stats">
         <button
-          className="btn toggle-btn"
+          className="py-1 px-8 w-full rounded border border-solid hover:bg-gray3 text-xs"
           onClick={() => {
             setShowStats(!showStats);
           }}>

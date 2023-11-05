@@ -6,7 +6,7 @@ import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
 import Card from "components/common/cards/Card";
 
-import { ICON_KEY } from "data/iconKey";
+import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IReply } from "utils/Interfaces";
 import { RootState } from "redux/store";

@@ -1,4 +1,4 @@
-import Review from "components/pages/pokemon/Review";
+import Review from "components/common/posts/Review";
 
 import { IReview } from "utils/Interfaces";
 

@@ -34,12 +34,7 @@ export function confirmPasswordMatch(value1: string, value2: string) {
     return "";
   }
 }
-interface registrationObject {
-  name: string;
-  username: string;
-  password: string;
-  confirm?: string;
-}
+
 export function validator(object: IRegistrationObject) {
   let errors = {
     name: validateName(object.name),
