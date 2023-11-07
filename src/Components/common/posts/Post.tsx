@@ -6,7 +6,7 @@ import { RootState } from "redux/store";
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
 import Card from "components/common/cards/Card";
-import ReplyList from "components/common/cards/ReplyList";
+import ReplyList from "components/common/posts/ReplyList";
 
 import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
@@ -55,10 +55,10 @@ function Post({ post }: IPostProps) {
     <>
       <Avatar
         user={user}
-        classList="h-16 w-16"
+        classList="h-10 sm:h-16 w-10 sm:w-16"
       />
       <div className="flex flex-col gap-y-1 w-[calc(100%-80px)]">
-        <h2 className="font-bold ">
+        <h2 className="font-bold text-sm sm:text-base">
           <Link
             to={`/profile/${truncateStr(user.username)}`}
             className="hover:underline">
@@ -68,7 +68,7 @@ function Post({ post }: IPostProps) {
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(post.created)}</span>
           {currentUser?.id === post.added_by && <IconBtn btnData={deleteBtnData} />}
         </h2>
-        <p className="text-sm">{post.content}</p>
+        <p className="text-xs sm:text-sm">{post.content}</p>
         <div className="flex gap-x-8">
           <IconBtn btnData={likeBtnData} />
           <IconBtn btnData={commentBtnData} />

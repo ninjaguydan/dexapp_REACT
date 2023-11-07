@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import ReplyList from "components/common/cards/ReplyList";
+import ReplyList from "components/common/posts/ReplyList";
 
 import TeamStats from "components/pages/teams/TeamStats";
 import TeamResistance from "components/pages/teams/TeamResistance";

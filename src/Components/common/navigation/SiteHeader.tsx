@@ -35,7 +35,7 @@ const SiteHeader = () => {
   };
 
   return (
-    <header className="flex justify-between items-center bg-gray2 p-4 sm:px-8 fixed w-full z-[1] border-b border-gray1 border-solid">
+    <header className="flex justify-between items-center bg-gray2 p-4 sm:px-8 fixed w-full z-[1] border-b border-gray3 border-solid">
       <Link
         to="/dexapp_REACT"
         className="flex w-10 lg:w-40 h-10 lg:h-12">

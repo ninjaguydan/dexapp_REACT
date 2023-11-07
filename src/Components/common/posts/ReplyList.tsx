@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import ReplyCard from "components/common/cards/ReplyCard";
+import ReplyCard from "components/common/posts/ReplyCard";
 import PostForm from "components/common/forms/PostForm";
 
 import { IReply } from "utils/Interfaces";
@@ -29,7 +29,7 @@ function ReplyList({ replies, user, kind }: IReplyListProps) {
           btnText={"Reply"}
           placeholder={`Replying to ${user}...`}
           type={{ name: "REPLY", for: { name: kind.name, id: kind.id } }}
-          classList={"first:mt-4 !bg-gray1"}
+          classList={"first:mt-2 first:sm:mt-4 !bg-gray1"}
         />
       )}
     </>

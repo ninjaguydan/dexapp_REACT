@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
 
-import ReplyList from "components/common/cards/ReplyList";
+import ReplyList from "components/common/posts/ReplyList";
 import IconBtn from "components/common/buttons/IconBtn";
 import Card from "components/common/cards/Card";
 
@@ -49,7 +49,7 @@ function Team({ team }: ITeamProps) {
   let node = (
     <>
       <div className="content team flex flex-col gap-y-1">
-        <h2 className="font-bold">
+        <h2 className="font-bold text-sm sm:text-base">
           <Link
             to={`/profile/${user.username}`}
             className="hover:underline">
@@ -64,7 +64,7 @@ function Team({ team }: ITeamProps) {
           </Link>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(team.created)}</span>
         </h2>
-        <span className="grid gap-x-2 sm:gap-x-4 lg:sm:gap-x-8 my-3 grid-cols-6">
+        <span className="grid gap-x-4 lg:sm:gap-x-8 my-1 sm:my-3 grid-cols-6">
           {team.members.map((value) => {
             return (
               <Link

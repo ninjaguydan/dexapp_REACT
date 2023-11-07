@@ -44,17 +44,12 @@ export default function PokemonSummary({ pokemon }: Props) {
 
   return (
     <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
-      <li className="border-b border-white border-opacity-10 border-solid p-6 text-center flex flex-col gap-y-4 items-center">
+      <li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center flex flex-col gap-y-3 sm:gap-y-4 items-center">
         <div>
           <h1 className=" capitalize text-3xl">{pokemon.name}</h1>
           <p className="text-gray4">#{makeHundreds(pokemon.id)}</p>
         </div>
         <PokemonAvatar pokemon={pokemon} />
-        {/* <img
-          src={pokemon.art_url}
-          alt={`${pokemon.name}'s official artwork`}
-          className=""
-        /> */}
         <div className="flex gap-x-8">
           <p className="text-gray4 flex items-center gap-x-2">
             <FaHeart /> <span className="text-gray5">03</span>
@@ -64,7 +59,7 @@ export default function PokemonSummary({ pokemon }: Props) {
           </p>
         </div>
       </li>
-      <li className="border-b border-white border-opacity-10 border-solid p-6 flex flex-row justify-center gap-3">
+      <li className="border-b border-white border-opacity-10 border-solid px-8 sm:px-6 p-2 sm:p-6 flex flex-row justify-center gap-3">
         {pokemon.types.map((type) => {
           return (
             <TypeBtn
@@ -74,26 +69,26 @@ export default function PokemonSummary({ pokemon }: Props) {
           );
         })}
       </li>
-      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
         <h3 className="font-bold">Base Stat Total</h3>
         <p>{getBaseStatTotal(Object.values(stats))}</p>
       </li>
       {Object.keys(stats).map((stat) => {
         return (
           <li
-            className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between"
+            className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between"
             key={stat}>
             <h3 className="font-bold">{stat}</h3>
             <p>{stats[stat]}</p>
           </li>
         );
       })}
-      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
         <h3 className="font-bold">Reviews</h3>
         <p>{reviewCnt}</p>
       </li>
       <li
-        className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between"
+        className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between"
         style={{ justifyContent: "center" }}>
         <p className="font-bold">Featured on 0 Teams!</p>
       </li>
@@ -105,7 +100,7 @@ export default function PokemonSummary({ pokemon }: Props) {
 					</button>
 				</li>
 			)} */}
-      <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
+      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
         <Link
           to={`/pokemon/${prev}`}
           className="flex items-center justify-center gap-x-4"

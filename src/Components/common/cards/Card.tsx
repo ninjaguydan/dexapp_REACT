@@ -7,7 +7,7 @@ interface Props {
 function Card({ children, classList }: Props) {
   return (
     <article
-      className={`relative flex gap-x-4 bg-gray2 p-4 rounded border border-white border-solid border-opacity-10 flex-wrap ${classList}`}>
+      className={`relative flex gap-x-2 sm:gap-x-4 bg-gray2 p-3 sm:p-4 rounded border border-white border-solid border-opacity-10 flex-wrap ${classList}`}>
       {children}
     </article>
   );

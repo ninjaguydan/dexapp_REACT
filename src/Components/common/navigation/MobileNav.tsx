@@ -12,13 +12,13 @@ export default function MobileNav() {
   const currentUser = useSelector((state: RootState) => state.loggedUser);
 
   return (
-    <nav className="fixed flex items-center justify-around border-t border-solid border-gray1 bg-gray2 bottom-0 px-5 pb-8 pt-4 z-[1] w-full">
+    <nav className="fixed flex items-center justify-around border-t border-solid border-gray3 bg-gray2 bottom-0 px-5 pb-6 pt-2 z-[1] w-full">
       {/* <SearchBtn /> */}
       <Link
         to="/dexapp_REACT"
         aria-label="home">
         <i
-          className="material-icons text-4xl"
+          className="material-icons text-3xl"
           aria-hidden="true">
           home
         </i>
@@ -27,7 +27,7 @@ export default function MobileNav() {
         to="/dexapp_REACT"
         aria-label="Pokemon Index">
         <img
-          className="w-8"
+          className="w-6"
           src={dex_icon as unknown as string}
           alt=""
           aria-hidden="true"
@@ -36,14 +36,14 @@ export default function MobileNav() {
       {!!currentUser.id ? (
         <Avatar
           user={currentUser}
-          classList="w-9"
+          classList="w-7"
         />
       ) : (
         <Link
           to="/login"
           aria-label="Login or Signup">
           <i
-            className="material-icons text-4xl"
+            className="material-icons text-3xl"
             aria-hidden="true">
             account_circle
           </i>

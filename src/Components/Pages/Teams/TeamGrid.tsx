@@ -11,12 +11,8 @@ type Props = {
 };
 
 export default function TeamGrid({ team, isLoading }: Props) {
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
   return (
-    <div className="bg-gray2 rounded border border-white border-opacity-10 border-solid p-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+    <div className="bg-gray2 rounded border border-white border-opacity-10 border-solid p-4 grid grid-cols-2 gap-8 md:gap-6 sm:grid-cols-3">
       {team.map((pokemon) => {
         if (pokemon.id === 0) {
           return (
@@ -42,11 +38,14 @@ export default function TeamGrid({ team, isLoading }: Props) {
                 <img
                   src={pokemon.art_url}
                   alt={`${pokemon.name}'s offical art`}
-                  className="bg-gray6 rounded-2xl hover:ring-2 hover:ring-gray3"
+                  className=" bg-gray6 rounded-2xl hover:ring-2 hover:ring-gray3"
                 />
-                <div className="flex flex-col text-xs xsm:flex-row sm:flex-col justify-center gap-2 py-2">
+                <div className="flex flex-col text-xs justify-center gap-2 py-2">
                   {pokemon.types.map((type, i) => (
-                    <TypeBtn type={type} />
+                    <TypeBtn
+                      type={type}
+                      classList="max-w-full !p-1 !text-sm"
+                    />
                   ))}
                 </div>
               </Link>

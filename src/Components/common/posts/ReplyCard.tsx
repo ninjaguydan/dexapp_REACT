@@ -45,7 +45,7 @@ function ReplyCard({ reply }: Props) {
         classList="w-10 h-10"
       />
       <div className="flex flex-col gap-y-1 w-[calc(100%-80px)]">
-        <h4 className="font-bold">
+        <h3 className="font-bold text-sm sm:text-base">
           <Link
             to={`/profile/${user.username}`}
             className="hover:underline">
@@ -54,8 +54,8 @@ function ReplyCard({ reply }: Props) {
           <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(reply.created)}</span>
           {currentUser?.id === reply.added_by && <IconBtn btnData={deleteBtnData} />}
-        </h4>
-        <p className="text-sm">{reply.content}</p>
+        </h3>
+        <p className="text-xs sm:text-sm">{reply.content}</p>
         <div className="flex gap-x-8">
           <IconBtn btnData={likeBtnData} />
         </div>
@@ -66,7 +66,7 @@ function ReplyCard({ reply }: Props) {
   return (
     <Card
       children={node}
-      classList="first:mt-4 !bg-gray1"
+      classList="first:mt-2 first:sm:mt-4 !bg-gray1"
     />
   );
 }
