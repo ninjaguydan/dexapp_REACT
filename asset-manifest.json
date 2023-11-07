@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/dexapp_REACT/static/css/main.88febdde.css",
-    "main.js": "/dexapp_REACT/static/js/main.cd8fe619.js",
+    "main.css": "/dexapp_REACT/static/css/main.e701f67f.css",
+    "main.js": "/dexapp_REACT/static/js/main.ee814a02.js",
     "static/media/pkmn.png": "/dexapp_REACT/static/media/pkmn.d32efd557ae8402a4f10.png",
     "static/media/pokeball.png": "/dexapp_REACT/static/media/pokeball.84d0aebfef6b6e7c7da1.png",
     "static/media/2f.png": "/dexapp_REACT/static/media/2f.803d673c11f3564537b3.png",
@@ -17,11 +17,11 @@
     "index.html": "/dexapp_REACT/index.html",
     "static/media/dex-icon-4c.svg": "/dexapp_REACT/static/media/dex-icon-4c.ae299379397042c9f9a6a97b92453fa4.svg",
     "static/media/dex-icon-w.svg": "/dexapp_REACT/static/media/dex-icon-w.7ceb812066f4dcd22eb1acbea54ee559.svg",
-    "main.88febdde.css.map": "/dexapp_REACT/static/css/main.88febdde.css.map",
-    "main.cd8fe619.js.map": "/dexapp_REACT/static/js/main.cd8fe619.js.map"
+    "main.e701f67f.css.map": "/dexapp_REACT/static/css/main.e701f67f.css.map",
+    "main.ee814a02.js.map": "/dexapp_REACT/static/js/main.ee814a02.js.map"
   },
   "entrypoints": [
-    "static/css/main.88febdde.css",
-    "static/js/main.cd8fe619.js"
+    "static/css/main.e701f67f.css",
+    "static/js/main.ee814a02.js"
   ]
 }
