@@ -19,7 +19,7 @@ function UserSummary({ user, openEdit }: Props) {
     <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
       <li className="border-b border-white border-opacity-10 border-solid p-6 text-center flex flex-col gap-y-4 items-center">
         <div>
-          <h1 className="font-bold uppercase">{user.name}</h1>
+          <h1 className="capitalize text-3xl">{user.name}</h1>
           <p className="text-gray4">{user.username}</p>
         </div>
         <Avatar

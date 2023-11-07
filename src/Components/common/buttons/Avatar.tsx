@@ -4,13 +4,15 @@ import getImageByKey from "utils/getImageByKey";
 interface Props {
   user: { user_img: string; username: string; bg_color: string; [key: string]: any };
   classList?: string;
+  clickAction?: () => void;
 }
 
-function Avatar({ user: { user_img, username, bg_color }, classList }: Props) {
+function Avatar({ user: { user_img, username, bg_color }, classList, clickAction }: Props) {
   return (
     <Link
       to={`/profile/${username}`}
-      className={classList}>
+      className={classList}
+      onClick={clickAction}>
       <img
         src={getImageByKey(user_img)}
         alt={"user profile"}

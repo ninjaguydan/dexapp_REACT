@@ -31,6 +31,7 @@ export default function PokemonAvatar({ pokemon, classList }: Props) {
 
   return (
     <button
+      className="w-3/5 lg:w-4/5"
       onClick={() => {
         toggleImage(pokemon.art_url, pokemon.shiny_url, currentImg, setCurrentImg);
       }}>

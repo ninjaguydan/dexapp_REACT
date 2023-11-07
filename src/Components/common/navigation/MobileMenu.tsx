@@ -35,6 +35,7 @@ const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
       <Avatar
         user={user}
         classList="w-20 h-20"
+        clickAction={closeMenu}
       />
       <div>
         <p className="font-bold">{user.name}</p>

@@ -9,6 +9,7 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  scroll-behavior: smooth;
   /* outline: 1px dotted magenta; */
 }
 a {

@@ -14,6 +14,10 @@ interface Props {
   pokemon: IPokemon;
 }
 
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
+
 export default function PokemonSummary({ pokemon }: Props) {
   const currentUser = useSelector((state: RootState) => state.loggedUser);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.pkmn === pokemon.id).length);
@@ -42,7 +46,7 @@ export default function PokemonSummary({ pokemon }: Props) {
     <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
       <li className="border-b border-white border-opacity-10 border-solid p-6 text-center flex flex-col gap-y-4 items-center">
         <div>
-          <h2 className="font-bold uppercase">{pokemon.name}</h2>
+          <h1 className=" capitalize text-3xl">{pokemon.name}</h1>
           <p className="text-gray4">#{makeHundreds(pokemon.id)}</p>
         </div>
         <PokemonAvatar pokemon={pokemon} />
@@ -60,7 +64,7 @@ export default function PokemonSummary({ pokemon }: Props) {
           </p>
         </div>
       </li>
-      <li className="border-b border-white border-opacity-10 border-solid p-6 flex flex-col xsm:flex-row justify-center gap-3">
+      <li className="border-b border-white border-opacity-10 border-solid p-6 flex flex-row justify-center gap-3">
         {pokemon.types.map((type) => {
           return (
             <TypeBtn
@@ -104,7 +108,8 @@ export default function PokemonSummary({ pokemon }: Props) {
       <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
         <Link
           to={`/pokemon/${prev}`}
-          className="flex items-center justify-center gap-x-4">
+          className="flex items-center justify-center gap-x-4"
+          onClick={scrollToTop}>
           <FaArrowLeft />
           <img
             src={grabImage(prev)}
@@ -116,7 +121,8 @@ export default function PokemonSummary({ pokemon }: Props) {
         </Link>
         <Link
           to={`/pokemon/${next}`}
-          className="flex items-center justify-center gap-x-4">
+          className="flex items-center justify-center gap-x-4"
+          onClick={scrollToTop}>
           <img
             src={grabImage(next)}
             onError={(e) => {
