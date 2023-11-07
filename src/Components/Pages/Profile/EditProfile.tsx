@@ -3,6 +3,7 @@ import { RootState } from "redux/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Btn from "components/common/buttons/Btn";
 import SelectAvatar from "components/common/buttons/SelectAvatar";
 import SelectColor from "components/common/buttons/SelectColor";
 import FormInput from "components/common/inputs/FormInput";
@@ -130,11 +131,13 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             ))}
           </div>
           <hr />
-          <button className="py-1 px-8 w-full rounded bg-primary text-white disabled:opacity-50 hover:bg-primaryDark">
-            Update
-          </button>
+          <Btn text="Update" />
         </form>
-        <button className="py-1 px-8 w-full rounded border border-solid mt-4 hover:bg-gray3">Delete Profile</button>
+        <Btn
+          text="Delete Profile"
+          isSecondary={true}
+          classList="mt-4"
+        />
       </div>
     </div>
   );

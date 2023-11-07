@@ -29,12 +29,10 @@ export default function TeamGrid({ team, isLoading }: Props) {
           );
         } else {
           return (
-            <>
-              {() => {
-                if (isLoading) return <Loading />;
-              }}
-              <PokemonCard pokemon={pokemon} />
-            </>
+            <PokemonCard
+              pokemon={pokemon}
+              isLoading={isLoading}
+            />
           );
         }
       })}

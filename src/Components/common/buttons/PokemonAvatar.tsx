@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+import placeholder from "media/0.png";
+
 import { IPokemon } from "utils/Interfaces";
 
 type Props = {
@@ -36,7 +39,7 @@ export default function PokemonAvatar({ pokemon, classList }: Props) {
         toggleImage(pokemon.art_url, pokemon.shiny_url, currentImg, setCurrentImg);
       }}>
       <img
-        src={currentImg}
+        src={currentImg || placeholder}
         alt={`${pokemon.name}'s official artwork`}
         className=""
       />

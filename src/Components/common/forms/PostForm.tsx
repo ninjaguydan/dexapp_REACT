@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Btn from "components/common/buttons/Btn";
 import Card from "components/common/cards/Card";
 import Avatar from "components/common/buttons/Avatar";
 
@@ -100,35 +101,39 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           className="text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded outline-none focus:shadow-focus"
           rows={2}
           placeholder={placeholder}></textarea>
-        {type.name === "REVIEW" && (
-          <select
-            className="text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded w-12 outline-none focus:shadow-focus"
-            id="rating"
-            value={formData.rating}
-            onChange={(e) => setValue(e)}>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-          </select>
-        )}
-        <button
-          className="py-1 px-8 w-28 rounded bg-primary text-white disabled:opacity-50"
-          disabled={enableButton(counter) ? false : true}>
-          {btnText}
-        </button>
-        <span
-          className={`absolute text-xs text-gray-500 right-4 bottom-6 ${counter > 140 && "text-primary"} ${
-            counter > 100 && "text-yellow-600"
-          }`}>
-          {counter}/140
-        </span>
+        <div className="flex  justify-between">
+          {type.name === "REVIEW" && (
+            <select
+              className="text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded w-12 outline-none focus:shadow-focus"
+              id="rating"
+              value={formData.rating}
+              onChange={(e) => setValue(e)}>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+          )}
+          <div className="flex items-center gap-x-3 ml-auto">
+            <span
+              className={`text-xs text-gray-500 ${counter > 100 && counter < 141 ? "text-yellowLight" : ""} ${
+                counter > 140 && "text-primary"
+              } `}>
+              {counter}/140
+            </span>
+            <Btn
+              text={btnText}
+              isDisabled={enableButton(counter) ? false : true}
+              classList="w-28"
+            />
+          </div>
+        </div>
       </form>
     </>
   );

@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 import TypeBtn from "components/common/buttons/TypeBtn";
 
 import { IPokemon } from "utils/Interfaces";
+import Loading from "../loader/Loading";
 
 type Props = {
   pokemon: IPokemon;
+  isLoading: boolean;
   classList?: string;
 };
 
-export default function PokemonCard({ pokemon, classList }: Props) {
+export default function PokemonCard({ pokemon, classList, isLoading }: Props) {
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Link
       to={`/pokemon/${pokemon.id}`}

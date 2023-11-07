@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
+import Btn from "components/common/buttons/Btn";
 
 import { IUser } from "utils/Interfaces";
 
@@ -16,7 +17,7 @@ function UserSummary({ user, openEdit }: Props) {
   const currentUser = useSelector((state: RootState) => state.loggedUser);
 
   return (
-    <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
+    <ul className="lg:min-w-[30%] group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
       <li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center flex flex-col gap-y-3 sm:gap-y-4 items-center">
         <div>
           <h1 className="capitalize text-3xl">{user.name}</h1>
@@ -40,11 +41,12 @@ function UserSummary({ user, openEdit }: Props) {
       </li>
       {currentUser?.id === user.id && (
         <li className="border-b border-white border-opacity-10 border-solid p-6">
-          <button
-            onClick={openEdit}
-            className="py-1 px-4 w-full rounded border border-solid hover:bg-gray3 text-center">
-            Edit Profile
-          </button>
+          <Btn
+            text="Edit Profile"
+            action={openEdit}
+            classList="w-full"
+            isSecondary={true}
+          />
         </li>
       )}
       {user?.location && (
