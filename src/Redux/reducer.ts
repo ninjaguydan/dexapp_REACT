@@ -154,6 +154,10 @@ const initState = {
     { postType: "post", user: 1, forId: 2 },
     { postType: "post", user: 2, forId: 2 },
     { postType: "review", user: 1, forId: 4 },
+    { postType: "post", user: 1, forId: 5 },
+    { postType: "post", user: 2, forId: 5 },
+    { postType: "post", user: 3, forId: 5 },
+    { postType: "post", user: 10, forId: 5 },
   ],
 };
 
