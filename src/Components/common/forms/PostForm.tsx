@@ -32,12 +32,6 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
   const [counter, setCounter] = useState(0);
   const [formData, setFormData] = useState(empty);
   const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const avatar = {
-    img: currentUser.user_img,
-    name: currentUser.username,
-    color: currentUser.bg_color,
-    classList: "hidden sm:block h-16 w-16",
-  };
   const dispatch = useDispatch();
 
   function setValue(event: any) {
@@ -92,7 +86,10 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
 
   let node = (
     <>
-      <Avatar user={avatar} />
+      <Avatar
+        user={currentUser}
+        classList="hidden sm:block h-16 w-16"
+      />
       <form
         onSubmit={(e) => onSubmit(e)}
         className="w-full flex flex-col flex-1 gap-y-4">
@@ -100,12 +97,12 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           onChange={(e) => setValue(e)}
           value={formData.content}
           id="content"
-          className="form-control-custom text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded"
+          className="text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded outline-none focus:shadow-focus"
           rows={2}
           placeholder={placeholder}></textarea>
         {type.name === "REVIEW" && (
           <select
-            className="form-control-custom text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded w-12"
+            className="text-gray5 bg-[unset] border-b boerder-solid border-gray4 rounded w-12 outline-none focus:shadow-focus"
             id="rating"
             value={formData.rating}
             onChange={(e) => setValue(e)}>

@@ -3,19 +3,18 @@ import { FaStar, FaHeart, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import TypeBtn from "components/common/buttons/TypeBtn";
+import PokemonAvatar from "components/common/buttons/PokemonAvatar";
 
 import { IPokemon } from "utils/Interfaces";
 import default_img from "media/0.png";
 import { makeHundreds, getBaseStatTotal } from "utils/Helpers";
 import { RootState } from "redux/store";
-import usePkmnTotal from "hooks/usePkmnTotal";
 
-interface IPokefileProps {
+interface Props {
   pokemon: IPokemon;
 }
 
-const PokemonSummary = ({ pokemon }: IPokefileProps) => {
-  // const { total } = usePkmnTotal();
+export default function PokemonSummary({ pokemon }: Props) {
   const currentUser = useSelector((state: RootState) => state.loggedUser);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.pkmn === pokemon.id).length);
   const stats: { [key: string]: number } = {
@@ -46,11 +45,12 @@ const PokemonSummary = ({ pokemon }: IPokefileProps) => {
           <h2 className="font-bold uppercase">{pokemon.name}</h2>
           <p className="text-gray4">#{makeHundreds(pokemon.id)}</p>
         </div>
-        <img
+        <PokemonAvatar pokemon={pokemon} />
+        {/* <img
           src={pokemon.art_url}
           alt={`${pokemon.name}'s official artwork`}
           className=""
-        />
+        /> */}
         <div className="flex gap-x-8">
           <p className="text-gray4 flex items-center gap-x-2">
             <FaHeart /> <span className="text-gray5">03</span>
@@ -62,7 +62,12 @@ const PokemonSummary = ({ pokemon }: IPokefileProps) => {
       </li>
       <li className="border-b border-white border-opacity-10 border-solid p-6 flex flex-col xsm:flex-row justify-center gap-3">
         {pokemon.types.map((type) => {
-          return <TypeBtn type={type} />;
+          return (
+            <TypeBtn
+              type={type}
+              key={type}
+            />
+          );
         })}
       </li>
       <li className="border-b text-sm border-white border-opacity-10 border-solid px-6 py-2 flex justify-between">
@@ -124,6 +129,4 @@ const PokemonSummary = ({ pokemon }: IPokefileProps) => {
       </li>
     </ul>
   );
-};
-
-export default PokemonSummary;
+}

@@ -29,16 +29,13 @@ const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
     dispatch({ type: "users/ON_LOGOUT" });
     navigate("/login");
   };
-  const avater = {
-    img: user.user_img,
-    name: user.username,
-    color: user.bg_color,
-    classList: "w-20 h-20",
-  };
 
   return createPortal(
     <div className="slider fixed z-[2] right-0 top-0 bg-gray1 border-l border-gray-500 border-solid rounded-l-lg w-4/5 h-full p-8 flex flex-col gap-y-4">
-      <Avatar user={avater} />
+      <Avatar
+        user={user}
+        classList="w-20 h-20"
+      />
       <div>
         <p className="font-bold">{user.name}</p>
         <p className="text-gray3">{user.username}</p>

@@ -1,9 +1,27 @@
 import { useEffect, useState } from "react";
 
-import { IPokemon, ITeam } from "../utils/Interfaces";
-import { setGen } from "../utils/setGen";
-import { setPkmnType, setRelations } from "../utils/setPkmnType";
-import useTypes from "./useTypes";
+import { PKMN_API } from "api/urls";
+
+import useTypes from "hooks/useTypes";
+
+import { IPokemon, ITeam } from "utils/Interfaces";
+import { setGen } from "utils/setGen";
+import { setPkmnType } from "utils/setPkmnType";
+import { setRelations } from "utils/setRelations";
+
+interface PKMN_JSON {
+  id: number;
+  name: string;
+  types: { slot: number; type: { name: string; url: string } }[];
+  stats: { base_stat: number; effort: number; stat: { name: string; url: string } }[];
+  sprites: {
+    front_default: string;
+    front_shiny: string;
+    [key: string]: any;
+    other: { "official-artwork": { front_default: string; front_shiny: string }; [key: string]: any };
+  };
+  [key: string]: any;
+}
 
 const usePokemon = (pkmnID: string = "1", teamArray: number[] = []) => {
   const { typeData, typeDataIsLoading } = useTypes();
@@ -16,29 +34,33 @@ const usePokemon = (pkmnID: string = "1", teamArray: number[] = []) => {
     if (typeDataIsLoading) {
       return;
     }
+
     const fetchPokemon = async (id: string) => {
-      const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
-      const pokemon = await data.json();
-      let tempPokemon = {
-        id: pokemon["id"],
-        name: pokemon["name"],
-        gen: setGen(pokemon["id"]),
-        types: setPkmnType(pokemon["types"]),
-        sprite_url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-        art_url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-        hp: pokemon["stats"][0]["base_stat"],
-        attack: pokemon["stats"][1]["base_stat"],
-        defense: pokemon["stats"][2]["base_stat"],
-        sp_attack: pokemon["stats"][3]["base_stat"],
-        sp_defense: pokemon["stats"][4]["base_stat"],
-        speed: pokemon["stats"][5]["base_stat"],
+      const response: Response = await fetch(PKMN_API + `/${id}`);
+      const data: PKMN_JSON = await response.json();
+
+      let tempPokemon: IPokemon = {
+        id: data.id,
+        name: data.name,
+        gen: setGen(data.id),
+        types: setPkmnType(data.types),
+        sprite_url: data.sprites.front_default,
+        art_url: data.sprites.other["official-artwork"].front_default,
+        shiny_url: data.sprites.other["official-artwork"].front_shiny,
+        hp: data.stats[0].base_stat,
+        attack: data.stats[1].base_stat,
+        defense: data.stats[2].base_stat,
+        sp_attack: data.stats[3].base_stat,
+        sp_defense: data.stats[4].base_stat,
+        speed: data.stats[5].base_stat,
         favorited_by: [],
-        weak_to: setRelations(setPkmnType(pokemon["types"]), typeData).weaknesses,
-        resists: setRelations(setPkmnType(pokemon["types"]), typeData).resistances,
-        immune_to: setRelations(setPkmnType(pokemon["types"]), typeData).immunities,
+        weak_to: setRelations(setPkmnType(data.types), typeData).weaknesses,
+        resists: setRelations(setPkmnType(data.types), typeData).resistances,
+        immune_to: setRelations(setPkmnType(data.types), typeData).immunities,
       };
       return tempPokemon;
     };
+
     if (teamArray.length !== 0) {
       teamArray.forEach(async (member) => promiseData.push(fetchPokemon(`${member}`)));
       Promise.all(promiseData).then((values) => {

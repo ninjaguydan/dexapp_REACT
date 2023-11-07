@@ -54,6 +54,7 @@ export interface IPokemon {
   types: string[];
   sprite_url: string;
   art_url: string;
+  shiny_url: string;
   hp: number;
   attack: number;
   defense: number;

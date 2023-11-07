@@ -80,7 +80,7 @@ export function styleType(type: string) {
       };
     default:
       return {
-        backgroundColor: "#808080;",
+        backgroundColor: "#808080",
       };
   }
 }

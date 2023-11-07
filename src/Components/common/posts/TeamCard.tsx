@@ -1,44 +1,34 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
 
 import ReplyList from "components/common/cards/ReplyList";
 import IconBtn from "components/common/buttons/IconBtn";
 import Card from "components/common/cards/Card";
 
+import useLikes from "hooks/dispatch/useLikes";
+
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference } from "utils/Helpers";
 import { ITeam } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
 interface ITeamProps {
   team: ITeam;
 }
 
 function Team({ team }: ITeamProps) {
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
   const [repliesVisible, setRepliesVisible] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
   );
-  let likes = useSelector((state: RootState) =>
+  const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
   );
-  let currentUser = useSelector((state: RootState) => state.loggedUser);
-
-  function toggleLike() {
-    if (currentUser.id === 0) {
-      return;
-    }
-    if (likes.find((like) => like.user === currentUser.id)) {
-      let toDel = { name: "team", forId: team.id, user: currentUser.id };
-      dispatch({ type: "users/UNLIKE", toDel });
-    } else {
-      let newLike = { postType: "team", user: currentUser.id, forId: team.id };
-      dispatch({ type: "users/LIKE", newLike });
-    }
-  }
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const toggleLike = useLikes(currentUser.id, likes, "team", team.id) as () => void;
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,

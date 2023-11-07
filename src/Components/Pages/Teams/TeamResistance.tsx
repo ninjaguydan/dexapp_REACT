@@ -18,31 +18,34 @@ export default function TeamResistance({ rTable }: ITeamResistanceProps) {
       <li className="chart-container">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-solid border-gray3">
+            <tr className="border-b border-solid border-gray3 bg-gray6">
               <th
                 scope="col"
                 className="pl-8">
-                Types
+                Type
               </th>
               <th
                 scope="col"
                 className="text-red-500 px-3 py-2">
+                <span className="sr-only">Weaknesses</span>
                 <FontAwesomeIcon icon={HeartMinus} />
               </th>
               <th
                 scope="col"
                 className="text-greenLight px-3 py-2">
+                <span className="sr-only">Resistances</span>
                 <FontAwesomeIcon icon={HeartPlus} />
               </th>
               <th
                 scope="col"
                 className="text-gray4 px-3 py-2">
+                <span className="sr-only">Immunities</span>
                 <FontAwesomeIcon icon={Shield} />
               </th>
             </tr>
           </thead>
           {showTable && (
-            <tbody className="[&_tr:nth-child(odd)]:bg-gray6">
+            <tbody className="[&_tr:nth-child(even)]:bg-gray6">
               {Object.keys(rTable).map((pkmnType: string, i) => (
                 <tr key={i}>
                   <th

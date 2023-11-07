@@ -20,6 +20,9 @@ module.exports = {
         black_80: "#000000cc",
       },
       gridTemplateColumns: {},
+      boxShadow: {
+        focus: "4px 4px 3px black",
+      },
     },
     screens: {
       xsm: "400px",

@@ -1,47 +1,28 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import { Heart, HeartOutline, Trash } from "components/common/icons/index";
+import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
 import Card from "components/common/cards/Card";
 
+import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IReply } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
-interface IReplyProps {
+interface Props {
   reply: IReply;
 }
 
-function ReplyCard({ reply }: IReplyProps) {
-  let dispatch = useDispatch();
-  let user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
-  let likes = useSelector((state: RootState) =>
+function ReplyCard({ reply }: Props) {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
+  const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "reply" && like.forId === reply.id)
   );
-  let currentUser = useSelector((state: RootState) => state.loggedUser);
-
-  function toggleLike() {
-    if (currentUser.id === 0) {
-      return;
-    }
-    if (likes.find((like) => like.user === currentUser.id)) {
-      let toDel = { name: "reply", forId: reply.id, user: currentUser.id };
-      dispatch({ type: "users/UNLIKE", toDel });
-    } else {
-      let newLike = { postType: "reply", user: currentUser.id, forId: reply.id };
-      dispatch({ type: "users/LIKE", newLike });
-    }
-  }
-
-  const avatar = {
-    img: user.user_img,
-    name: user.username,
-    color: user.bg_color,
-    classList: "w-10 h-10",
-  };
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const toggleLike = useLikes(currentUser.id, likes, "reply", reply.id) as () => void;
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -59,8 +40,11 @@ function ReplyCard({ reply }: IReplyProps) {
 
   let node = (
     <>
-      <Avatar user={avatar} />
-      <div className="flex flex-col gap-y-1">
+      <Avatar
+        user={user}
+        classList="w-10 h-10"
+      />
+      <div className="flex flex-col gap-y-1 w-[calc(100%-80px)]">
         <h4 className="font-bold">
           <Link
             to={`/profile/${user.username}`}

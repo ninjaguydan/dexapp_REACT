@@ -49,6 +49,13 @@ const initState = {
     { id: 2, content: "I hate pikachu!", created: 1649163929404, added_by: 2, likes: [1] },
     { id: 3, content: "Old pokemon are the best!", created: 1647003929404, added_by: 1, likes: [2] },
     { id: 4, content: "Daniel is so cool", created: 1655179597085, added_by: 3, likes: [] },
+    {
+      id: 5,
+      content: "On a Pokemon's profile page, you can click the image to see the official shiny artwork..!!",
+      created: 1698289597085,
+      added_by: 2,
+      likes: [],
+    },
   ],
   reviews: [
     {
@@ -72,7 +79,7 @@ const initState = {
     { id: 3, content: "Bulba is great!", rating: 6, created: 1633439233667, added_by: 1, pkmn: 1, likes: [] },
     {
       id: 4,
-      content: "Best Middle Evo.This should be enough",
+      content: "Best Middle Evo and it's not even close!!",
       rating: 8,
       created: 1638709633667,
       added_by: 1,
@@ -122,6 +129,22 @@ const initState = {
       added_by: 3,
       for: "review",
       forId: 1,
+    },
+    {
+      id: 7,
+      content: "No way...",
+      created: 1699289597085,
+      added_by: 1,
+      for: "post",
+      forId: 5,
+    },
+    {
+      id: 8,
+      content: "Charizard might have the best one ngl",
+      created: 1699289597085,
+      added_by: 3,
+      for: "post",
+      forId: 5,
     },
   ],
   likes: [
@@ -184,16 +207,16 @@ function reducer(state = initState, action: any) {
     case "users/LIKE":
       return {
         ...state,
-        likes: [...state.likes, action.newLike],
+        likes: [...state.likes, action.tempLike],
       };
     case "users/UNLIKE":
       return {
         ...state,
         likes: state.likes.filter((like) => {
-          if (like.postType !== action.toDel.name || like.user !== action.toDel.user) {
+          if (like.postType !== action.tempLike.postType || like.user !== action.tempLike.user) {
             return like;
           } else {
-            return like.forId !== action.toDel.forId;
+            return like.forId !== action.tempLike.forId;
           }
         }),
       };

@@ -1,39 +1,35 @@
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
 import Card from "components/common/cards/Card";
 import ReplyList from "components/common/cards/ReplyList";
 
+import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IPost } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
 interface IPostProps {
   post: IPost;
 }
 
 function Post({ post }: IPostProps) {
+  const dispatch = useDispatch();
   const [repliesVisible, setRepliesVisible] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "post" && reply.forId === post.id)
   );
-  let user = useSelector((state: RootState) => state.users.filter((user) => user.id === post.added_by)[0]);
-  let likes = useSelector((state: RootState) =>
+  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === post.added_by)[0]);
+  const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "post" && like.forId === post.id)
   );
-  let currentUser = useSelector((state: RootState) => state.loggedUser);
-  let dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const toggleLike = useLikes(currentUser.id, likes, "post", post.id) as () => void;
 
-  const avatar = {
-    img: user.user_img,
-    name: user.username,
-    color: user.bg_color,
-    classList: "h-16 w-16",
-  };
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
     content: "",
@@ -55,23 +51,13 @@ function Post({ post }: IPostProps) {
     state: false,
   };
 
-  function toggleLike() {
-    if (currentUser.id === 0) {
-      return;
-    }
-    if (likes.find((like) => like.user === currentUser.id)) {
-      let toDel = { name: "post", forId: post.id, user: currentUser.id };
-      dispatch({ type: "users/UNLIKE", toDel });
-    } else {
-      let newLike = { postType: "post", user: currentUser.id, forId: post.id };
-      dispatch({ type: "users/LIKE", newLike });
-    }
-  }
-
   let node = (
     <>
-      <Avatar user={avatar} />
-      <div className="flex flex-col gap-y-1">
+      <Avatar
+        user={user}
+        classList="h-16 w-16"
+      />
+      <div className="flex flex-col gap-y-1 w-[calc(100%-80px)]">
         <h2 className="font-bold ">
           <Link
             to={`/profile/${truncateStr(user.username)}`}

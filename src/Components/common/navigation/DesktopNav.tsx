@@ -12,15 +12,13 @@ import { truncateStr } from "utils/Helpers";
 const DesktopNav = () => {
   const user = useSelector((state: any) => state.loggedUser);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
-  const avatar = {
-    img: user.user_img,
-    name: user.username,
-    color: user.bg_color,
-    classList: "w-9 relative",
-  };
+
   let menuNode = !!user.id ? (
     <div className="nav-user-desk flex items-center gap-x-1">
-      <Avatar user={avatar} />
+      <Avatar
+        user={user}
+        classList="w-9 relative"
+      />
       <button
         className="flex items-center gap-x-2 px-3 py-1 hover:text-secondary"
         onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>

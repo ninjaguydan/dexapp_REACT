@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-
-import getImageByKey from "utils/getImageByKey";
-import { IUser } from "utils/Interfaces";
 import { RootState } from "redux/store";
+
 import Avatar from "components/common/buttons/Avatar";
+
+import { IUser } from "utils/Interfaces";
 
 interface Props {
   user: IUser;
@@ -14,12 +14,6 @@ function UserSummary({ user, openEdit }: Props) {
   const postCnt = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).length);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.added_by === user.id).length);
   const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const avatar = {
-    img: user.user_img,
-    name: user.username,
-    color: user.bg_color,
-    classList: "w-full block max-w-[200px] sm:max-w-[120px]",
-  };
 
   return (
     <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
@@ -28,10 +22,13 @@ function UserSummary({ user, openEdit }: Props) {
           <h1 className="font-bold uppercase">{user.name}</h1>
           <p className="text-gray4">{user.username}</p>
         </div>
-        <Avatar user={avatar} />
+        <Avatar
+          user={user}
+          classList={"w-full block max-w-[200px] sm:max-w-[120px]"}
+        />
         {user?.bio && <p className="bio max-w-[30ch] text-sm">{user.bio}</p>}
         <div className="flex gap-x-4">
-          <p className="text-gray4 ">
+          <p className="text-gray4">
             <span className="font-bold text-gray5">0 </span>
             Following
           </p>

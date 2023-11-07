@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "redux/store";
 
-import { HeartOutline, Heart } from "components/common/icons/index";
 import IconBtn from "components/common/buttons/IconBtn";
 
+import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
 import { ITeam, IUser, ILike, IRTable, ISTable, IPokemon } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
 interface ITeamStatsProps {
   currentUser: IUser;
@@ -22,20 +22,7 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
   const teamLikes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
   );
-  // const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
-
-  function toggleLike() {
-    if (currentUser.id === 0) {
-      return;
-    }
-    if (teamLikes.find((like) => like.user === currentUser.id)) {
-      let toDel = { name: "team", forId: team.id, user: currentUser.id };
-      dispatch({ type: "users/UNLIKE", toDel });
-    } else {
-      let newLike = { postType: "team", user: currentUser.id, forId: team.id };
-      dispatch({ type: "users/LIKE", newLike });
-    }
-  }
+  const toggleLike = useLikes(currentUser.id, teamLikes, "team", team.id) as () => void;
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,

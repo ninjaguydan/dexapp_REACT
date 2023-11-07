@@ -2,18 +2,19 @@ import { Link } from "react-router-dom";
 import getImageByKey from "utils/getImageByKey";
 
 interface Props {
-  user: { img: string; name: string; color: string; classList?: string };
+  user: { user_img: string; username: string; bg_color: string; [key: string]: any };
+  classList?: string;
 }
 
-function Avatar({ user: { img, name, color, classList } }: Props) {
+function Avatar({ user: { user_img, username, bg_color }, classList }: Props) {
   return (
     <Link
-      to={`/profile/${name}`}
+      to={`/profile/${username}`}
       className={classList}>
       <img
-        src={getImageByKey(img)}
+        src={getImageByKey(user_img)}
         alt={"user profile"}
-        className={`${color} rounded-full`}
+        className={`${bg_color} rounded-full`}
       />
     </Link>
   );
