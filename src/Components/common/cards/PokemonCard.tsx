@@ -25,7 +25,7 @@ export default function PokemonCard({ pokemon, classList }: Props) {
         {pokemon.types.map((type, i) => (
           <TypeBtn
             type={type}
-            classList="max-w-full !p-1 !text-sm"
+            classList="max-w-full !p-1 font-normal leading-none"
           />
         ))}
       </div>
