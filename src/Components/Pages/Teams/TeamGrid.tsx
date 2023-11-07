@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 
-import TypeBtn from "components/common/buttons/TypeBtn";
-import { IPokemon } from "utils/Interfaces";
-import placeholder from "media/0.png";
+import PokemonCard from "components/common/cards/PokemonCard";
 import Loading from "components/common/loader/Loading";
+
+import placeholder from "media/0.png";
+
+import { IPokemon } from "utils/Interfaces";
 
 type Props = {
   team: IPokemon[];
@@ -31,24 +33,7 @@ export default function TeamGrid({ team, isLoading }: Props) {
               {() => {
                 if (isLoading) return <Loading />;
               }}
-              <Link
-                to={`/pokemon/${pokemon.id}`}
-                key={pokemon.id}
-                className="">
-                <img
-                  src={pokemon.art_url}
-                  alt={`${pokemon.name}'s offical art`}
-                  className=" bg-gray6 rounded-2xl hover:ring-2 hover:ring-gray3"
-                />
-                <div className="flex flex-col text-xs justify-center gap-2 py-2">
-                  {pokemon.types.map((type, i) => (
-                    <TypeBtn
-                      type={type}
-                      classList="max-w-full !p-1 !text-sm"
-                    />
-                  ))}
-                </div>
-              </Link>
+              <PokemonCard pokemon={pokemon} />
             </>
           );
         }

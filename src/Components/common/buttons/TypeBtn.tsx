@@ -9,7 +9,7 @@ function TypeBtn({ type, classList }: Props) {
   return (
     <button
       style={styleType(type)}
-      className={`border border-solid border-white border-opacity-10 rounded-full p-1 sm:p-2 capitalize w-full text-xs sm:text-base max-w-[156px] ${classList}`}>
+      className={`border border-solid border-white border-opacity-10 rounded-full p-1 capitalize w-full text-xs font-bold max-w-[156px] ${classList}`}>
       {type}
     </button>
   );
