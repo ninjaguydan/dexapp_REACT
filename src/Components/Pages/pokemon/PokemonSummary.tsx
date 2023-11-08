@@ -43,7 +43,7 @@ export default function PokemonSummary({ pokemon }: Props) {
   }
 
   return (
-    <ul className="group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
+    <ul className="sm:min-w-[30%] group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
       <li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center flex flex-col gap-y-3 sm:gap-y-4 items-center">
         <div>
           <h1 className=" capitalize text-3xl">{pokemon.name}</h1>

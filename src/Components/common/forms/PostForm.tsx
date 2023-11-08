@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Btn from "components/common/buttons/Btn";
-import Card from "components/common/cards/Card";
+import Card from "components/modules/Card";
 import Avatar from "components/common/buttons/Avatar";
 
 import { IReply, IReview } from "utils/Interfaces";
@@ -85,8 +85,8 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
     setFormData(empty);
   }
 
-  let node = (
-    <>
+  return (
+    <Card classList={classList}>
       <Avatar
         user={currentUser}
         classList="hidden sm:block h-16 w-16"
@@ -135,14 +135,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           </div>
         </div>
       </form>
-    </>
-  );
-
-  return (
-    <Card
-      children={node}
-      classList={classList}
-    />
+    </Card>
   );
 }
 

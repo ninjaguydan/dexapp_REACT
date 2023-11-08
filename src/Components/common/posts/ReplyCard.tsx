@@ -4,7 +4,7 @@ import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/common/cards/Card";
+import Card from "components/modules/Card";
 
 import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
@@ -29,6 +29,7 @@ function ReplyCard({ reply }: Props) {
     content: "",
     action: () => dispatch({ type: "reply/DELETE", replyId: reply.id }),
     state: true,
+    classList: "absolute top-4 right-4",
   };
 
   const likeBtnData = {
@@ -38,8 +39,8 @@ function ReplyCard({ reply }: Props) {
     state: currentUser && !!likes.find((like) => like.user === currentUser.id),
   };
 
-  let node = (
-    <>
+  return (
+    <Card classList="first:mt-2 first:sm:mt-4 !bg-gray1">
       <Avatar
         user={user}
         classList="w-10 h-10"
@@ -60,14 +61,7 @@ function ReplyCard({ reply }: Props) {
           <IconBtn btnData={likeBtnData} />
         </div>
       </div>
-    </>
-  );
-
-  return (
-    <Card
-      children={node}
-      classList="first:mt-2 first:sm:mt-4 !bg-gray1"
-    />
+    </Card>
   );
 }
 

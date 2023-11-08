@@ -9,7 +9,7 @@ import ReviewList from "components/common/posts/ReviewList";
 
 import { RootState } from "redux/store";
 import { titleCase } from "utils/Helpers";
-import usePokemon from "hooks/usePokemon";
+import usePokemon from "hooks/fetchers/usePokemon";
 import { IPokemon } from "utils/Interfaces";
 
 const PokemonProfile = () => {

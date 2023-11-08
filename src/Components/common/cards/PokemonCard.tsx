@@ -29,6 +29,7 @@ export default function PokemonCard({ pokemon, classList, isLoading }: Props) {
       <div className="flex flex-col text-xs justify-center gap-2 mt-auto">
         {pokemon.types.map((type, i) => (
           <TypeBtn
+            key={type}
             type={type}
             classList="max-w-full !p-1 font-normal leading-none"
           />

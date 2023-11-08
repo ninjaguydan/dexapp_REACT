@@ -5,7 +5,7 @@ import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/common/cards/Card";
+import Card from "components/modules/Card";
 import ReplyList from "components/common/posts/ReplyList";
 
 import useLikes from "hooks/dispatch/useLikes";
@@ -35,6 +35,7 @@ function Post({ post }: IPostProps) {
     content: "",
     action: () => dispatch({ type: "post/DELETE", postId: post.id }),
     state: true,
+    classList: "absolute top-4 right-4",
   };
   const likeBtnData = {
     label: ICON_KEY.LIKES,
@@ -51,8 +52,8 @@ function Post({ post }: IPostProps) {
     state: false,
   };
 
-  let node = (
-    <>
+  return (
+    <Card>
       <Avatar
         user={user}
         classList="h-10 sm:h-16 w-10 sm:w-16"
@@ -83,10 +84,8 @@ function Post({ post }: IPostProps) {
           />
         )}
       </div>
-    </>
+    </Card>
   );
-
-  return <Card children={node} />;
 }
 
 export default Post;

@@ -7,6 +7,7 @@ import {
   FaStar,
   FaRegStar,
   FaRegCommentAlt,
+  FaCross,
 } from "react-icons/fa";
 import { faHeartCirclePlus, faHeartCircleMinus, faShield } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,6 +20,7 @@ export {
   FaStar as Star,
   FaRegStar as StarOutline,
   FaRegCommentAlt as ChatOutline,
+  FaCross as Cross,
   faHeartCirclePlus as HeartPlus,
   faHeartCircleMinus as HeartMinus,
   faShield as Shield,

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 import PokemonCard from "components/common/cards/PokemonCard";
-import Loading from "components/common/loader/Loading";
 
 import placeholder from "media/0.png";
 
@@ -13,9 +12,33 @@ type Props = {
 };
 
 export default function TeamGrid({ team, isLoading }: Props) {
+  const arr = [...Array(6).keys()];
+
   return (
     <div className="bg-gray2 rounded border border-white border-opacity-10 border-solid p-4 grid grid-cols-2 gap-8 md:gap-6 sm:grid-cols-3">
-      {team.map((pokemon) => {
+      {arr.map((index) => {
+        if (index < team.length) {
+          return (
+            <PokemonCard
+              key={team[index].id}
+              pokemon={team[index]}
+              isLoading={isLoading}
+            />
+          );
+        } else {
+          return (
+            <div
+              key={index}
+              className="bg-gray6 rounded-2xl flex items-center justify-center">
+              <img
+                src={placeholder}
+                alt="placeholder"
+              />
+            </div>
+          );
+        }
+      })}
+      {/* {team.map((pokemon) => {
         if (pokemon.id === 0) {
           return (
             <Link
@@ -35,7 +58,7 @@ export default function TeamGrid({ team, isLoading }: Props) {
             />
           );
         }
-      })}
+      })} */}
     </div>
   );
 }

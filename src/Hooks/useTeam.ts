@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import usePokemon from "./usePokemon";
+import usePokemon from "./fetchers/usePokemon";
 import { getBaseStatTotal } from "../utils/Helpers";
 import { IRTable, ISTable } from "../utils/Interfaces";
 

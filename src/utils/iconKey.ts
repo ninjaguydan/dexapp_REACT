@@ -3,4 +3,5 @@ export const ICON_KEY = {
   COMMENTS: "comments",
   DELETE: "delete",
   FAVORITE: "favorite",
+  CLOSE: "close",
 };

@@ -3,7 +3,7 @@ import { FaStar, FaHeart } from "react-icons/fa";
 
 import Loading from "components/common/loader/Loading";
 
-import usePokemon from "hooks/usePokemon";
+import usePokemon from "hooks/fetchers/usePokemon";
 import { getRandomFloat, titleCase } from "utils/Helpers";
 
 export default function TopTenCard({ id }: { id: number }) {

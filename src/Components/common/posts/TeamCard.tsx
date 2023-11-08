@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
 
+import placeholder from "media/0.png";
+
 import ReplyList from "components/common/posts/ReplyList";
 import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/common/cards/Card";
+import Card from "components/modules/Card";
 
 import useLikes from "hooks/dispatch/useLikes";
 
@@ -29,6 +31,7 @@ function Team({ team }: ITeamProps) {
   );
   const currentUser = useSelector((state: RootState) => state.loggedUser);
   const toggleLike = useLikes(currentUser.id, likes, "team", team.id) as () => void;
+  const arr = [...Array(6).keys()];
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,
@@ -46,8 +49,8 @@ function Team({ team }: ITeamProps) {
     state: false,
   };
 
-  let node = (
-    <>
+  return (
+    <Card>
       <div className="content team flex flex-col gap-y-1">
         <h2 className="font-bold text-sm sm:text-base">
           <Link
@@ -65,17 +68,27 @@ function Team({ team }: ITeamProps) {
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(team.created)}</span>
         </h2>
         <span className="grid gap-x-4 lg:sm:gap-x-8 my-1 sm:my-3 grid-cols-6">
-          {team.members.map((value) => {
-            return (
-              <Link
-                to={`/pokemon/${value}`}
-                key={value}>
+          {arr.map((index) => {
+            if (team.members[index]) {
+              return (
+                <Link
+                  to={`/pokemon/${team.members[index]}`}
+                  key={index}>
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${team.members[index]}.png`}
+                    className="bg-gray1 rounded-full hover:ring-2 hover:ring-gray3"
+                  />
+                </Link>
+              );
+            } else {
+              return (
                 <img
-                  className="bg-gray1 rounded-full hover:ring-2 hover:ring-gray3"
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${value}.png`}
+                  key={index}
+                  src={placeholder}
+                  className="bg-gray1 rounded-full"
                 />
-              </Link>
-            );
+              );
+            }
           })}
         </span>
         <div className="flex gap-x-8">
@@ -92,10 +105,8 @@ function Team({ team }: ITeamProps) {
           />
         )}
       </div>
-    </>
+    </Card>
   );
-
-  return <Card children={node} />;
 }
 
 export default Team;

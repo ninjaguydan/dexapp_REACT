@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { IType } from "../utils/Interfaces";
-import { TYPES } from "../data/typeManager";
+import { IType } from "../../utils/Interfaces";
+import { TYPES } from "../../data/typeManager";
 
 const useTypes = () => {
   const [typeDataIsLoading, setTypeDataIsLoading] = useState(true);

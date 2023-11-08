@@ -3,8 +3,8 @@ import { useState } from "react";
 import Results from "components/pages/search/Results";
 
 import { titleCase } from "utils/Helpers";
-import usePokemon from "hooks/usePokemon";
-import useTypes from "hooks/useTypes";
+import usePokemon from "hooks/fetchers/usePokemon";
+import useTypes from "hooks/fetchers/useTypes";
 
 const Pokedex = () => {
   const { data: results, isLoading } = usePokemon();

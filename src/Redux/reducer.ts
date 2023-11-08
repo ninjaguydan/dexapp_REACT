@@ -100,6 +100,14 @@ const initState = {
       added_by: 3,
       created: 1655171111085,
     },
+    {
+      id: 5,
+      name: "Test",
+      members: [1005, 995],
+      likes: [],
+      added_by: 10,
+      created: 1685171111085,
+    },
   ],
   replies: [
     { id: 1, content: "Wow son you a big ass hater", created: 1649163929404, added_by: 2, for: "review", forId: 1 },

@@ -1,4 +1,3 @@
-import ResultCard from "components/common/cards/ResultCard";
 import Loading from "components/common/loader/Loading";
 
 import { addOrdinalSuffix } from "utils/Helpers";
@@ -29,13 +28,14 @@ const Results = ({ results, isLoading, params }) => {
           })
           .map((result) => {
             return (
-              <ResultCard
-                key={result.id}
-                id={result.id}
-                art_url={result.art_url}
-                name={result.name}
-                isLoading={isLoading}
-              />
+              <></>
+              // <ResultCard
+              //   key={result.id}
+              //   id={result.id}
+              //   art_url={result.art_url}
+              //   name={result.name}
+              //   isLoading={isLoading}
+              // />
             );
           })}
       </div>

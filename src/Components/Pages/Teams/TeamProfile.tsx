@@ -5,7 +5,7 @@ import ReplyList from "components/common/posts/ReplyList";
 
 import TeamStats from "components/pages/teams/TeamStats";
 import TeamResistance from "components/pages/teams/TeamResistance";
-import TeamGrid from "components/pages/teams/TeamGrid";
+import TeamGrid from "components/common/posts/TeamGrid";
 
 import useTeam from "hooks/useTeam";
 import { ITeam, IUser, ILike } from "utils/Interfaces";

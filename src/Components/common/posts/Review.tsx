@@ -5,11 +5,11 @@ import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/common/cards/Card";
+import Card from "components/modules/Card";
 import ReplyList from "components/common/posts/ReplyList";
 import Loading from "components/common/loader/Loading";
 
-import usePokemon from "hooks/usePokemon";
+import usePokemon from "hooks/fetchers/usePokemon";
 
 import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
@@ -64,6 +64,7 @@ const Review = ({ review, TL_view = false }: Props) => {
     content: "",
     action: () => dispatch({ type: "review/DELETE", reviewId: review.id }),
     state: true,
+    classList: "absolute top-4 right-4",
   };
 
   const likeBtnData = {
@@ -86,8 +87,8 @@ const Review = ({ review, TL_view = false }: Props) => {
     return <Loading />;
   }
 
-  let node = (
-    <>
+  return (
+    <Card>
       {TL_view ? (
         <Link to={`/pokemon/${pkmnData.id}`}>
           <img
@@ -138,10 +139,8 @@ const Review = ({ review, TL_view = false }: Props) => {
           />
         )}
       </div>
-    </>
+    </Card>
   );
-
-  return <Card children={node} />;
 };
 
 export default Review;

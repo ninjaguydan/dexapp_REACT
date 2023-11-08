@@ -8,8 +8,11 @@ import SelectAvatar from "components/common/buttons/SelectAvatar";
 import SelectColor from "components/common/buttons/SelectColor";
 import FormInput from "components/common/inputs/FormInput";
 
+import Modal from "components/modules/Modal";
+
 interface IEditProfileProps {
   closeEdit: () => void;
+  isOpen: boolean;
 }
 interface initForm {
   name: string;
@@ -51,7 +54,7 @@ function handleChange(event: any, state: initForm, action: React.Dispatch<React.
   });
 }
 
-function EditProfile({ closeEdit }: IEditProfileProps) {
+function EditProfile({ closeEdit, isOpen }: IEditProfileProps) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.loggedUser);
   const [formData, setFormData] = useState<initForm>({
@@ -69,17 +72,12 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
   }
 
   return (
-    <div className="p-4 bg-black_80 fixed z-20 top-0 left-0 w-full h-full overflow-auto">
-      <div className="bg-gray2 max-w-lg m-auto p-4 sm:p-8 rounded">
-        <header className="flex justify-between pb-1">
-          <h2 className="text-3xl font-medium">Edit Profile</h2>
-          <button
-            onClick={closeEdit}
-            className="text-gray5 text-2xl px-1 rounded hover:bg-gray3">
-            &#10005;
-          </button>
-        </header>
-        <hr />
+    <Modal
+      closeModal={closeEdit}
+      isOpen={isOpen}>
+      <Modal.Header>Edit Profile</Modal.Header>
+      <hr />
+      <Modal.Body>
         <form
           onSubmit={(e) => updateProfile(e)}
           className="flex flex-col gap-y-3 mt-4">
@@ -122,8 +120,9 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
           <hr />
           <h3>Choose background color</h3>
           <div className="grid grid-cols-6 gap-x-5">
-            {colorOptions.map((option) => (
+            {colorOptions.map((option, index) => (
               <SelectColor
+                key={option}
                 color={option}
                 click={(e) => clickColor(e, formData, setFormData)}
                 selected={formData.bg_color === option}
@@ -138,8 +137,8 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
           isSecondary={true}
           classList="mt-4"
         />
-      </div>
-    </div>
+      </Modal.Body>
+    </Modal>
   );
 }
 

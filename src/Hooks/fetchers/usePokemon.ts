@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { PKMN_API } from "api/urls";
 
-import useTypes from "hooks/useTypes";
+import useTypes from "hooks/fetchers/useTypes";
 
 import { IPokemon, ITeam } from "utils/Interfaces";
 import { setGen } from "utils/setGen";
