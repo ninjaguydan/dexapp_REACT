@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import ReplyCard from "components/common/posts/ReplyCard";
-import PostForm from "components/common/forms/PostForm";
+import PostForm from "components/common/posts/PostForm";
 
 import { IReply } from "utils/Interfaces";
 import { RootState } from "redux/store";

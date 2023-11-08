@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-
-import PokemonCard from "components/common/cards/PokemonCard";
+import PokemonCard from "components/common/posts/PokemonCard";
 
 import placeholder from "media/0.png";
 
@@ -38,27 +36,6 @@ export default function TeamGrid({ team, isLoading }: Props) {
           );
         }
       })}
-      {/* {team.map((pokemon) => {
-        if (pokemon.id === 0) {
-          return (
-            <Link
-              to={"/dexapp_REACT"}
-              key={pokemon.id}>
-              <img
-                src={placeholder}
-                alt="placeholder icon"
-              />
-            </Link>
-          );
-        } else {
-          return (
-            <PokemonCard
-              pokemon={pokemon}
-              isLoading={isLoading}
-            />
-          );
-        }
-      })} */}
     </div>
   );
 }

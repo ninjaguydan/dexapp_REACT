@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
-import Btn from "components/common/buttons/Btn";
+import Btn from "components/common/buttons/Button";
 
 import { IUser } from "utils/Interfaces";
 

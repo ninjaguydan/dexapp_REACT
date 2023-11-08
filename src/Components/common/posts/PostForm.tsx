@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Btn from "components/common/buttons/Btn";
+import Btn from "components/common/buttons/Button";
 import Card from "components/modules/Card";
 import Avatar from "components/common/buttons/Avatar";
 

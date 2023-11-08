@@ -9,14 +9,17 @@ interface ISelectAvatarProps {
 const SelectAvatar = ({ click, id, selected }: ISelectAvatarProps) => {
   return (
     <button
-      onClick={(event) => click(event)}
+      id={id}
+      name="user_img"
       type="button"
+      onClick={(event) => click(event)}
       className={`rounded ${selected && "bg-gray3 ring-2 ring-white"}`}>
       <img
-        src={getImageByKey(`${id}`)}
         id={id}
         //@ts-ignore
         name="user_img"
+        onClick={(event) => click(event)}
+        src={getImageByKey(`${id}`)}
       />
     </button>
   );

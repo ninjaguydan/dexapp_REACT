@@ -3,7 +3,7 @@ import { RootState } from "redux/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Btn from "components/common/buttons/Btn";
+import Btn from "components/common/buttons/Button";
 import SelectAvatar from "components/common/buttons/SelectAvatar";
 import SelectColor from "components/common/buttons/SelectColor";
 import FormInput from "components/common/inputs/FormInput";
@@ -25,19 +25,8 @@ const avatarOptions = ["m1", "m4", "m2", "m3", "f1", "f4", "f2", "f3"];
 const colorOptions = ["bg-black", "bg-primary", "bg-secondary", "bg-green", "bg-yellow", "bg-purple"];
 
 function clickIcon(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
-  switch (event.target.tagName) {
-    case "BUTTON": //when clicked with keyboard "ENTER"
-      action({
-        ...state,
-        [event.target.children[0].name]: event.target.children[0].id,
-      });
-      break;
-    default: // when clicked with mouse
-      action({
-        ...state,
-        [event.target.name]: event.target.id,
-      });
-  }
+  console.log(event);
+  action({ ...state, [event.target.name]: event.target.id });
 }
 
 function clickColor(event: any, state: initForm, action: React.Dispatch<React.SetStateAction<initForm>>) {
@@ -72,15 +61,12 @@ function EditProfile({ closeEdit, isOpen }: IEditProfileProps) {
   }
 
   return (
-    <Modal
-      closeModal={closeEdit}
-      isOpen={isOpen}>
+    <Modal closeModal={closeEdit}>
       <Modal.Header>Edit Profile</Modal.Header>
-      <hr />
       <Modal.Body>
         <form
           onSubmit={(e) => updateProfile(e)}
-          className="flex flex-col gap-y-3 mt-4">
+          className="flex flex-col gap-y-3">
           <FormInput
             name="name"
             label="Name"

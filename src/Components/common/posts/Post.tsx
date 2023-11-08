@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RootState } from "redux/store";
 
+import DeletePost from "components/common/modals/DeletePost";
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/modules/Card";
 import ReplyList from "components/common/posts/ReplyList";
+import Card from "components/modules/Card";
 
 import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
@@ -20,6 +21,7 @@ interface IPostProps {
 function Post({ post }: IPostProps) {
   const dispatch = useDispatch();
   const [repliesVisible, setRepliesVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "post" && reply.forId === post.id)
   );
@@ -33,7 +35,10 @@ function Post({ post }: IPostProps) {
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
     content: "",
-    action: () => dispatch({ type: "post/DELETE", postId: post.id }),
+    // action: () => dispatch({ type: "post/DELETE", postId: post.id }),
+    action: () => {
+      setShowPopup(true);
+    },
     state: true,
     classList: "absolute top-4 right-4",
   };
@@ -84,6 +89,14 @@ function Post({ post }: IPostProps) {
           />
         )}
       </div>
+      {showPopup && (
+        <DeletePost
+          onClose={() => {
+            setShowPopup(false);
+          }}
+          onConfirm={() => dispatch({ type: "post/DELETE", postId: post.id })}
+        />
+      )}
     </Card>
   );
 }

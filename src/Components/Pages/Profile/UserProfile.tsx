@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import PostForm from "components/common/forms/PostForm";
+import PostForm from "components/common/posts/PostForm";
 import UserSummary from "components/pages/profile/UserSummary";
-import EditProfile from "components/pages/profile/EditProfile";
+import EditProfile from "components/common/modals/EditProfile";
 import PostList from "components/common/posts/PostList";
 
 import { IUser } from "utils/Interfaces";

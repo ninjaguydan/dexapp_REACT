@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import PostForm from "components/common/forms/PostForm";
+import PostForm from "components/common/posts/PostForm";
 import TimelineCard from "components/pages/home/TimelineCard";
 
 import generateTimeline from "utils/generateTimeline";

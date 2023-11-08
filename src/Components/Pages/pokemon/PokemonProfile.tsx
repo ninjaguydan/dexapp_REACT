@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
-import PostForm from "components/common/forms/PostForm";
+import PostForm from "components/common/posts/PostForm";
 import Loading from "components//common/loader/Loading";
 import PokemonSummary from "components/pages/pokemon/PokemonSummary";
 import ReviewList from "components/common/posts/ReviewList";

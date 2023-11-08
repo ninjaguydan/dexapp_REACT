@@ -7,13 +7,13 @@ interface ISelectColorProps {
 const SelectColor = ({ selected, click, color }: ISelectColorProps) => {
   return (
     <button
+      id={color}
+      name="bg_color"
       type="button"
+      onClick={(event) => click(event)}
       className={`w-full rounded-lg after:content-[''] after:block after:pb-[100%] ${color} ${
         selected ? "ring-2 ring-white" : ""
-      }`}
-      onClick={(event) => click(event)}
-      name="bg_color"
-      id={color}></button>
+      }`}></button>
   );
 };
 
