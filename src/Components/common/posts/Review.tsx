@@ -5,18 +5,20 @@ import { RootState } from "redux/store";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/modules/Card";
+import { StarOutline, Star } from "components/common/icons/index";
+import DeletePost from "components/common/modals/DeletePost";
 import ReplyList from "components/common/posts/ReplyList";
 import Loading from "components/common/loader/Loading";
 
-import usePokemon from "hooks/fetchers/usePokemon";
+import Card from "components/modules/Card";
 
+import usePokemon from "hooks/fetchers/usePokemon";
 import useLikes from "hooks/dispatch/useLikes";
+
+import setImage from "utils/setDefaultImg";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
 import { IReview, IPokemon } from "utils/Interfaces";
-
-import { StarOutline, Star } from "components/common/icons/index";
 
 interface Props {
   review: IReview;
@@ -48,6 +50,7 @@ const setRating = (rating: number) => {
 const Review = ({ review, TL_view = false }: Props) => {
   const dispatch = useDispatch();
   const [repliesVisible, setRepliesVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "review" && reply.forId === review.id)
   );
@@ -62,7 +65,9 @@ const Review = ({ review, TL_view = false }: Props) => {
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
     content: "",
-    action: () => dispatch({ type: "review/DELETE", reviewId: review.id }),
+    action: () => {
+      setShowPopup(true);
+    },
     state: true,
     classList: "absolute top-4 right-4",
   };
@@ -95,6 +100,9 @@ const Review = ({ review, TL_view = false }: Props) => {
             src={pkmnData.sprite_url}
             alt={`${pkmnData.name}'s official sprite`}
             className="bg-gray1 rounded-full w-10 h-10 sm:w-16 sm:h-16"
+            onError={(e) => {
+              setImage(e);
+            }}
           />
         </Link>
       ) : (
@@ -139,6 +147,15 @@ const Review = ({ review, TL_view = false }: Props) => {
           />
         )}
       </div>
+      {showPopup && (
+        <DeletePost
+          onClose={() => {
+            setShowPopup(false);
+          }}
+          onConfirm={() => dispatch({ type: "review/DELETE", reviewId: review.id })}
+          label="review"
+        />
+      )}
     </Card>
   );
 };

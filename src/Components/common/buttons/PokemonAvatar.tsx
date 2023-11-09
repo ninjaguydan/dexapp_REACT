@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import placeholder from "media/0.png";
+import setImage from "utils/setDefaultImg";
 
 import { IPokemon } from "utils/Interfaces";
 
@@ -42,6 +43,9 @@ export default function PokemonAvatar({ pokemon, classList }: Props) {
         src={currentImg || placeholder}
         alt={`${pokemon.name}'s official artwork`}
         className=""
+        onError={(e) => {
+          setImage(e);
+        }}
       />
     </button>
   );

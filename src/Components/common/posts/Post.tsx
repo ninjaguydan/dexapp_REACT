@@ -35,7 +35,6 @@ function Post({ post }: IPostProps) {
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
     content: "",
-    // action: () => dispatch({ type: "post/DELETE", postId: post.id }),
     action: () => {
       setShowPopup(true);
     },
@@ -95,6 +94,7 @@ function Post({ post }: IPostProps) {
             setShowPopup(false);
           }}
           onConfirm={() => dispatch({ type: "post/DELETE", postId: post.id })}
+          label="post"
         />
       )}
     </Card>

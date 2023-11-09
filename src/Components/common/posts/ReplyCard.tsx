@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/store";
+import { useState } from "react";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
+import DeletePost from "components/common/modals/DeletePost";
+
 import Card from "components/modules/Card";
 
 import useLikes from "hooks/dispatch/useLikes";
+
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IReply } from "utils/Interfaces";
@@ -23,11 +27,12 @@ function ReplyCard({ reply }: Props) {
   );
   const currentUser = useSelector((state: RootState) => state.loggedUser);
   const toggleLike = useLikes(currentUser.id, likes, "reply", reply.id) as () => void;
+  const [showPopup, setShowPopup] = useState(false);
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
     content: "",
-    action: () => dispatch({ type: "reply/DELETE", replyId: reply.id }),
+    action: () => setShowPopup(true),
     state: true,
     classList: "absolute top-4 right-4",
   };
@@ -61,6 +66,15 @@ function ReplyCard({ reply }: Props) {
           <IconBtn btnData={likeBtnData} />
         </div>
       </div>
+      {showPopup && (
+        <DeletePost
+          onClose={() => {
+            setShowPopup(false);
+          }}
+          onConfirm={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}
+          label="comment"
+        />
+      )}
     </Card>
   );
 }

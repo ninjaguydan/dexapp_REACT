@@ -56,6 +56,13 @@ const initState = {
       added_by: 2,
       likes: [],
     },
+    {
+      id: 6,
+      content: "Hello World!",
+      created: 1699400000000,
+      added_by: 10,
+      likes: [],
+    },
   ],
   reviews: [
     {
@@ -275,6 +282,24 @@ function reducer(state = initState, action: any) {
       return {
         ...state,
         replies: state.replies.filter((reply) => reply.id !== action.replyId),
+      };
+    case "team/CREATE":
+      return {
+        ...state,
+        teams: [...state.teams, action.newTeam],
+      };
+    case "team/ADD":
+      return {
+        ...state,
+        teams: state.teams.map((team) => {
+          if (team.id === action.teamId) {
+            return {
+              ...team,
+              members: [...team.members, action.pkmnId],
+            };
+          }
+          return team;
+        }),
       };
     default:
       return state;

@@ -1,15 +1,15 @@
 import { FaCheckCircle } from "components/common/icons/index";
 
-interface IFormInputProps {
+type Props = {
   label: string;
   name: string;
-  type: string;
+  type?: string;
   value: string;
   handleChange: (e: any) => void;
-  error: string;
-}
+  error?: string;
+};
 //TODO: change the way errors are handled
-const FormInput = ({ label, name, type = "text", value, handleChange, error = "" }: IFormInputProps) => {
+const FormInput = ({ label, name, type = "text", value, handleChange, error = "" }: Props) => {
   return (
     <div className="relative">
       <label htmlFor={name}>{label}</label>

@@ -4,6 +4,8 @@ import { FaStar, FaHeart } from "react-icons/fa";
 import Loading from "components/common/loader/Loading";
 
 import usePokemon from "hooks/fetchers/usePokemon";
+
+import setImage from "utils/setDefaultImg";
 import { getRandomFloat, titleCase } from "utils/Helpers";
 
 export default function TopTenCard({ id }: { id: number }) {
@@ -21,9 +23,12 @@ export default function TopTenCard({ id }: { id: number }) {
         to={`/pokemon/${pkmnData.id}`}
         className="flex items-center w-full gap-x-2 sm:gap-x-4 group ">
         <img
-          src={pkmnData.art_url}
+          src={pkmnData.shiny_url}
           alt={`${pkmnData.name}'s official art`}
           className="w-24 sm:w-28"
+          onError={(e) => {
+            setImage(e);
+          }}
         />
         <div className="flex flex-col gap-y-2">
           <h3 className="font-bold group-hover:underline lg:text-lg">{titleCase(pkmnData.name)}</h3>

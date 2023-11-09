@@ -33,7 +33,7 @@ function clickedOutside(event: PointerEvent, element: React.MutableRefObject<Ele
 }
 
 export default function Modal({ children, closeModal, onConfirm = () => {} }: Props) {
-  const modalRef: React.MutableRefObject<Element | undefined> = useRef();
+  const modalRef: React.MutableRefObject<HTMLElement | undefined> = useRef();
   const keyListenersMap: Map<number, (e: KeyboardEvent, modalRef: React.MutableRefObject<Element | undefined>) => void> =
     new Map([
       [27, closeModal],
@@ -65,7 +65,7 @@ export default function Modal({ children, closeModal, onConfirm = () => {} }: Pr
       className="flex block p-4 bg-black_80 fixed z-20 top-0 left-0 w-full h-full overflow-auto backdrop-blur-sm"
       aria-modal="true">
       <figure
-        className="bg-gray2 max-w-lg m-auto p-4 sm:p-6 rounded flex flex-col gap-y-2"
+        className="bg-gray2 w-full max-w-lg m-auto p-4 sm:p-6 rounded flex flex-col gap-y-2"
         ref={modalRef as any}>
         <ModalContext.Provider value={{ closeModal, onConfirm }}>{children}</ModalContext.Provider>
       </figure>

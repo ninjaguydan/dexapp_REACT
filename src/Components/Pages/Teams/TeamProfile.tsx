@@ -13,7 +13,13 @@ import { RootState } from "redux/store";
 
 export default function TeamProfile() {
   const { teamName } = useParams();
-  const team = useSelector((state: RootState) => state.teams.filter((team: ITeam) => team.name === teamName)[0]);
+  const team = useSelector((state: RootState) => {
+    if (window.location.pathname.match(/\d/)) {
+      return state.teams.filter((team: ITeam) => team.id === parseInt(teamName!))[0];
+    } else {
+      return state.teams.filter((team: ITeam) => team.name === teamName)[0];
+    }
+  });
   const currentUser = useSelector((state: RootState) => state.loggedUser);
   const { summary, loadingSummary } = useTeam(team.members);
   const replies = useSelector((state: RootState) =>

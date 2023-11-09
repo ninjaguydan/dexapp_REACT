@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 
 import TypeBtn from "components/common/buttons/TypeBtn";
+import Loading from "components/common/loader/Loading";
 
 import { IPokemon } from "utils/Interfaces";
-import Loading from "../loader/Loading";
+import setImage from "utils/setDefaultImg";
 
 type Props = {
   pokemon: IPokemon;
@@ -24,7 +25,9 @@ export default function PokemonCard({ pokemon, classList, isLoading }: Props) {
       <img
         src={pokemon.art_url}
         alt={`${pokemon.name}'s offical art`}
-        className=" "
+        onError={(e) => {
+          setImage(e);
+        }}
       />
       <div className="flex flex-col text-xs justify-center gap-2 mt-auto">
         {pokemon.types.map((type, i) => (
