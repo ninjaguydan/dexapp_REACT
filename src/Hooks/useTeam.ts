@@ -101,7 +101,7 @@ const useTeam = (teamArray: number[]) => {
     });
 
     setLoadinSummary(false);
-  }, [isLoading]);
+  }, [isLoading, teamArray]);
 
   return { summary: { teamData, resistanceTable, statTable }, loadingSummary };
 };

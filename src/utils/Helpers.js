@@ -23,6 +23,9 @@ export function renderStars(num) {
   }
   return result;
 }
+export function checkNum(value) {
+  return value.match(/\d/);
+}
 export function truncateStr(string) {
   if (string.length > 13) {
     let str = string.substring(0, 12);
@@ -31,7 +34,14 @@ export function truncateStr(string) {
   return string;
 }
 export function titleCase(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  if (str === undefined) return;
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(function (word) {
+      return word.replace(word[0], word[0].toUpperCase());
+    })
+    .join(" ");
 }
 export function getRandomInt(min, max) {
   min = Math.ceil(min);

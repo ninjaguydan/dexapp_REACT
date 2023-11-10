@@ -6,13 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Btn from "components/common/buttons/Button";
 import SelectAvatar from "components/common/buttons/SelectAvatar";
 import SelectColor from "components/common/buttons/SelectColor";
-import FormInput from "components/common/inputs/FormInput";
+import FormInput from "components/common/forms/FormInput";
 
 import Modal from "components/modules/Modal";
 
 interface IEditProfileProps {
   closeEdit: () => void;
-  isOpen: boolean;
 }
 interface initForm {
   name: string;
@@ -43,7 +42,7 @@ function handleChange(event: any, state: initForm, action: React.Dispatch<React.
   });
 }
 
-function EditProfile({ closeEdit, isOpen }: IEditProfileProps) {
+function EditProfile({ closeEdit }: IEditProfileProps) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.loggedUser);
   const [formData, setFormData] = useState<initForm>({

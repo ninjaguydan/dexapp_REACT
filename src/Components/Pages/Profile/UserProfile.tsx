@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import PostForm from "components/common/posts/PostForm";
 import UserSummary from "components/pages/profile/UserSummary";
-import EditProfile from "components/common/modals/EditProfile";
+
 import PostList from "components/common/posts/PostList";
 
 import { IUser } from "utils/Interfaces";
@@ -19,16 +19,7 @@ const UserProfile = () => {
 
   return (
     <div className="flex flex-col w-full gap-x-4 gap-y-4 sm:flex-row">
-      {editForm && (
-        <EditProfile
-          closeEdit={() => setEditForm(false)}
-          isOpen={editForm}
-        />
-      )}
-      <UserSummary
-        user={user as IUser}
-        openEdit={() => setEditForm(true)}
-      />
+      <UserSummary user={user as IUser} />
       <div className="w-full">
         {currentUser.id === user.id ? (
           <PostForm

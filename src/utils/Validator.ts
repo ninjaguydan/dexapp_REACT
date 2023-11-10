@@ -1,4 +1,6 @@
 import { IRegistrationObject } from "./Interfaces";
+import { titleCase } from "utils/Helpers";
+import { checkNum } from "utils/Helpers";
 
 function validateName(value: string) {
   if (value && value.trim().length < 2) {
@@ -52,4 +54,18 @@ export function checkIfEmpty(object: IRegistrationObject) {
 export function checkIfValues(object: IRegistrationObject) {
   let values = Object.values(object);
   return values.every((x) => x !== null && x !== "");
+}
+
+type TeamEditErrors =
+  | "Team name cannot contain numbers"
+  | "Team name must have at least 2 characters."
+  | "Team name can't be more than 20 characters."
+  | "Uh oh... looks like there's already a team with this name.";
+
+export function setTeamNameError(value: string, existingNames: string[]): TeamEditErrors | "" {
+  if (checkNum(value)) return "Team name cannot contain numbers";
+  if (value.length < 2) return "Team name must have at least 2 characters.";
+  if (value.length > 20) return "Team name can't be more than 20 characters.";
+  if (existingNames.includes(titleCase(value))) return "Uh oh... looks like there's already a team with this name.";
+  return "";
 }

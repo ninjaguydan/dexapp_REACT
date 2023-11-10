@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 const initState = {
   loggedUser: {
     id: 10,
@@ -113,7 +115,15 @@ const initState = {
       members: [1005, 995],
       likes: [],
       added_by: 10,
+      created: 1699557368376,
+    },
+    {
       created: 1685171111085,
+      added_by: 10,
+      id: "698a02d8-658b-47ce-b8bc-3f009d817ab8",
+      likes: [],
+      members: [129, 129, 129, 129, 129, 129],
+      name: "Fisherman Wade",
     },
   ],
   replies: [
@@ -288,14 +298,40 @@ function reducer(state = initState, action: any) {
         ...state,
         teams: [...state.teams, action.newTeam],
       };
+    case "team/DELETE":
+      return {
+        ...state,
+        teams: state.teams.filter((team) => team.id !== action.teamId),
+        replies: state.replies.filter((reply) => {
+          if (reply.for !== "team") {
+            return reply;
+          } else {
+            return reply.forId !== action.teamId;
+          }
+        }),
+      };
     case "team/ADD":
+      return {
+        ...state,
+        teams: state.teams.map((team) => {
+          if (team.name === action.teamName) {
+            return {
+              ...team,
+              members: [...team.members, action.pkmnId],
+            };
+          }
+          return team;
+        }),
+      };
+    case "team/UPDATE":
       return {
         ...state,
         teams: state.teams.map((team) => {
           if (team.id === action.teamId) {
             return {
               ...team,
-              members: [...team.members, action.pkmnId],
+              name: action.teamData.name,
+              members: action.teamData.members,
             };
           }
           return team;

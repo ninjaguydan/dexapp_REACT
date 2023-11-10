@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //comps
-import FormInput from "components/common/inputs/FormInput";
+import FormInput from "components/common/forms/FormInput";
 
 //utility
 import pkmn_img from "media/pkmn.png";

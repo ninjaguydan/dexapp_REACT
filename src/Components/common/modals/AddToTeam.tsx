@@ -1,14 +1,15 @@
+import { v4 as uuidv4 } from "uuid";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store";
 import { useNavigate } from "react-router-dom";
 
-import FormInput from "components/common/inputs/FormInput";
-
 import Modal from "components/modules/Modal";
 import Button from "components/modules/Button";
 
+import { titleCase } from "utils/Helpers";
 import { ITeam } from "utils/Interfaces";
+import { setTeamNameError } from "utils/Validator";
 
 type Props = {
   onClose: () => void;
@@ -20,21 +21,42 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const myTeams: ITeam[] = useSelector((state: RootState) => state.teams.filter((team) => team.added_by === userId));
+  const [error, setError] = useState<string>("");
+  const myTeams: ITeam[] = useSelector((state: RootState) =>
+    state.teams.filter((team) => {
+      return team.added_by === userId && team.members.length < 6;
+    })
+  );
+  const allTeamNames: string[] = useSelector((state: RootState) => state.teams.map((team) => team.name));
   const selectedTeam: React.MutableRefObject<HTMLInputElement | undefined> = useRef();
   const teamName: React.MutableRefObject<HTMLInputElement | undefined> = useRef();
 
   const formHandler = useCallback(
     () => (event: any) => {
       event.preventDefault();
-      const data: { team: number | undefined; newTeamName: string | undefined } = {
-        team: parseInt(selectedTeam.current?.value!),
-        newTeamName: teamName.current?.value,
+      const data: { team: string | undefined; newTeamName: string | undefined } = {
+        team: selectedTeam.current?.value!,
+        newTeamName: titleCase(teamName.current?.value),
       };
       if (!!data.team) {
         onClose();
-        dispatch({ type: "team/ADD", pkmnId, teamId: data.team });
+        dispatch({ type: "team/ADD", pkmnId, teamName: data.team });
         navigate(`/team/${data.team}`);
+      } else {
+        setError(setTeamNameError(data.newTeamName!, allTeamNames));
+        if (setTeamNameError(data.newTeamName!, allTeamNames) === "") {
+          const newTeam: ITeam = {
+            id: uuidv4(),
+            name: data.newTeamName!,
+            members: [pkmnId],
+            likes: [],
+            added_by: userId,
+            created: new Date().getTime(),
+          };
+          dispatch({ type: "team/CREATE", newTeam });
+          onClose();
+          navigate(`/team/${data.newTeamName!}`);
+        }
       }
     },
     []
@@ -56,16 +78,15 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
                 name="select-team"
                 id="select-team">
                 {myTeams.map((team) => (
-                  <option
-                    key={team.id}
-                    value={team.id}>
-                    {team.name}
-                  </option>
+                  <option key={team.id}>{team.name}</option>
                 ))}
               </select>
             </div>
-            <Button action={() => {}}>
-              <Button.Primary>Add to teamName</Button.Primary>
+            {myTeams.length === 0 && <p>No teams with available slots. Try creating a new one!</p>}
+            <Button
+              action={() => {}}
+              isDisabled={myTeams.length === 0}>
+              <Button.Primary>Add to Team</Button.Primary>
             </Button>
             <span className="flex items-center gap-x-2">
               <hr className="w-full" />
@@ -83,7 +104,7 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
             className="w-full flex flex-col gap-y-4"
             onSubmit={formHandler()}>
             <div className="relative flex flex-col gap-y-2 w-full">
-              <label htmlFor="select-team">New Team Name</label>
+              <label htmlFor="team-name">New Team Name</label>
               <input
                 ref={teamName as any}
                 placeholder="Team Name"
@@ -91,6 +112,7 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
                 className="w-full text-black p-1 rounded"
                 type="text"
               />
+              {error && <p className="text-red-500 text-xs">{error}</p>}
             </div>
             <Button action={() => {}}>
               <Button.Primary>Create Team and Add</Button.Primary>
@@ -98,6 +120,7 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
             <Button
               action={() => {
                 setShowCreateForm(false);
+                setError("");
               }}>
               <Button.Secondary>Back</Button.Secondary>
             </Button>

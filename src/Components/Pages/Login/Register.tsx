@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 //comps
-import FormInput from "components/common/inputs/FormInput";
+import FormInput from "components/common/forms/FormInput";
 
 //utility
 import { validator, checkIfValues, checkIfEmpty, confirmPasswordMatch } from "utils/Validator";

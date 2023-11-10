@@ -61,13 +61,13 @@ function Team({ team }: ITeamProps) {
           <span className="text-gray4 font-normal"> created the team, </span>
           <Link
             to={`/team/${team.name}`}
-            className="hover:underline">
+            className="hover:underline capitalize">
             {" "}
             {team.name}
           </Link>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(team.created)}</span>
         </h2>
-        <span className="grid gap-x-4 lg:sm:gap-x-8 my-1 sm:my-3 grid-cols-6">
+        <span className="grid gap-x-4 sm:gap-x-8 my-1 sm:my-3 grid-cols-6">
           {arr.map((index) => {
             if (team.members[index]) {
               return (

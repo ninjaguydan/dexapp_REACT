@@ -1,20 +1,24 @@
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
+import { useState, useRef } from "react";
 
+import EditProfile from "components/common/modals/EditProfile";
 import Avatar from "components/common/buttons/Avatar";
-import Btn from "components/common/buttons/Button";
 
 import { IUser } from "utils/Interfaces";
+import Button from "components/modules/Button";
 
 interface Props {
   user: IUser;
-  openEdit: () => void;
 }
 
-function UserSummary({ user, openEdit }: Props) {
+function UserSummary({ user }: Props) {
+  const [editForm, setEditForm] = useState<boolean>(false);
   const postCnt = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).length);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.added_by === user.id).length);
   const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
+  const focus = () => buttonRef.current?.focus();
 
   return (
     <ul className="lg:min-w-[30%] group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
@@ -41,12 +45,12 @@ function UserSummary({ user, openEdit }: Props) {
       </li>
       {currentUser?.id === user.id && (
         <li className="border-b border-white border-opacity-10 border-solid p-6">
-          <Btn
-            text="Edit Profile"
-            action={openEdit}
-            classList="w-full"
-            isSecondary={true}
-          />
+          <Button
+            action={() => {
+              setEditForm(true);
+            }}>
+            <Button.Secondary ref={buttonRef}>Edit Profile</Button.Secondary>
+          </Button>
         </li>
       )}
       {user?.location && (
@@ -81,6 +85,14 @@ function UserSummary({ user, openEdit }: Props) {
         <p className="font-bold">Teams</p>
         <span>0</span>
       </li>
+      {editForm && (
+        <EditProfile
+          closeEdit={() => {
+            setEditForm(false);
+            focus();
+          }}
+        />
+      )}
     </ul>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/store";
@@ -7,7 +7,9 @@ import IconBtn from "components/common/buttons/IconBtn";
 
 import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
-import { ITeam, IUser, ILike, IRTable, ISTable, IPokemon } from "utils/Interfaces";
+import { ITeam, IUser, ISTable } from "utils/Interfaces";
+import Button from "components/modules/Button";
+import EditTeam from "components/common/modals/EditTeam";
 
 interface ITeamStatsProps {
   currentUser: IUser;
@@ -17,19 +19,28 @@ interface ITeamStatsProps {
 }
 
 export default function TeamStats({ currentUser, team, stats, user }: ITeamStatsProps) {
-  const [showStats, setShowStats] = useState(true);
   const dispatch = useDispatch();
+  const [showStats, setShowStats] = useState(true);
+  const [showEditTeam, setShowEditTeam] = useState(false);
   const teamLikes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
   );
   const toggleLike = useLikes(currentUser.id, teamLikes, "team", team.id) as () => void;
+  const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
+  const focus = () => buttonRef.current?.focus();
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,
     content: teamLikes.length,
     action: () => toggleLike(),
     state: currentUser && !!teamLikes.find((like) => like.user === currentUser.id),
+    classList: "!text-lg",
   };
+  // const deleteBtnData = {
+  //   label: ICON_KEY.DELETE,
+  //   action: () => {},
+  //   classList: "absolute top-4 left-4",
+  // };
 
   return (
     <ul className="w-full h-[fit-content] relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
@@ -40,10 +51,20 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
             by <Link to={`/profile/${user}`}>{user}</Link>
           </p>
         </div>
-        <div className="icon-container">
+        <div className="flex gap-x-8">
           <IconBtn btnData={likeBtnData} />
         </div>
       </li>
+      {currentUser?.id === team.added_by && (
+        <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+          <Button
+            action={() => {
+              setShowEditTeam(true);
+            }}>
+            <Button.Secondary ref={buttonRef}>Edit Team</Button.Secondary>
+          </Button>
+        </li>
+      )}
       {showStats && (
         <>
           {Object.keys(stats).map((stat, i) => (
@@ -68,6 +89,15 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
           Hide/Display Team Stats
         </button>
       </li>
+      {!!showEditTeam && (
+        <EditTeam
+          onClose={() => {
+            setShowEditTeam(false);
+            focus();
+          }}
+          team={team}
+        />
+      )}
     </ul>
   );
 }

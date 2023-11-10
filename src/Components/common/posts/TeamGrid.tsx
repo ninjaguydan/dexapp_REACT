@@ -18,7 +18,7 @@ export default function TeamGrid({ team, isLoading }: Props) {
         if (index < team.length) {
           return (
             <PokemonCard
-              key={team[index].id}
+              key={index}
               pokemon={team[index]}
               isLoading={isLoading}
             />

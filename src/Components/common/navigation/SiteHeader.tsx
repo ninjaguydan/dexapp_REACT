@@ -9,9 +9,10 @@ import MobileMenu from "components/common/navigation/MobileMenu";
 import useDeviceWidth from "hooks/useDeviceWidth";
 import dex_logo_icon from "media/dex-icon-4c.svg";
 import dex_logo_full from "media/dex-logo-w.svg";
+import { RootState } from "redux/store";
 
 const SiteHeader = () => {
-  const currentUser = useSelector((state: any) => state.loggedUser);
+  const currentUser = useSelector((state: RootState) => state.loggedUser);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [breakpoint] = useDeviceWidth();
   const LOGO: { [key: string]: any } = {

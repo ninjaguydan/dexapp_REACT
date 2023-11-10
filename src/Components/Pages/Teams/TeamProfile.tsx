@@ -1,5 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { RootState } from "redux/store";
 
 import ReplyList from "components/common/posts/ReplyList";
 
@@ -8,24 +9,22 @@ import TeamResistance from "components/pages/teams/TeamResistance";
 import TeamGrid from "components/common/posts/TeamGrid";
 
 import useTeam from "hooks/useTeam";
-import { ITeam, IUser, ILike } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
-export default function TeamProfile() {
+import { checkNum } from "utils/Helpers";
+import { ITeam } from "utils/Interfaces";
+import { memo, useEffect } from "react";
+
+function TeamProfile() {
   const { teamName } = useParams();
-  const team = useSelector((state: RootState) => {
-    if (window.location.pathname.match(/\d/)) {
-      return state.teams.filter((team: ITeam) => team.id === parseInt(teamName!))[0];
-    } else {
-      return state.teams.filter((team: ITeam) => team.name === teamName)[0];
-    }
-  });
   const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const { summary, loadingSummary } = useTeam(team.members);
+  const team = useSelector((state: RootState) => state.teams.filter((team: ITeam) => team.name === teamName)[0]);
+  const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
   );
-  const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
+  const { summary, loadingSummary } = useTeam(team.members);
+
+  console.log(team);
 
   return (
     <div className="flex flex-col w-full gap-4 md:flex-row">
@@ -54,3 +53,4 @@ export default function TeamProfile() {
     </div>
   );
 }
+export default memo(TeamProfile);
