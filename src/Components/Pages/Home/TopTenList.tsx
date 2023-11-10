@@ -2,11 +2,11 @@ import { memo } from "react";
 
 import TopTenCard from "components/pages/home/TopTenCard";
 
-import { getRandomInt, getRandomFloat, titleCase } from "utils/Helpers";
+import { getRandomInt } from "utils/Helpers";
 
 let arr: number[] = [];
 while (arr.length < 10) {
-  arr.push(getRandomInt(1, 1010));
+  arr.push(getRandomInt(1, 1017));
 }
 
 function TopTenList() {

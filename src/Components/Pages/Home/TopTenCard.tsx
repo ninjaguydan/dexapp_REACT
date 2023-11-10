@@ -1,18 +1,22 @@
 import { Link } from "react-router-dom";
 import { FaStar, FaHeart } from "react-icons/fa";
 
-import Loading from "components/common/loader/Loading";
+import Spinner from "components/modules/Spinner";
 
-import usePokemon from "hooks/fetchers/usePokemon";
+import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
 
 import setImage from "utils/setDefaultImg";
-import { getRandomFloat, titleCase } from "utils/Helpers";
+import { getRandomFloat } from "utils/Helpers";
 
 export default function TopTenCard({ id }: { id: number }) {
-  const { pkmnData, isLoading } = usePokemon(`${id}`);
+  const { data: pkmnData, isLoading } = useFetchPkmn(id);
 
-  if (isLoading) {
-    return <Loading />;
+  if (isLoading || !pkmnData) {
+    return (
+      <div className="flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -23,7 +27,7 @@ export default function TopTenCard({ id }: { id: number }) {
         to={`/pokemon/${pkmnData.id}`}
         className="flex items-center w-full gap-x-2 sm:gap-x-4 group ">
         <img
-          src={pkmnData.shiny_url}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pkmnData.id}.png`}
           alt={`${pkmnData.name}'s official art`}
           className="w-24 sm:w-28"
           onError={(e) => {
@@ -31,7 +35,7 @@ export default function TopTenCard({ id }: { id: number }) {
           }}
         />
         <div className="flex flex-col gap-y-2">
-          <h3 className="font-bold group-hover:underline lg:text-lg">{titleCase(pkmnData.name)}</h3>
+          <h3 className="font-bold group-hover:underline lg:text-lg capitalize">{pkmnData.name}</h3>
           <div className="flex flex-col lg:flex-row gap-x-4">
             <p className="flex items-center gap-x-2">
               <FaHeart className="text-gray3" /> {getRandomFloat(1, 99)}k

@@ -1,10 +1,10 @@
-import Loading from "components/common/loader/Loading";
+import Spinner from "components/modules/Spinner";
 
 import { addOrdinalSuffix } from "utils/Helpers";
 
 const Results = ({ results, isLoading, params }) => {
   if (isLoading) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   return (

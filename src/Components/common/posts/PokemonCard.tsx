@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import TypeBtn from "components/common/buttons/TypeBtn";
-import Loading from "components/common/loader/Loading";
+import Spinner from "components/modules/Spinner";
 
 import { IPokemon } from "utils/Interfaces";
 import setImage from "utils/setDefaultImg";
@@ -14,7 +14,7 @@ type Props = {
 
 export default function PokemonCard({ pokemon, classList, isLoading }: Props) {
   if (isLoading) {
-    return <Loading />;
+    return <Spinner />;
   }
   return (
     <Link

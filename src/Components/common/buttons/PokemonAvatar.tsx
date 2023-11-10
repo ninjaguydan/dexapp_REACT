@@ -6,15 +6,16 @@ import setImage from "utils/setDefaultImg";
 import { IPokemon } from "utils/Interfaces";
 
 type Props = {
-  pokemon: IPokemon;
-  classList?: string;
+  normal_art: string | undefined;
+  shiny_art: string | undefined;
+  name: string | undefined;
 };
 
 function toggleImage(
-  option1: string,
-  option2: string,
-  state: string,
-  action: React.Dispatch<React.SetStateAction<string>>
+  option1: string | undefined,
+  option2: string | undefined,
+  state: string | undefined,
+  action: React.Dispatch<React.SetStateAction<string | undefined>>
 ): void {
   switch (state) {
     case option1:
@@ -26,22 +27,22 @@ function toggleImage(
   }
 }
 
-export default function PokemonAvatar({ pokemon, classList }: Props) {
-  const [currentImg, setCurrentImg] = useState(pokemon.art_url);
+export default function PokemonAvatar({ normal_art, shiny_art, name }: Props) {
+  const [currentImg, setCurrentImg] = useState(normal_art);
 
   useEffect(() => {
-    setCurrentImg(pokemon.art_url);
-  }, [pokemon]);
+    setCurrentImg(normal_art);
+  }, [normal_art]);
 
   return (
     <button
       className="w-40 sm:w-3/5 lg:w-4/5"
       onClick={() => {
-        toggleImage(pokemon.art_url, pokemon.shiny_url, currentImg, setCurrentImg);
+        toggleImage(normal_art, shiny_art, currentImg, setCurrentImg);
       }}>
       <img
         src={currentImg || placeholder}
-        alt={`${pokemon.name}'s official artwork`}
+        alt={`${name}'s official artwork`}
         className=""
         onError={(e) => {
           setImage(e);

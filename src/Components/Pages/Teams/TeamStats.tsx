@@ -19,7 +19,6 @@ interface ITeamStatsProps {
 }
 
 export default function TeamStats({ currentUser, team, stats, user }: ITeamStatsProps) {
-  const dispatch = useDispatch();
   const [showStats, setShowStats] = useState(true);
   const [showEditTeam, setShowEditTeam] = useState(false);
   const teamLikes = useSelector((state: RootState) =>
@@ -36,11 +35,6 @@ export default function TeamStats({ currentUser, team, stats, user }: ITeamStats
     state: currentUser && !!teamLikes.find((like) => like.user === currentUser.id),
     classList: "!text-lg",
   };
-  // const deleteBtnData = {
-  //   label: ICON_KEY.DELETE,
-  //   action: () => {},
-  //   classList: "absolute top-4 left-4",
-  // };
 
   return (
     <ul className="w-full h-[fit-content] relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">

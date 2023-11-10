@@ -10,7 +10,6 @@ import TeamGrid from "components/common/posts/TeamGrid";
 
 import useTeam from "hooks/useTeam";
 
-import { checkNum } from "utils/Helpers";
 import { ITeam } from "utils/Interfaces";
 import { memo, useEffect } from "react";
 
@@ -24,7 +23,7 @@ function TeamProfile() {
   );
   const { summary, loadingSummary } = useTeam(team.members);
 
-  console.log(team);
+  // console.log(team);
 
   return (
     <div className="flex flex-col w-full gap-4 md:flex-row">

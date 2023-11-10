@@ -8,11 +8,11 @@ import IconBtn from "components/common/buttons/IconBtn";
 import { StarOutline, Star } from "components/common/icons/index";
 import DeletePost from "components/common/modals/DeletePost";
 import ReplyList from "components/common/posts/ReplyList";
-import Loading from "components/common/loader/Loading";
 
+import Spinner from "components/modules/Spinner";
 import Card from "components/modules/Card";
 
-import usePokemon from "hooks/fetchers/usePokemon";
+import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
 import useLikes from "hooks/dispatch/useLikes";
 
 import setImage from "utils/setDefaultImg";
@@ -59,7 +59,9 @@ const Review = ({ review, TL_view = false }: Props) => {
     state.likes.filter((like) => like.postType === "review" && like.forId === review.id)
   );
   const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const { pkmnData, isLoading }: { pkmnData: IPokemon; isLoading: boolean } = usePokemon(`${review.pkmn}`);
+  const { data: pkmnData, isLoading }: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(
+    review.pkmn
+  );
   const toggleLike = useLikes(currentUser.id, likes, "review", review.id) as () => void;
 
   const deleteBtnData = {
@@ -88,8 +90,8 @@ const Review = ({ review, TL_view = false }: Props) => {
     state: false,
   };
 
-  if (isLoading) {
-    return <Loading />;
+  if (isLoading || !pkmnData) {
+    return <Spinner />;
   }
 
   return (
@@ -97,7 +99,7 @@ const Review = ({ review, TL_view = false }: Props) => {
       {TL_view ? (
         <Link to={`/pokemon/${pkmnData.id}`}>
           <img
-            src={pkmnData.sprite_url}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmnData.id}.png`}
             alt={`${pkmnData.name}'s official sprite`}
             className="bg-gray1 rounded-full w-10 h-10 sm:w-16 sm:h-16"
             onError={(e) => {

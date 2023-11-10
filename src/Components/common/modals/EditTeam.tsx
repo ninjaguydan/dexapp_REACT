@@ -7,6 +7,7 @@ import Button from "components/modules/Button";
 import { ITeam } from "utils/Interfaces";
 import { setTeamNameError } from "utils/Validator";
 import { RootState } from "redux/store";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   onClose: () => void;
@@ -15,6 +16,7 @@ type Props = {
 
 export default function EditTeam({ onClose, team }: Props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [checkedState, setCheckedState] = useState(new Array(team.members.length).fill(false));
   const allTeamNames: string[] = useSelector((state: RootState) => state.teams.map((team) => team.name));
@@ -23,6 +25,15 @@ export default function EditTeam({ onClose, team }: Props) {
   const handleChange = (position: number) => {
     const updatedCheckedState = checkedState.map((item, index) => (index === position ? !item : item));
     setCheckedState(updatedCheckedState);
+  };
+
+  const handleUpdate = (data: { name: string; members: (string | number | undefined)[] }) => {
+    dispatch({ type: "team/UPDATE", teamData: data, teamId: team.id });
+    onClose();
+  };
+  const handleDelete = () => {
+    dispatch({ type: "team/DELETE", teamId: team.id });
+    navigate("/dexapp_REACT");
   };
 
   const onSubmit = useCallback(
@@ -37,15 +48,18 @@ export default function EditTeam({ onClose, team }: Props) {
           })
           .filter(Boolean),
       };
+      // if the Team name was changed...
       if (teamData.name !== team.name) {
+        // validate it and set errors
         setError(setTeamNameError(teamData.name!, allTeamNames));
+        // if there were no errors...
         if (setTeamNameError(teamData.name!, allTeamNames) === "") {
-          dispatch({ type: "team/UPDATE", teamData, teamId: team.id });
-          onClose();
+          // do the thing
+          handleUpdate(teamData);
         }
       } else {
-        dispatch({ type: "team/UPDATE", teamData, teamId: team.id });
-        onClose();
+        // just do the thing
+        handleUpdate(teamData);
       }
     },
     [checkedState]
@@ -94,7 +108,7 @@ export default function EditTeam({ onClose, team }: Props) {
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button action={() => dispatch({ type: "team/DELETE", teamId: team.id })}>
+            <Button action={handleDelete}>
               <Button.Secondary>Delete Team</Button.Secondary>
             </Button>
             <Button action={() => {}}>

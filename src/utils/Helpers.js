@@ -1,4 +1,5 @@
 export function makeHundreds(num) {
+  if (!num) return "000";
   if (num < 10) {
     return `00${num}`;
   } else if (num < 100) {
@@ -34,7 +35,7 @@ export function truncateStr(string) {
   return string;
 }
 export function titleCase(str) {
-  if (str === undefined) return;
+  if ((str === undefined) | (str === "")) return;
   return str
     .toLowerCase()
     .split(" ")
