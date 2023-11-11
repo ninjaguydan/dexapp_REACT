@@ -3,10 +3,10 @@ import { useState } from "react";
 import Results from "components/pages/search/Results";
 
 import { titleCase } from "utils/Helpers";
-import useTypes from "hooks/fetchers/useTypes";
+// import useTypes from "hooks/fetchers/useTypes";
 
 const Pokedex = () => {
-  const { data: types, loadingTypes } = useTypes();
+  // const { data: types, loadingTypes } = useTypes();
   const [params, setParams] = useState({
     gen: "All",
     type: "All",
@@ -44,7 +44,7 @@ const Pokedex = () => {
           value={params.type}
           onChange={(e) => handleChange(e)}>
           <option>All</option>
-          {!loadingTypes && types.map((type) => <option key={type.id}>{titleCase(type.name)}</option>)}
+          {/* {!loadingTypes && types.map((type) => <option key={type.id}>{titleCase(type.name)}</option>)} */}
         </select>
         {/* <button className="btn secondary">Filter</button> */}
       </form>

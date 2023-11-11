@@ -124,6 +124,26 @@ export interface IRTable {
     immune: number;
   };
 }
+export let table: IRTable = {
+  normal: { weak: 0, resist: 0, immune: 0 },
+  fighting: { weak: 0, resist: 0, immune: 0 },
+  flying: { weak: 0, resist: 0, immune: 0 },
+  poison: { weak: 0, resist: 0, immune: 0 },
+  ground: { weak: 0, resist: 0, immune: 0 },
+  rock: { weak: 0, resist: 0, immune: 0 },
+  bug: { weak: 0, resist: 0, immune: 0 },
+  ghost: { weak: 0, resist: 0, immune: 0 },
+  steel: { weak: 0, resist: 0, immune: 0 },
+  fire: { weak: 0, resist: 0, immune: 0 },
+  water: { weak: 0, resist: 0, immune: 0 },
+  grass: { weak: 0, resist: 0, immune: 0 },
+  electric: { weak: 0, resist: 0, immune: 0 },
+  psychic: { weak: 0, resist: 0, immune: 0 },
+  ice: { weak: 0, resist: 0, immune: 0 },
+  dragon: { weak: 0, resist: 0, immune: 0 },
+  dark: { weak: 0, resist: 0, immune: 0 },
+  fairy: { weak: 0, resist: 0, immune: 0 },
+};
 export interface ISTable {
   [key: string]: number;
 }
