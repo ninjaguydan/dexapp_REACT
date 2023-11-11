@@ -1,15 +1,19 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { HeartPlus, HeartMinus, Shield } from "components/common/icons/index";
+
+import useSetResistance from "hooks/fetchers/useSetResistance";
 import { IRTable } from "utils/Interfaces";
 
 interface ITeamResistanceProps {
-  rTable: IRTable;
+  team: number[];
 }
 
-export default function TeamResistance({ rTable }: ITeamResistanceProps) {
+export default function TeamResistance({ team }: ITeamResistanceProps) {
   const [showTable, setShowTable] = useState(true);
+  const { resistanceTable: table } = useSetResistance(team);
+
   return (
     <ul className="w-full h-[fit-content] relative bg-gray2 rounded border border-white border-opacity-10 border-solid">
       <li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center">
@@ -46,14 +50,14 @@ export default function TeamResistance({ rTable }: ITeamResistanceProps) {
           </thead>
           {showTable && (
             <tbody className="[&_tr:nth-child(even)]:bg-gray6">
-              {Object.keys(rTable).map((pkmnType: string, i) => (
+              {Object.keys(table).map((pkmnType: string, i) => (
                 <tr key={i}>
                   <th
                     scope="row"
                     className="capitalize pl-8 text-sm sm:text-base">
                     {pkmnType}
                   </th>
-                  {Object.values(rTable[pkmnType]).map((value, i) => (
+                  {Object.values(table[pkmnType]).map((value, i) => (
                     <td
                       key={i}
                       className={`text-gray4 px-3 py-1 sm:py-2 ${value > 3 ? "font-bold text-base sm:text-xl" : ""} ${
@@ -61,7 +65,6 @@ export default function TeamResistance({ rTable }: ITeamResistanceProps) {
                       } ${i === 0 && value > 2 ? "text-red-500" : ""} ${value > 0 ? "text-gray5 text-sm" : ""}`}>
                       {value === 0 ? "-" : value}
                     </td>
-                    // <td>{rTable.pkmnType[i]}</td>
                   ))}
                 </tr>
               ))}

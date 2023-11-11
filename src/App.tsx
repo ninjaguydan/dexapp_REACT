@@ -15,11 +15,14 @@ import TeamProfile from "components/pages/teams/TeamProfile";
 import Pokedex from "components/pages/search/Pokedex";
 import PageNotFound from "components/pages/error404/PageNotFound";
 
+import ScrolltoTop from "hooks/ScrollToTop";
+
 function App() {
   const [breakpoint] = useDeviceWidth();
 
   return (
     <MyRouter>
+      <ScrolltoTop />
       <SiteHeader />
       {breakpoint === "MOBILE" && <MobileNav />}
       <main className="py-24 profile main flex items-center flex-col gap-x-4 max-w-5xl mx-auto lg:flex-row-reverse lg:items-start">

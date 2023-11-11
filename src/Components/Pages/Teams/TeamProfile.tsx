@@ -8,44 +8,36 @@ import TeamStats from "components/pages/teams/TeamStats";
 import TeamResistance from "components/pages/teams/TeamResistance";
 import TeamGrid from "components/common/posts/TeamGrid";
 
-import useTeam from "hooks/useTeam";
-
-import { ITeam } from "utils/Interfaces";
-import { memo, useEffect } from "react";
+import { IReply, ITeam, IUser } from "utils/Interfaces";
+import { memo } from "react";
 
 function TeamProfile() {
   const { teamName } = useParams();
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const team = useSelector((state: RootState) => state.teams.filter((team: ITeam) => team.name === teamName)[0]);
-  const created_by = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
-  const replies = useSelector((state: RootState) =>
+  const team: ITeam = useSelector((state: RootState) => state.teams.filter((team) => team.name === teamName)[0]);
+  const current_user: IUser = useSelector((state: RootState) => state.loggedUser);
+  const created_by: string = useSelector(
+    (state: RootState) => state.users.filter((user) => user.id === team.added_by)[0].username
+  );
+  const replies: IReply[] = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
   );
-  const { summary, loadingSummary } = useTeam(team.members);
-
-  // console.log(team);
 
   return (
     <div className="flex flex-col w-full gap-4 md:flex-row">
-      <aside className="flex flex-col sm:flex-row gap-x-2 md:w-6/12 md:flex-col">
+      <aside className="flex flex-col sm:flex-row gap-4 md:w-6/12 md:flex-col">
         <TeamStats
-          currentUser={currentUser}
+          current_user_id={current_user.id}
           team={team}
-          stats={summary.statTable}
-          user={created_by.username}
+          created_by={created_by}
         />
-        <br />
-        <TeamResistance rTable={summary.resistanceTable} />
+        <TeamResistance team={team.members} />
       </aside>
 
       <div className="flex flex-col w-full gap-4">
-        <TeamGrid
-          team={summary.teamData}
-          isLoading={loadingSummary}
-        />
+        <TeamGrid team={team.members} />
         <ReplyList
           replies={replies}
-          user={created_by.username}
+          user={created_by}
           kind={{ name: "team", id: team.id }}
         />
       </div>

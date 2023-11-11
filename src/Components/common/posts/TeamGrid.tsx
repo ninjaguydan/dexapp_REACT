@@ -5,11 +5,10 @@ import placeholder from "media/0.png";
 import { IPokemon } from "utils/Interfaces";
 
 type Props = {
-  team: IPokemon[];
-  isLoading: boolean;
+  team: number[];
 };
 
-export default function TeamGrid({ team, isLoading }: Props) {
+export default function TeamGrid({ team }: Props) {
   const arr = [...Array(6).keys()];
 
   return (
@@ -19,8 +18,7 @@ export default function TeamGrid({ team, isLoading }: Props) {
           return (
             <PokemonCard
               key={index}
-              pokemon={team[index]}
-              isLoading={isLoading}
+              pokemon_id={team[index]}
             />
           );
         } else {

@@ -36,7 +36,7 @@ export interface IReply {
 export interface ITeam {
   id: number | string;
   name: string;
-  members: (string | number)[];
+  members: number[];
   likes: (string | number)[];
   added_by: number | string;
   created: number;
@@ -66,6 +66,19 @@ export interface IPokemon {
   resists: string[];
   immune_to: string[];
 }
+export type PKMN_JSON = {
+  id: number;
+  name: string;
+  types: { slot: number; type: { name: string; url: string } }[];
+  stats: { base_stat: number; effort: number; stat: { name: string; url: string } }[];
+  sprites: {
+    front_default: string;
+    front_shiny: string;
+    [key: string]: any;
+    other: { "official-artwork": { front_default: string; front_shiny: string }; [key: string]: any };
+  };
+  [key: string]: any;
+};
 export interface IType {
   id: number;
   name: string;
@@ -74,6 +87,36 @@ export interface IType {
   resists: string[];
   immune_to: string[];
 }
+export type TYPE_JSON = {
+  damage_relations: {
+    double_damage_from: { name: string; url: string }[];
+    half_damage_from: { name: string; url: string }[];
+    no_damage_from: { name: string; url: string }[];
+  };
+  id: number;
+  name: string;
+  [key: string]: any;
+};
+export const TYPE_LIST = {
+  normal: 1,
+  fighting: 2,
+  flying: 3,
+  poison: 4,
+  ground: 5,
+  rock: 6,
+  bug: 7,
+  ghost: 8,
+  steel: 9,
+  fire: 10,
+  water: 11,
+  grass: 12,
+  electric: 13,
+  psychic: 14,
+  ice: 15,
+  dragon: 16,
+  dark: 17,
+  fairy: 18,
+};
 export interface IRTable {
   [key: string]: {
     weak: number;

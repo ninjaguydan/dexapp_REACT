@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 
 import TypeBtn from "components/common/buttons/TypeBtn";
+
+import setImage from "utils/setDefaultImg";
+import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
 import Spinner from "components/modules/Spinner";
 
-import { IPokemon } from "utils/Interfaces";
-import setImage from "utils/setDefaultImg";
-
 type Props = {
-  pokemon: IPokemon;
-  isLoading: boolean;
+  pokemon_id: number;
   classList?: string;
 };
 
-export default function PokemonCard({ pokemon, classList, isLoading }: Props) {
-  if (isLoading) {
-    return <Spinner />;
-  }
+export default function PokemonCard({ pokemon_id, classList }: Props) {
+  const { data: pokemon, isLoading } = useFetchPkmn(pokemon_id);
+
+  if (isLoading || !pokemon) return <Spinner />;
+
   return (
     <Link
       to={`/pokemon/${pokemon.id}`}

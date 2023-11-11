@@ -56,6 +56,7 @@ export default function EditTeam({ onClose, team }: Props) {
         if (setTeamNameError(teamData.name!, allTeamNames) === "") {
           // do the thing
           handleUpdate(teamData);
+          navigate(`/team/${teamData.name}`);
         }
       } else {
         // just do the thing

@@ -2,23 +2,9 @@
 
 import { PKMN_API } from "api/urls";
 import useSWR from "swr";
-import { IPokemon } from "utils/Interfaces";
+import { IPokemon, PKMN_JSON } from "utils/Interfaces";
 import { setGen } from "utils/setGen";
 import { setPkmnType } from "utils/setPkmnType";
-
-type JSON = {
-  id: number;
-  name: string;
-  types: { slot: number; type: { name: string; url: string } }[];
-  stats: { base_stat: number; effort: number; stat: { name: string; url: string } }[];
-  sprites: {
-    front_default: string;
-    front_shiny: string;
-    [key: string]: any;
-    other: { "official-artwork": { front_default: string; front_shiny: string }; [key: string]: any };
-  };
-  [key: string]: any;
-};
 
 async function fetchPkmn(url: string): Promise<IPokemon | undefined> {
   let pkmn: IPokemon | undefined = undefined;
@@ -26,7 +12,7 @@ async function fetchPkmn(url: string): Promise<IPokemon | undefined> {
   try {
     const response: Response = await fetch(url);
     if (response.ok) {
-      const json: JSON = await response.json();
+      const json: PKMN_JSON = await response.json();
       pkmn = {
         id: json.id,
         name: json.name,
