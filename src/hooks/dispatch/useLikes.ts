@@ -1,10 +1,9 @@
-import { useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "hooks/hooks";
 
 import { ILike } from "utils/Interfaces";
 
 function useLikes(userId: number | string, likes: ILike[], postType: string, forId: string | number) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (userId === 0) return;
 

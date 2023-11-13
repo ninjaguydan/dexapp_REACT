@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { RootState } from "redux/store";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "hooks/hooks";
 
 import FormInput from "components/common/forms/FormInput";
 
@@ -11,7 +12,7 @@ import FormRow from "components/modules/FormRow";
 import pkmn_img from "media/pkmn.png";
 
 const Login = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const users = useSelector((state: RootState) => state.users);
   const [error, setError] = useState(false);

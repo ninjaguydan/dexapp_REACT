@@ -1,6 +1,5 @@
 //dependencies
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "hooks/hooks";
 
@@ -19,7 +18,7 @@ interface Props {
 }
 
 const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   if (!isOpen) return <></>;

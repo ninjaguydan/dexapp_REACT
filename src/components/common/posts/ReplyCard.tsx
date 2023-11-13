@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
 import { RootState } from "redux/store";
@@ -22,7 +22,7 @@ interface Props {
 }
 
 function ReplyCard({ reply }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
   const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "reply" && like.forId === reply.id)

@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import Modal from "components/modules/Modal";
@@ -15,7 +16,7 @@ type Props = {
 };
 
 export default function EditTeam({ onClose, team }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [checkedState, setCheckedState] = useState(new Array(team.members.length).fill(false));

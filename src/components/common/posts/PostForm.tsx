@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
-import { RootState } from "redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
 
@@ -33,10 +31,10 @@ function enableButton(count: number) {
 }
 
 function PostForm({ btnText, placeholder, type, classList }: Props) {
+  const dispatch = useAppDispatch();
   const [counter, setCounter] = useState(0);
   const [formData, setFormData] = useState(empty);
   const currentUser = useAppSelector(selectCurrentUser);
-  const dispatch = useDispatch();
 
   function setValue(event: any) {
     setFormData({ ...formData, [event.target.id]: event.target.value });

@@ -1,7 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
-import dex_icon from "media/dex-icon-w.svg";
+import { useAppDispatch } from "hooks/hooks";
 
 interface IDesktopMenu {
   username: string;
@@ -9,7 +7,7 @@ interface IDesktopMenu {
 }
 
 const DesktopMenu = ({ username, openDrop }: IDesktopMenu) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onLogout = () => {

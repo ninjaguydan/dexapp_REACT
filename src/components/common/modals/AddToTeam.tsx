@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { useCallback, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "hooks/hooks";
 import { RootState } from "redux/store";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +19,7 @@ type Props = {
 };
 
 export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [error, setError] = useState<string>("");

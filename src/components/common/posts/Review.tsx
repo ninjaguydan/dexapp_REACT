@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
 import { Link } from "react-router-dom";
@@ -50,7 +50,7 @@ const setRating = (rating: number) => {
 };
 
 const Review = ({ review, TL_view = false }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const replies = useSelector((state: RootState) =>

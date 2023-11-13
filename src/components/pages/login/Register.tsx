@@ -2,8 +2,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "hooks/hooks";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
 
 //comps
@@ -22,7 +21,7 @@ const emptyForm = {
 };
 
 const Register = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectCurrentUser);
   const [values, setValues] = useState<IRegistrationObject>(emptyForm);

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ interface IPostProps {
 }
 
 function Post({ post }: IPostProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectCurrentUser);
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
