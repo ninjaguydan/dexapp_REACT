@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppSelector } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
@@ -16,21 +16,24 @@ import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference } from "utils/Helpers";
 import { ITeam } from "utils/Interfaces";
+import { makeSelectLikesBy } from "redux/slices/likeSlice";
 
 interface ITeamProps {
   team: ITeam;
 }
 
 function TeamCard({ team }: ITeamProps) {
+  // logged in user
+  const currentUser = useAppSelector(selectCurrentUser);
+  // get memoized likes
+  const selectTeamLikes = useMemo(makeSelectLikesBy, []);
+  const likes = useAppSelector((state) => selectTeamLikes(state.likes, { id: team.id, type: "team" }));
+
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
   const [repliesVisible, setRepliesVisible] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
   );
-  const likes = useSelector((state: RootState) =>
-    state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
-  );
-  const currentUser = useAppSelector(selectCurrentUser);
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
   const arr = [...Array(6).keys()];
 

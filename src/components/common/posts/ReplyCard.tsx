@@ -1,17 +1,19 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useAppSelector, useAppDispatch } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
 import { RootState } from "redux/store";
-import { useState } from "react";
+
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+import useLikes from "hooks/dispatch/useLikes";
+
+import { selectCurrentUser } from "redux/slices/authSlice";
+import { makeSelectLikesBy } from "redux/slices/likeSlice";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
 import DeletePost from "components/common/modals/DeletePost";
 
 import Card from "components/modules/Card";
-
-import useLikes from "hooks/dispatch/useLikes";
 
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
@@ -23,11 +25,13 @@ interface Props {
 
 function ReplyCard({ reply }: Props) {
   const dispatch = useAppDispatch();
-  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
-  const likes = useSelector((state: RootState) =>
-    state.likes.filter((like) => like.postType === "reply" && like.forId === reply.id)
-  );
+  // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
+  // get memoized likes
+  const selectReplyLikes = useMemo(makeSelectLikesBy, []);
+  const likes = useAppSelector((state) => selectReplyLikes(state.likes, { id: reply.id, type: "reply" }));
+
+  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "reply", reply.id) as () => void;
   const [showPopup, setShowPopup] = useState(false);
 

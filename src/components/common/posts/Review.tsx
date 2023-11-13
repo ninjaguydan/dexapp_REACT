@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
@@ -21,6 +21,8 @@ import setImage from "utils/setDefaultImg";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
 import { IReview } from "utils/Interfaces";
+
+import { makeSelectLikesBy } from "redux/slices/likeSlice";
 
 interface Props {
   review: IReview;
@@ -51,16 +53,19 @@ const setRating = (rating: number) => {
 
 const Review = ({ review, TL_view = false }: Props) => {
   const dispatch = useAppDispatch();
+  // logged in user
+  const currentUser = useAppSelector(selectCurrentUser);
+  // get memoized likes
+  const selectReviewLikes = useMemo(makeSelectLikesBy, []);
+  const likes = useAppSelector((state) => selectReviewLikes(state.likes, { id: review.id, type: "review" }));
+  // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "review" && reply.forId === review.id)
   );
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === review.added_by)[0]);
-  const likes = useSelector((state: RootState) =>
-    state.likes.filter((like) => like.postType === "review" && like.forId === review.id)
-  );
-  const currentUser = useAppSelector(selectCurrentUser);
+
   const { data: pkmnData, isLoading }: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(
     review.pkmn
   );

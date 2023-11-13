@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
@@ -16,22 +16,27 @@ import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IPost } from "utils/Interfaces";
 
+import { makeSelectLikesBy } from "redux/slices/likeSlice";
+
 interface IPostProps {
   post: IPost;
 }
 
 function Post({ post }: IPostProps) {
   const dispatch = useAppDispatch();
+  // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
+  // get memoized likes
+  const selectPostLikes = useMemo(makeSelectLikesBy, []);
+  const likes = useAppSelector((state) => selectPostLikes(state.likes, { id: post.id, type: "post" }));
+  // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const replies = useSelector((state: RootState) =>
     state.replies.filter((reply) => reply.for === "post" && reply.forId === post.id)
   );
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === post.added_by)[0]);
-  const likes = useSelector((state: RootState) =>
-    state.likes.filter((like) => like.postType === "post" && like.forId === post.id)
-  );
+
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "post", post.id) as () => void;
 
   const deleteBtnData = {

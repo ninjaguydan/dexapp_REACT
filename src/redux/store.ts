@@ -1,7 +1,4 @@
-import { legacy_createStore as createStore } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-
-import reducer from "redux/reducer";
 
 import authReducer from "redux/slices/authSlice";
 import likesReducer from "redux/slices/likeSlice";
@@ -10,8 +7,6 @@ import replyReducer from "redux/slices/replySlice";
 import reviewReducer from "redux/slices/reviewSlice";
 import teamReducer from "redux/slices/teamSlice";
 import usersReducer from "redux/slices/userSlice";
-
-// const store = createStore(reducer);
 
 const store = configureStore({
   reducer: {

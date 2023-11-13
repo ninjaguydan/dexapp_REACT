@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/store";
@@ -11,6 +11,8 @@ import { ITeam, IUser, ISTable } from "utils/Interfaces";
 import Button from "components/modules/Button";
 import EditTeam from "components/common/modals/EditTeam";
 import useSetStats from "hooks/fetchers/useSetStats";
+import { makeSelectLikesBy } from "redux/slices/likeSlice";
+import { useAppSelector } from "hooks/hooks";
 
 interface ITeamStatsProps {
   current_user_id: string | number;
@@ -24,18 +26,18 @@ export default function TeamStats({ current_user_id, team, created_by }: ITeamSt
   const [showEditTeam, setShowEditTeam] = useState(false);
   // hooks
   const { statTable: stats } = useSetStats(team.members);
-  const teamLikes = useSelector((state: RootState) =>
-    state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
-  );
+  // get memoized likes
+  const selectTeamLikes = useMemo(makeSelectLikesBy, []);
+  const likes = useAppSelector((state) => selectTeamLikes(state.likes, { id: team.id, type: "team" }));
   // var
-  const toggleLike = useLikes(current_user_id, teamLikes, "team", team.id) as () => void;
+  const toggleLike = useLikes(current_user_id, likes, "team", team.id) as () => void;
   const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
   const focus = () => buttonRef.current?.focus();
   const likeBtnData = {
     label: ICON_KEY.LIKES,
-    content: teamLikes.length,
+    content: likes.length,
     action: () => toggleLike(),
-    state: !current_user_id && !!teamLikes.find((like) => like.user === current_user_id),
+    state: !current_user_id && !!likes.find((like) => like.user === current_user_id),
     classList: "!text-lg",
   };
 

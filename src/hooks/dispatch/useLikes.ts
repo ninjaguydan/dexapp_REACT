@@ -1,4 +1,6 @@
 import { useAppDispatch } from "hooks/hooks";
+// import { useDispatch } from "react-redux";
+import { like_ADD, like_REMOVE } from "redux/slices/likeSlice";
 
 import { ILike } from "utils/Interfaces";
 
@@ -11,7 +13,8 @@ function useLikes(userId: number | string, likes: ILike[], postType: string, for
   let tempLike = { postType: postType, user: userId, forId: forId };
 
   const toggleLike = () => {
-    dispatch({ type: `users/${ACTION}`, tempLike });
+    if (ACTION === "LIKE") dispatch(like_ADD({ ...tempLike }));
+    else dispatch(like_REMOVE({ ...tempLike }));
   };
   return toggleLike;
 }

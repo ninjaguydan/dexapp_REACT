@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { ILike } from "utils/Interfaces";
+import { RootState } from "redux/store";
 
 const initialState: ILike[] = [
   { postType: "reply", user: 1, forId: 4 },
@@ -20,16 +21,33 @@ const likeSlice = createSlice({
   reducers: {
     like_ADD(state, action) {
       const like = action.payload;
+      console.log("adding like");
       state.push(like);
     },
     like_REMOVE(state, action) {
-      const { postType, userId, forId } = action.payload;
-      state = state.filter((like) => {
-        if (like.postType !== postType || like.user !== userId) return like;
-        return like.forId !== forId;
+      const { postType, user, forId } = action.payload;
+      return state.filter((like) => {
+        if (like.postType !== postType || like.user !== user) {
+          return like;
+        } else {
+          return like.forId !== forId;
+        }
       });
     },
   },
 });
 
 export default likeSlice.reducer;
+export const { like_ADD, like_REMOVE } = likeSlice.actions;
+
+// Selectors
+export const selectLikes = (state: ILike[]) => state;
+
+type Details = {
+  id: string | number;
+  type: "post" | "review" | "team" | "reply";
+};
+export const makeSelectLikesBy = () =>
+  createSelector([selectLikes, (state: ILike[], details: Details) => details], (likes, details) =>
+    likes.filter((like) => like.postType === details.type && like.forId === details.id)
+  );
