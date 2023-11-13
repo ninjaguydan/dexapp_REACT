@@ -15,15 +15,17 @@ const initialState: IUser[] = [
       location: "Jackson, MS",
     },
     loading: false,
-    userToken: null,
+    userToken:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3Mjc2NjAyOCwiZXhwIjoxNjc0NDk0MDI4fQ.kCak9sLJr74frSRVQp0_27BY4iBCgQSmoT3vQVWKzJg",
     error: null,
-    success: false,
+    success: true,
   },
   {
     loading: false,
-    userToken: null,
+    userToken:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3Mjc2NjAyOCwiZXhwIjoxNjc0NDk0MDI4fQ.kCak9sLJr74frSRVQp0_27BY4iBCgQSmoT3vQVWKzJg",
     error: null,
-    success: false,
+    success: true,
     userInfo: {
       id: 2,
       bio: "This is a bio. I can put anything here. Gotta be respectful tho",
@@ -36,9 +38,10 @@ const initialState: IUser[] = [
   },
   {
     loading: false,
-    userToken: null,
+    userToken:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3Mjc2NjAyOCwiZXhwIjoxNjc0NDk0MDI4fQ.kCak9sLJr74frSRVQp0_27BY4iBCgQSmoT3vQVWKzJg",
     error: null,
-    success: false,
+    success: true,
     userInfo: {
       id: 3,
       name: "Kelsey J",
@@ -50,9 +53,10 @@ const initialState: IUser[] = [
   },
   {
     loading: false,
-    userToken: null,
+    userToken:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3Mjc2NjAyOCwiZXhwIjoxNjc0NDk0MDI4fQ.kCak9sLJr74frSRVQp0_27BY4iBCgQSmoT3vQVWKzJg",
     error: null,
-    success: false,
+    success: true,
     userInfo: {
       id: 10,
       bio: "I am an anonymous user. Change whatever you like, or make a new account!",

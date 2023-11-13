@@ -1,8 +1,8 @@
 export interface IUser {
-  loading: false;
-  userToken: null;
-  error: null;
-  success: false;
+  loading: boolean;
+  userToken: string | null;
+  error: string | null;
+  success: boolean;
   userInfo: {
     id: number | string;
     name: string;

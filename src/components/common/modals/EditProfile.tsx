@@ -1,7 +1,9 @@
 import React from "react";
-import { RootState } from "redux/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import SelectAvatar from "components/common/buttons/SelectAvatar";
 import SelectColor from "components/common/buttons/SelectColor";
@@ -15,8 +17,8 @@ interface IEditProfileProps {
 }
 interface initForm {
   name: string;
-  location: string;
-  bio: string;
+  location?: string;
+  bio?: string;
   user_img: string;
   bg_color: string;
 }
@@ -43,14 +45,15 @@ function handleChange(event: any, state: initForm, action: React.Dispatch<React.
 }
 
 function EditProfile({ closeEdit }: IEditProfileProps) {
+  const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.loggedUser);
+  // const user = useSelector((state: RootState) => state.loggedUser);
   const [formData, setFormData] = useState<initForm>({
-    name: user.name,
-    location: user?.location,
-    bio: user?.bio,
-    user_img: user.user_img,
-    bg_color: user.bg_color,
+    name: user.userInfo.name,
+    location: user.userInfo.location,
+    bio: user.userInfo.bio,
+    user_img: user.userInfo.user_img,
+    bg_color: user.userInfo.bg_color,
   });
 
   function updateProfile(event: any) {
