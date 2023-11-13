@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "redux/store";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import ReplyList from "components/common/posts/ReplyList";
 
@@ -14,7 +16,7 @@ import { memo } from "react";
 function TeamProfile() {
   const { teamName } = useParams();
   const team: ITeam = useSelector((state: RootState) => state.teams.filter((team) => team.name === teamName)[0]);
-  const current_user: IUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const created_by: string = useSelector(
     (state: RootState) => state.users.filter((user) => user.id === team.added_by)[0].username
   );
@@ -26,7 +28,7 @@ function TeamProfile() {
     <div className="flex flex-col w-full gap-4 md:flex-row">
       <aside className="flex flex-col sm:flex-row gap-4 md:w-6/12 md:flex-col">
         <TeamStats
-          current_user_id={current_user.id}
+          current_user_id={currentUser.userInfo.id}
           team={team}
           created_by={created_by}
         />

@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import ReplyCard from "components/common/posts/ReplyCard";
 import PostForm from "components/common/posts/PostForm";
 
 import { IReply } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
 interface IReplyListProps {
   replies: IReply[];
@@ -13,7 +13,7 @@ interface IReplyListProps {
 }
 
 function ReplyList({ replies, user, kind }: IReplyListProps) {
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   return (
     <>
       {replies.map((reply) => {
@@ -24,7 +24,7 @@ function ReplyList({ replies, user, kind }: IReplyListProps) {
           />
         );
       })}
-      {!!currentUser.id && (
+      {!!currentUser.userToken && (
         <PostForm
           btnText={"Reply"}
           placeholder={`Replying to ${user}...`}

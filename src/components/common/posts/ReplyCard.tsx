@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { RootState } from "redux/store";
 import { useState } from "react";
 
@@ -25,8 +27,8 @@ function ReplyCard({ reply }: Props) {
   const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "reply" && like.forId === reply.id)
   );
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const toggleLike = useLikes(currentUser.id, likes, "reply", reply.id) as () => void;
+  const currentUser = useAppSelector(selectCurrentUser);
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "reply", reply.id) as () => void;
   const [showPopup, setShowPopup] = useState(false);
 
   const deleteBtnData = {
@@ -41,7 +43,7 @@ function ReplyCard({ reply }: Props) {
     label: ICON_KEY.LIKES,
     content: likes.length,
     action: () => toggleLike(),
-    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
+    state: currentUser && !!likes.find((like) => like.user === currentUser.userInfo.id),
   };
 
   return (
@@ -59,7 +61,7 @@ function ReplyCard({ reply }: Props) {
           </Link>
           <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(reply.created)}</span>
-          {currentUser?.id === reply.added_by && <IconBtn btnData={deleteBtnData} />}
+          {currentUser.userInfo.id === reply.added_by && <IconBtn btnData={deleteBtnData} />}
         </h3>
         <p className="text-xs sm:text-sm">{reply.content}</p>
         <div className="flex gap-x-8">

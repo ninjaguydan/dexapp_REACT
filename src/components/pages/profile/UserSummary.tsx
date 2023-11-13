@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { RootState } from "redux/store";
 import { useState, useRef } from "react";
 
@@ -16,7 +18,7 @@ function UserSummary({ user }: Props) {
   const [editForm, setEditForm] = useState<boolean>(false);
   const postCnt = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).length);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.added_by === user.id).length);
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
   const focus = () => buttonRef.current?.focus();
 
@@ -43,7 +45,7 @@ function UserSummary({ user }: Props) {
           </p>
         </div>
       </li>
-      {currentUser?.id === user.id && (
+      {currentUser.userInfo.id === user.id && (
         <li className="border-b border-white border-opacity-10 border-solid p-6">
           <Button.Secondary
             ref={buttonRef}

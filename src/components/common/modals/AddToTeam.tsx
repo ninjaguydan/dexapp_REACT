@@ -13,7 +13,7 @@ import { setTeamNameError } from "utils/Validator";
 
 type Props = {
   onClose: () => void;
-  userId: number;
+  userId: number | string;
   pkmnId: number;
 };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import Avatar from "components/common/buttons/Avatar";
 import SearchBtn from "components/common//buttons/SearchBtn";
@@ -10,24 +11,24 @@ import { FaAngleDown } from "components/common/icons/index";
 import { truncateStr } from "utils/Helpers";
 
 const DesktopNav = () => {
-  const user = useSelector((state: any) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 
-  let menuNode = !!user.id ? (
+  let menuNode = !!currentUser.userToken ? (
     <div className="nav-user-desk flex items-center gap-x-1">
       <Avatar
-        user={user}
+        user={currentUser.userInfo}
         classList="w-9 relative"
       />
       <button
         className="flex items-center gap-x-2 px-3 py-1 hover:text-secondary"
         onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
-        {truncateStr(user.username)}
+        {truncateStr(currentUser.userInfo.username)}
         <FaAngleDown />
       </button>
       {dropdownIsOpen && (
         <DesktopMenu
-          username={user.username}
+          username={currentUser.userInfo.username}
           openDrop={() => setDropdownIsOpen(!dropdownIsOpen)}
         />
       )}

@@ -1,7 +1,8 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { RootState } from "redux/store";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import PostForm from "components/common/posts/PostForm";
 import PokemonSummary from "components/pages/pokemon/PokemonSummary";
@@ -14,8 +15,8 @@ import { IPokemon } from "utils/Interfaces";
 
 const PokemonProfile = () => {
   const { id } = useParams();
+  const currentUser = useAppSelector(selectCurrentUser);
   const { data: pkmnData, isLoading }: { data: IPokemon | undefined; isLoading: boolean } = useFetchPkmn(parseInt(id!));
-  const user = useSelector((state: RootState) => state.loggedUser);
   const reviews = useSelector((state: RootState) =>
     state.reviews.filter((review) => review.pkmn === parseInt(id as string)).reverse()
   );
@@ -27,7 +28,7 @@ const PokemonProfile = () => {
         isLoading={isLoading}
       />
       <div className="w-full">
-        {!!user.id && pkmnData && (
+        {!!currentUser.userToken && pkmnData && (
           <PostForm
             btnText={"Post"}
             placeholder={`What do you think${pkmnData ? ` of ${titleCase(pkmnData.name)}?` : "?"}`}

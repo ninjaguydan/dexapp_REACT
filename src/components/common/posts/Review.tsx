@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { Link } from "react-router-dom";
 import { RootState } from "redux/store";
 
@@ -18,7 +20,7 @@ import useLikes from "hooks/dispatch/useLikes";
 import setImage from "utils/setDefaultImg";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
-import { IReview, IPokemon } from "utils/Interfaces";
+import { IReview } from "utils/Interfaces";
 
 interface Props {
   review: IReview;
@@ -58,11 +60,11 @@ const Review = ({ review, TL_view = false }: Props) => {
   const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "review" && like.forId === review.id)
   );
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const { data: pkmnData, isLoading }: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(
     review.pkmn
   );
-  const toggleLike = useLikes(currentUser.id, likes, "review", review.id) as () => void;
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "review", review.id) as () => void;
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -78,7 +80,7 @@ const Review = ({ review, TL_view = false }: Props) => {
     label: ICON_KEY.LIKES,
     content: likes.length,
     action: () => toggleLike(),
-    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
+    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
   };
 
   const commentBtnData = {
@@ -133,7 +135,7 @@ const Review = ({ review, TL_view = false }: Props) => {
             </Link>
           )}
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(review.created)}</span>
-          {currentUser?.id === review.added_by && <IconBtn btnData={deleteBtnData} />}
+          {currentUser.userToken === review.added_by && <IconBtn btnData={deleteBtnData} />}
         </h2>
         <span className="flex text-xs sm:text-sm my-1 sm:my-2 text-gray3">{setRating(review.rating)}</span>
         <p className="text-xs sm:text-sm">{review.content}</p>

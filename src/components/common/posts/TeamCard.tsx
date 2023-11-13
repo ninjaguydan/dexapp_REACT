@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
 
@@ -28,15 +30,15 @@ function TeamCard({ team }: ITeamProps) {
   const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
   );
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const toggleLike = useLikes(currentUser.id, likes, "team", team.id) as () => void;
+  const currentUser = useAppSelector(selectCurrentUser);
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
   const arr = [...Array(6).keys()];
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,
     content: likes.length,
     action: () => toggleLike(),
-    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
+    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
   };
 
   const commentBtnData = {

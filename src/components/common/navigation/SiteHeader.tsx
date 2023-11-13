@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import MenuBtn from "components/common/buttons/MenuBtn";
 import DesktopNav from "components/common/navigation/DesktopNav";
@@ -9,10 +11,9 @@ import MobileMenu from "components/common/navigation/MobileMenu";
 import useDeviceWidth from "hooks/useDeviceWidth";
 import dex_logo_icon from "media/dex-icon-4c.svg";
 import dex_logo_full from "media/dex-logo-w.svg";
-import { RootState } from "redux/store";
 
 const SiteHeader = () => {
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [breakpoint] = useDeviceWidth();
   const LOGO: { [key: string]: any } = {
@@ -22,14 +23,14 @@ const SiteHeader = () => {
   };
   const menuBtnData = {
     isOpen: menuIsOpen,
-    isVisible: !!currentUser.id,
+    isVisible: !!currentUser.userToken,
     action: () => {
       setMenuIsOpen(!menuIsOpen);
     },
   };
   const menuData = {
     isOpen: menuIsOpen,
-    user: currentUser,
+    user: currentUser.userInfo,
     closeMenu: () => {
       setMenuIsOpen(false);
     },

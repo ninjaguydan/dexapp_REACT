@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import Avatar from "components/common/buttons/Avatar";
 
@@ -33,7 +35,7 @@ function enableButton(count: number) {
 function PostForm({ btnText, placeholder, type, classList }: Props) {
   const [counter, setCounter] = useState(0);
   const [formData, setFormData] = useState(empty);
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
   function setValue(event: any) {
@@ -50,7 +52,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
       id: uuidv4(),
       content: formData.content,
       created: new Date().getTime(),
-      added_by: currentUser.id,
+      added_by: currentUser.userInfo.id,
       likes: [],
     };
     switch (type.name) {
@@ -89,7 +91,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
   return (
     <Card classList={classList}>
       <Avatar
-        user={currentUser}
+        user={currentUser.userInfo}
         classList="hidden sm:block h-16 w-16"
       />
       <form

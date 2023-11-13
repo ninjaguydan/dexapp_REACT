@@ -1,4 +1,15 @@
 export interface IUser {
+  id: number | string;
+  name: string;
+  username: string;
+  password: string;
+  bio?: string;
+  location?: string;
+  pronouns?: string;
+  user_img: string;
+  bg_color: string;
+}
+export interface IAuthUser {
   loading: boolean;
   userToken: string | null;
   error: string | null;

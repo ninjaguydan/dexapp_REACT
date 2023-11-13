@@ -1,9 +1,10 @@
 //dependencies
+import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 //comps
 import FormInput from "components/common/forms/FormInput";
@@ -12,7 +13,6 @@ import FormInput from "components/common/forms/FormInput";
 import { validator, checkIfValues, checkIfEmpty, confirmPasswordMatch } from "utils/Validator";
 import { IRegistrationObject } from "utils/Interfaces";
 import pk_ball from "media/pokeball.png";
-import { RootState } from "redux/store";
 
 const emptyForm = {
   name: "",
@@ -24,7 +24,7 @@ const emptyForm = {
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const [values, setValues] = useState<IRegistrationObject>(emptyForm);
   const [errors, setErrors] = useState(values);
   const handleChange = (event: any) => {
@@ -32,7 +32,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    if (!!currentUser.id) {
+    if (!!currentUser.userToken === true) {
       navigate("/dexapp_REACT");
     }
   }, []);

@@ -1,7 +1,7 @@
 //dependencies
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 //comps
 import Avatar from "components/common/buttons/Avatar";
@@ -9,7 +9,7 @@ import dex_icon from "media/dex-icon-w.svg";
 // import SearchBtn from "components/common/buttons/SearchBtn";
 
 export default function MobileNav() {
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser).userInfo;
 
   return (
     <nav className="fixed flex items-center justify-around border-t border-solid border-gray3 bg-gray2 bottom-0 px-5 pb-6 pt-2 z-[1] w-full">

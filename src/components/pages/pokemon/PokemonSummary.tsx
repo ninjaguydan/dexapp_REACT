@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { FaStar, FaHeart } from "react-icons/fa";
 import { RootState } from "redux/store";
 
@@ -22,7 +24,7 @@ interface Props {
 
 export default function PokemonSummary({ pokemon, isLoading }: Props) {
   const [showAddToTeam, setShowAddToTeam] = useState(false);
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.pkmn === pokemon?.id).length);
   const stats: { [key: string]: number } = {
     HP: pokemon?.hp || 0,
@@ -105,7 +107,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
       <ListItem classList="!justify-center">
         <p className="font-bold">Featured on 0 Teams!</p>
       </ListItem>
-      {!!currentUser.id && pokemon && (
+      {!!currentUser.userToken && pokemon && (
         <ListItem>
           <Button.Secondary
             action={() => {
@@ -130,7 +132,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
           onClose={() => {
             setShowAddToTeam(false);
           }}
-          userId={currentUser.id}
+          userId={currentUser.userInfo.id}
           pkmnId={pokemon!.id}
         />
       )}

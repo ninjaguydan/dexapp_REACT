@@ -1,8 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "redux/store";
-import { useAppSelector } from "hooks/hooks";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { selectCurrentUser } from "redux/slices/authSlice";
 
 import SelectAvatar from "components/common/buttons/SelectAvatar";
@@ -45,9 +43,8 @@ function handleChange(event: any, state: initForm, action: React.Dispatch<React.
 }
 
 function EditProfile({ closeEdit }: IEditProfileProps) {
-  const user = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
-  // const user = useSelector((state: RootState) => state.loggedUser);
+  const user = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<initForm>({
     name: user.userInfo.name,
     location: user.userInfo.location,
@@ -59,7 +56,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
   function updateProfile(event: any) {
     event.preventDefault();
     closeEdit();
-    dispatch({ type: "users/UPDATE", formData, userId: user.id });
+    dispatch({ type: "users/UPDATE", formData, userId: user.userInfo.id });
   }
 
   return (

@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 import DeletePost from "components/common/modals/DeletePost";
 import Avatar from "components/common/buttons/Avatar";
@@ -20,6 +22,7 @@ interface IPostProps {
 
 function Post({ post }: IPostProps) {
   const dispatch = useDispatch();
+  const currentUser = useAppSelector(selectCurrentUser);
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const replies = useSelector((state: RootState) =>
@@ -29,8 +32,7 @@ function Post({ post }: IPostProps) {
   const likes = useSelector((state: RootState) =>
     state.likes.filter((like) => like.postType === "post" && like.forId === post.id)
   );
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const toggleLike = useLikes(currentUser.id, likes, "post", post.id) as () => void;
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "post", post.id) as () => void;
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -45,7 +47,7 @@ function Post({ post }: IPostProps) {
     label: ICON_KEY.LIKES,
     content: likes.length,
     action: () => toggleLike(),
-    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
+    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
   };
   const commentBtnData = {
     label: ICON_KEY.COMMENTS,
@@ -73,7 +75,7 @@ function Post({ post }: IPostProps) {
           </Link>
           <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(post.created)}</span>
-          {currentUser?.id === post.added_by && <IconBtn btnData={deleteBtnData} />}
+          {currentUser.userToken === post.added_by && <IconBtn btnData={deleteBtnData} />}
         </h2>
         <p className="text-xs sm:text-sm">{post.content}</p>
         <div className="flex gap-x-8">
