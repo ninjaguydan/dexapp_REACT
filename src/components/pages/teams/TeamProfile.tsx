@@ -1,27 +1,31 @@
-import { useSelector } from "react-redux";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { RootState } from "redux/store";
 import { useAppSelector } from "hooks/hooks";
+import { useSelector } from "react-redux";
+
 import { selectCurrentUser } from "redux/slices/authSlice";
 
 import ReplyList from "components/common/posts/ReplyList";
-
 import TeamStats from "components/pages/teams/TeamStats";
 import TeamResistance from "components/pages/teams/TeamResistance";
 import TeamGrid from "components/common/posts/TeamGrid";
 
-import { IReply, ITeam, IUser } from "utils/Interfaces";
-import { memo } from "react";
+import { ITeam } from "utils/Interfaces";
+
+import { RootState } from "redux/store";
+import { makeSelectRepliesBy } from "redux/slices/replySlice";
 
 function TeamProfile() {
   const { teamName } = useParams();
-  const team: ITeam = useSelector((state: RootState) => state.teams.filter((team) => team.name === teamName)[0]);
+  // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
+  // get memoized replies
+  const selectTeamReplies = useMemo(makeSelectRepliesBy, []);
+  const replies = useAppSelector((state) => selectTeamReplies(state.replies, { id: team.id, type: "team" }));
+
+  const team: ITeam = useSelector((state: RootState) => state.teams.filter((team) => team.name === teamName)[0]);
   const created_by: string = useSelector(
     (state: RootState) => state.users.filter((user) => user.id === team.added_by)[0].username
-  );
-  const replies: IReply[] = useSelector((state: RootState) =>
-    state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
   );
 
   return (
@@ -46,4 +50,4 @@ function TeamProfile() {
     </div>
   );
 }
-export default memo(TeamProfile);
+export default TeamProfile;

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IReply } from "utils/Interfaces";
 
 const initialState: IReply[] = [
@@ -58,13 +58,25 @@ const replySlice = createSlice({
     },
     reply_DESTROY(state, action: PayloadAction<number | string>) {
       const postId = action.payload;
-      state = state.filter((reply) => reply.id !== postId);
+      return state.filter((reply) => reply.id !== postId);
     },
     reply_DESTROY_BY_POST(state, action: PayloadAction<number | string>) {
       const postId = action.payload;
-      state = state.filter((reply) => reply.forId !== postId);
+      return state.filter((reply) => reply.forId !== postId);
     },
   },
 });
 
 export default replySlice.reducer;
+
+// Selectors
+export const selectReplies = (state: IReply[]) => state;
+
+type Details = {
+  id: string | number;
+  type: "post" | "review" | "team";
+};
+export const makeSelectRepliesBy = () =>
+  createSelector([selectReplies, (state: IReply[], details: Details) => details], (replies, details) =>
+    replies.filter((reply) => reply.for === details.type && reply.forId === details.id)
+  );

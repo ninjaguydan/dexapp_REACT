@@ -1,28 +1,28 @@
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAppSelector, useAppDispatch } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
 import { Link } from "react-router-dom";
-import { RootState } from "redux/store";
+import { useSelector } from "react-redux";
 
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+import useLikes from "hooks/dispatch/useLikes";
+import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
+
+import DeletePost from "components/common/modals/DeletePost";
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
 import { StarOutline, Star } from "components/common/icons/index";
-import DeletePost from "components/common/modals/DeletePost";
 import ReplyList from "components/common/posts/ReplyList";
-
-import Spinner from "components/modules/Spinner";
 import Card from "components/modules/Card";
+import Spinner from "components/modules/Spinner";
 
-import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
-import useLikes from "hooks/dispatch/useLikes";
-
-import setImage from "utils/setDefaultImg";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
 import { IReview } from "utils/Interfaces";
+import setImage from "utils/setDefaultImg";
 
+import { RootState } from "redux/store";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { makeSelectLikesBy } from "redux/slices/likeSlice";
+import { makeSelectRepliesBy } from "redux/slices/replySlice";
 
 interface Props {
   review: IReview;
@@ -58,14 +58,14 @@ const Review = ({ review, TL_view = false }: Props) => {
   // get memoized likes
   const selectReviewLikes = useMemo(makeSelectLikesBy, []);
   const likes = useAppSelector((state) => selectReviewLikes(state.likes, { id: review.id, type: "review" }));
+  // get memoized replies
+  const selectReviewReplies = useMemo(makeSelectRepliesBy, []);
+  const replies = useAppSelector((state) => selectReviewReplies(state.replies, { id: review.id, type: "review" }));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const replies = useSelector((state: RootState) =>
-    state.replies.filter((reply) => reply.for === "review" && reply.forId === review.id)
-  );
-  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === review.added_by)[0]);
 
+  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === review.added_by)[0]);
   const { data: pkmnData, isLoading }: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(
     review.pkmn
   );

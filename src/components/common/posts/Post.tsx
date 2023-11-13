@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
 import { useState, useMemo } from "react";
-import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
+import useLikes from "hooks/dispatch/useLikes";
 
 import DeletePost from "components/common/modals/DeletePost";
 import Avatar from "components/common/buttons/Avatar";
@@ -11,12 +11,14 @@ import IconBtn from "components/common/buttons/IconBtn";
 import ReplyList from "components/common/posts/ReplyList";
 import Card from "components/modules/Card";
 
-import useLikes from "hooks/dispatch/useLikes";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IPost } from "utils/Interfaces";
 
+import { RootState } from "redux/store";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { makeSelectLikesBy } from "redux/slices/likeSlice";
+import { makeSelectRepliesBy } from "redux/slices/replySlice";
 
 interface IPostProps {
   post: IPost;
@@ -29,12 +31,12 @@ function Post({ post }: IPostProps) {
   // get memoized likes
   const selectPostLikes = useMemo(makeSelectLikesBy, []);
   const likes = useAppSelector((state) => selectPostLikes(state.likes, { id: post.id, type: "post" }));
+  // get memoized replies
+  const selectPostReplies = useMemo(makeSelectRepliesBy, []);
+  const replies = useAppSelector((state) => selectPostReplies(state.replies, { id: post.id, type: "post" }));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const replies = useSelector((state: RootState) =>
-    state.replies.filter((reply) => reply.for === "post" && reply.forId === post.id)
-  );
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === post.added_by)[0]);
 
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "post", post.id) as () => void;

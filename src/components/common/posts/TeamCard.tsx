@@ -1,22 +1,24 @@
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAppSelector } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
-import { RootState } from "redux/store";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import placeholder from "media/0.png";
+import { useAppSelector } from "hooks/hooks";
+import useLikes from "hooks/dispatch/useLikes";
 
-import ReplyList from "components/common/posts/ReplyList";
 import IconBtn from "components/common/buttons/IconBtn";
+import ReplyList from "components/common/posts/ReplyList";
 import Card from "components/modules/Card";
 
-import useLikes from "hooks/dispatch/useLikes";
+import placeholder from "media/0.png";
 
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference } from "utils/Helpers";
 import { ITeam } from "utils/Interfaces";
+
+import { RootState } from "redux/store";
+import { selectCurrentUser } from "redux/slices/authSlice";
 import { makeSelectLikesBy } from "redux/slices/likeSlice";
+import { makeSelectRepliesBy } from "redux/slices/replySlice";
 
 interface ITeamProps {
   team: ITeam;
@@ -28,12 +30,13 @@ function TeamCard({ team }: ITeamProps) {
   // get memoized likes
   const selectTeamLikes = useMemo(makeSelectLikesBy, []);
   const likes = useAppSelector((state) => selectTeamLikes(state.likes, { id: team.id, type: "team" }));
+  // get memoized replies
+  const selectTeamReplies = useMemo(makeSelectRepliesBy, []);
+  const replies = useAppSelector((state) => selectTeamReplies(state.replies, { id: team.id, type: "team" }));
 
+  // init state
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
   const [repliesVisible, setRepliesVisible] = useState(false);
-  const replies = useSelector((state: RootState) =>
-    state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
-  );
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
   const arr = [...Array(6).keys()];
 
