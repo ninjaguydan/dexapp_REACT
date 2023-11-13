@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
-import Btn from "components/common/buttons/Button";
-import Card from "components/modules/Card";
 import Avatar from "components/common/buttons/Avatar";
 
+import Card from "components/modules/Card";
+import Button from "components/modules/Button";
+
 import { IReply, IReview } from "utils/Interfaces";
-import { RootState } from "redux/store";
 
 interface Props {
   btnText: string;
@@ -127,11 +128,11 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
               } `}>
               {counter}/140
             </span>
-            <Btn
-              text={btnText}
+            <Button.Primary
               isDisabled={enableButton(counter) ? false : true}
-              classList="w-28"
-            />
+              classList="!px-8">
+              {btnText}
+            </Button.Primary>
           </div>
         </div>
       </form>

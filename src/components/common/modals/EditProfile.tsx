@@ -3,12 +3,12 @@ import { RootState } from "redux/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Btn from "components/common/buttons/Button";
 import SelectAvatar from "components/common/buttons/SelectAvatar";
 import SelectColor from "components/common/buttons/SelectColor";
 import FormInput from "components/common/forms/FormInput";
 
 import Modal from "components/modules/Modal";
+import Button from "components/modules/Button";
 
 interface IEditProfileProps {
   closeEdit: () => void;
@@ -115,13 +115,13 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
             ))}
           </div>
           <hr />
-          <Btn text="Update" />
+          <Button.Primary>Update</Button.Primary>
         </form>
-        <Btn
-          text="Delete Profile"
-          isSecondary={true}
-          classList="mt-4"
-        />
+        <Button.Secondary
+          classList="mt-2"
+          isDisabled={true}>
+          Delete Profile
+        </Button.Secondary>
       </Modal.Body>
     </Modal>
   );

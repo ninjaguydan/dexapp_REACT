@@ -17,7 +17,7 @@ export default function TeamResistance({ team }: ITeamResistanceProps) {
   return (
     <ul className="w-full h-[fit-content] relative bg-gray2 rounded border border-white border-opacity-10 border-solid">
       <li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center">
-        <h2 className="font-bold uppercase">Type Resistance</h2>
+        <h2 className="font-bold uppercase">Defensive Coverage</h2>
       </li>
       <li className="chart-container">
         <table className="w-full">

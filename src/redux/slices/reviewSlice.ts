@@ -1,0 +1,51 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IReview } from "utils/Interfaces";
+
+const initialState: IReview[] = [
+  {
+    id: 1,
+    content: "What an over rated piece of garbage!!",
+    rating: 3,
+    created: 1655158527085,
+    added_by: 1,
+    pkmn: 6,
+    likes: [],
+  },
+  {
+    id: 2,
+    content: "Mega evolution made him cool again",
+    rating: 9,
+    created: 1633439194661,
+    added_by: 2,
+    pkmn: 6,
+    likes: [],
+  },
+  { id: 3, content: "Bulba is great!", rating: 6, created: 1633439233667, added_by: 1, pkmn: 1, likes: [] },
+  {
+    id: 4,
+    content: "Best Middle Evo and it's not even close!!",
+    rating: 8,
+    created: 1638709633667,
+    added_by: 1,
+    pkmn: 8,
+    likes: [],
+  },
+  { id: 5, content: "big C H O N K", rating: 10, created: 1633439233667, added_by: 1, pkmn: 3, likes: [] },
+];
+
+const reviewSlice = createSlice({
+  name: "reviews",
+  initialState,
+  reducers: {
+    review_CREATE(state, action: PayloadAction<IReview>) {
+      const newReview = action.payload;
+      state.push(newReview);
+    },
+    review_DELETE(state, action: PayloadAction<string | number>) {
+      const reviewId = action.payload;
+      state = state.filter((review) => review.id !== reviewId);
+    },
+  },
+});
+
+export default reviewSlice.reducer;

@@ -54,12 +54,13 @@ export default function TeamStats({ current_user_id, team, created_by }: ITeamSt
       </li>
       {current_user_id === team.added_by && (
         <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-          <Button
+          <Button.Secondary
+            ref={buttonRef}
             action={() => {
               setShowEditTeam(true);
             }}>
-            <Button.Secondary ref={buttonRef}>Edit Team</Button.Secondary>
-          </Button>
+            Edit Team
+          </Button.Secondary>
         </li>
       )}
       {showStats && (

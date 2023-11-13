@@ -45,12 +45,13 @@ function UserSummary({ user }: Props) {
       </li>
       {currentUser?.id === user.id && (
         <li className="border-b border-white border-opacity-10 border-solid p-6">
-          <Button
+          <Button.Secondary
+            ref={buttonRef}
             action={() => {
               setEditForm(true);
             }}>
-            <Button.Secondary ref={buttonRef}>Edit Profile</Button.Secondary>
-          </Button>
+            Edit Profile
+          </Button.Secondary>
         </li>
       )}
       {user?.location && (

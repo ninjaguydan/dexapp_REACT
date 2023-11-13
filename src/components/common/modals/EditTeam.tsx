@@ -108,13 +108,9 @@ export default function EditTeam({ onClose, team }: Props) {
               </label>
             ))}
           </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button action={handleDelete}>
-              <Button.Secondary>Delete Team</Button.Secondary>
-            </Button>
-            <Button action={() => {}}>
-              <Button.Primary>Save</Button.Primary>
-            </Button>
+          <div className="flex flex-col sm:flex-row-reverse gap-4">
+            <Button.Primary>Save</Button.Primary>
+            <Button.Secondary action={handleDelete}>Delete Team</Button.Secondary>
           </div>
         </form>
       </Modal.Body>

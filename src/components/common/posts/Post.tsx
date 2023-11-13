@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { RootState } from "redux/store";
+import { Link } from "react-router-dom";
 
 import DeletePost from "components/common/modals/DeletePost";
 import Avatar from "components/common/buttons/Avatar";
@@ -55,6 +55,8 @@ function Post({ post }: IPostProps) {
     },
     state: false,
   };
+
+  console.log("Post render");
 
   return (
     <Card>

@@ -13,6 +13,8 @@ function Timeline() {
   const currentUser = useSelector((state: RootState) => state.loggedUser);
   const timeline = generateTimeline(posts, reviews, teams);
 
+  console.log("Timeline render");
+
   return (
     <div className="post-column main w-full max-w-2xl lg:max-w-none">
       {!!currentUser.id && (

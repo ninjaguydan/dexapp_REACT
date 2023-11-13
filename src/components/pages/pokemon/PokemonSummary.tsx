@@ -107,12 +107,12 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
       </ListItem>
       {!!currentUser.id && pokemon && (
         <ListItem>
-          <Button
+          <Button.Secondary
             action={() => {
               setShowAddToTeam(true);
             }}>
-            <Button.Secondary>Add to Team</Button.Secondary>
-          </Button>
+            Add to Team
+          </Button.Secondary>
         </ListItem>
       )}
       <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">

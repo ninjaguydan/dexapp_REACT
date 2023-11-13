@@ -19,8 +19,7 @@ interface ITeamProps {
   team: ITeam;
 }
 
-function Team({ team }: ITeamProps) {
-  const dispatch = useDispatch();
+function TeamCard({ team }: ITeamProps) {
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
   const [repliesVisible, setRepliesVisible] = useState(false);
   const replies = useSelector((state: RootState) =>
@@ -48,6 +47,8 @@ function Team({ team }: ITeamProps) {
     },
     state: false,
   };
+
+  console.log("TeamCard render");
 
   return (
     <Card>
@@ -109,4 +110,4 @@ function Team({ team }: ITeamProps) {
   );
 }
 
-export default Team;
+export default TeamCard;

@@ -1,13 +1,19 @@
 export interface IUser {
-  id: number | string;
-  name: string;
-  username: string;
-  password: string;
-  bio: string;
-  location: string;
-  pronouns: string;
-  user_img: string;
-  bg_color: string;
+  loading: false;
+  userToken: null;
+  error: null;
+  success: false;
+  userInfo: {
+    id: number | string;
+    name: string;
+    username: string;
+    password: string;
+    bio?: string;
+    location?: string;
+    pronouns?: string;
+    user_img: string;
+    bg_color: string;
+  };
 }
 export interface IPost {
   id: number | string;

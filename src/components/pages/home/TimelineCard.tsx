@@ -1,6 +1,6 @@
 import Post from "components/common/posts/Post";
 import Review from "components/common/posts/Review";
-import Team from "components/common/posts/TeamCard";
+import TeamCard from "components/common/posts/TeamCard";
 
 import { IPost, IReview, ITeam } from "utils/Interfaces";
 
@@ -20,7 +20,7 @@ function TimelineCard({ review = false, team = false, data }: ITimelineCardProps
     );
   }
   if (team) {
-    return <Team team={data as ITeam} />;
+    return <TeamCard team={data as ITeam} />;
   }
 
   return <Post post={data as IPost} />;

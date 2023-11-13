@@ -100,20 +100,20 @@ Modal.Body = function ModalBody(props: any) {
 Modal.Footer = function ModalFooter(props: any) {
   const { closeModal, onConfirm } = useContext(ModalContext);
   return (
-    <footer className="flex items-center gap-x-4">
-      <Button
-        action={() => {
-          closeModal();
-        }}>
-        <Button.Secondary>Cancel</Button.Secondary>
-      </Button>
-      <Button
+    <footer className="flex gap-4 flex-col xsm:flex-row-reverse items-center ">
+      <Button.Primary
         action={() => {
           onConfirm();
           closeModal();
         }}>
-        <Button.Primary>{props.children}</Button.Primary>
-      </Button>
+        {props.children}
+      </Button.Primary>
+      <Button.Secondary
+        action={() => {
+          closeModal();
+        }}>
+        Cancel
+      </Button.Secondary>
     </footer>
   );
 };

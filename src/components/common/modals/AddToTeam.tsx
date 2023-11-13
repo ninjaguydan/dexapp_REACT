@@ -83,21 +83,17 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
               </select>
             </div>
             {myTeams.length === 0 && <p>No teams with available slots. Try creating a new one!</p>}
-            <Button
-              action={() => {}}
-              isDisabled={myTeams.length === 0}>
-              <Button.Primary>Add to Team</Button.Primary>
-            </Button>
+            <Button.Primary isDisabled={myTeams.length === 0}>Add to Team</Button.Primary>
             <span className="flex items-center gap-x-2">
               <hr className="w-full" />
               OR <hr className="w-full" />
             </span>
-            <Button
+            <Button.Secondary
               action={() => {
                 setShowCreateForm(true);
               }}>
-              <Button.Secondary>Create New Team</Button.Secondary>
-            </Button>
+              Create New Team
+            </Button.Secondary>
           </form>
         ) : (
           <form
@@ -114,16 +110,14 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
               />
               {error && <p className="text-red-500 text-xs">{error}</p>}
             </div>
-            <Button action={() => {}}>
-              <Button.Primary>Create Team and Add</Button.Primary>
-            </Button>
-            <Button
+            <Button.Primary>Create Team and Add</Button.Primary>
+            <Button.Secondary
               action={() => {
                 setShowCreateForm(false);
                 setError("");
               }}>
-              <Button.Secondary>Back</Button.Secondary>
-            </Button>
+              Back
+            </Button.Secondary>
           </form>
         )}
       </Modal.Body>

@@ -1,41 +1,33 @@
 import { createContext, useContext, forwardRef, useImperativeHandle, useRef } from "react";
 
 type Props = {
-  action: () => void;
-  children: React.ReactNode;
+  action?: () => void;
+  children?: React.ReactNode;
   isDisabled?: boolean;
-  ref?: React.MutableRefObject<HTMLButtonElement>;
+  classList?: string;
 };
 
 const ButtonContext = createContext({
-  action: () => {},
   isDisabled: false,
-  ref: {} as React.MutableRefObject<HTMLButtonElement> | undefined,
 });
 
-export default function Button({ children, action, isDisabled = false, ref }: Props) {
-  return <ButtonContext.Provider value={{ action, isDisabled, ref }}>{children}</ButtonContext.Provider>;
+export default function Button({ children, action, isDisabled = false }: Props) {
+  return <ButtonContext.Provider value={{ isDisabled }}>{children}</ButtonContext.Provider>;
 }
 
-Button.Primary = forwardRef(function ButtonPrimary(props: any, ref?) {
-  const { action, isDisabled } = useContext(ButtonContext);
-  // const btnRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
-
+Button.Primary = forwardRef(function ButtonPrimary({ children, action = () => {}, isDisabled, classList }: Props, ref?) {
   return (
     <button
-      // ref={btnRef as any}
-      className="w-full py-1 px-8 rounded text-white disabled:opacity-50 bg-primary hover:bg-primaryDark"
+      className={`w-full p-1 rounded text-white disabled:opacity-50 bg-primary hover:bg-primaryDark ${classList}`}
       onClick={() => action()}
       disabled={isDisabled}>
-      {props.children}
+      {children}
     </button>
   );
 });
 
-Button.Secondary = forwardRef(function ButtonSecondary(props: any, ref?) {
-  const { action, isDisabled } = useContext(ButtonContext);
+Button.Secondary = forwardRef(function ButtonSecondary({ children, action = () => {}, isDisabled, classList }: Props, ref?) {
   const btnRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
-
   useImperativeHandle(
     ref, //forwarded ref
     function () {
@@ -52,10 +44,10 @@ Button.Secondary = forwardRef(function ButtonSecondary(props: any, ref?) {
     <button
       ref={btnRef as any}
       type="button"
-      className="w-full py-1 px-8 rounded text-white disabled:opacity-50 border border-solid border-white hover:bg-[#3d3c44]"
+      className={`w-full p-1 rounded text-white disabled:opacity-50 border border-solid border-white hover:bg-[#3d3c44] ${classList}`}
       onClick={() => action()}
       disabled={isDisabled}>
-      {props.children}
+      {children}
     </button>
   );
 });

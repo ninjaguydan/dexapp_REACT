@@ -94,6 +94,8 @@ const Review = ({ review, TL_view = false }: Props) => {
     return <Spinner />;
   }
 
+  console.log("Review render");
+
   return (
     <Card>
       {TL_view ? (
