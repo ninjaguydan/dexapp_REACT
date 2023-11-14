@@ -14,9 +14,7 @@ function Timeline() {
   const reviews = useSelector((state: RootState) => state.reviews);
   const teams = useSelector((state: RootState) => state.teams);
   const timeline = generateTimeline(posts, reviews, teams);
-
-  console.log("Timeline render");
-
+  console.count("TL counter");
   return (
     <div className="post-column main w-full max-w-2xl lg:max-w-none">
       {!!currentUser.id && (

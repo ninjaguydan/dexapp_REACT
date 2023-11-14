@@ -78,5 +78,8 @@ type Details = {
 };
 export const makeSelectRepliesBy = () =>
   createSelector([selectReplies, (state: IReply[], details: Details) => details], (replies, details) =>
-    replies.filter((reply) => reply.for === details.type && reply.forId === details.id)
+    replies.filter((reply) => {
+      console.log("Reply Selector");
+      return reply.for === details.type && reply.forId === details.id;
+    })
   );

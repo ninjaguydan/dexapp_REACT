@@ -9,10 +9,16 @@ import DesktopMenu from "components/common/navigation/DesktopMenu";
 import { FaAngleDown } from "components/common/icons/index";
 
 import { truncateStr } from "utils/Helpers";
+import useDeviceWidth from "hooks/useDeviceWidth";
 
 const DesktopNav = () => {
   const currentUser = useAppSelector(selectCurrentUser);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const [breakpoint] = useDeviceWidth();
+
+  if (breakpoint === "MOBILE") return <></>;
+
+  console.count("Desktop Nav counter");
 
   let menuNode = !!currentUser.userToken ? (
     <div className="nav-user-desk flex items-center gap-x-1">

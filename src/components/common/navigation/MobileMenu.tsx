@@ -3,7 +3,9 @@ import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "hooks/hooks";
 
-import Avatar from "../buttons/Avatar";
+import useDeviceWidth from "hooks/useDeviceWidth";
+
+import Avatar from "components/common/buttons/Avatar";
 
 //utility
 import dex_icon_w from "media/dex-icon-w.svg";
@@ -20,8 +22,9 @@ interface Props {
 const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [breakpoint] = useDeviceWidth();
 
-  if (!isOpen) return <></>;
+  if (!isOpen || breakpoint !== "MOBILE") return <></>;
 
   const onLogout = () => {
     closeMenu();

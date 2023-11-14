@@ -10,7 +10,6 @@ while (arr.length < 10) {
 }
 
 function TopTenList() {
-  console.log("Top 10 render");
   return (
     <ol
       className="relative flex w-full max-w-2xl overflow-auto lg:overflow-visible bg-gray2 rounded border border-white border-solid border-opacity-10 lg:flex-col lg:max-w-sm"

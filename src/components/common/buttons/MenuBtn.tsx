@@ -1,3 +1,4 @@
+import useDeviceWidth from "hooks/useDeviceWidth";
 import { createPortal } from "react-dom";
 
 interface Props {
@@ -5,7 +6,8 @@ interface Props {
 }
 
 const MenuBtn = ({ data: { action, isOpen, isVisible } }: Props) => {
-  if (!isVisible) return <></>;
+  const [breakpoint] = useDeviceWidth();
+  if (!isVisible || breakpoint !== "MOBILE") return <></>;
   return createPortal(
     <>
       <button

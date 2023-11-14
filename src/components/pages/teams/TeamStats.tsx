@@ -27,7 +27,7 @@ export default function TeamStats({ current_user_id, team, created_by }: ITeamSt
   // hooks
   const { statTable: stats } = useSetStats(team.members);
   // get memoized likes
-  const selectTeamLikes = useMemo(makeSelectLikesBy, []);
+  const selectTeamLikes = useMemo(makeSelectLikesBy, [team.id]);
   const likes = useAppSelector((state) => selectTeamLikes(state.likes, { id: team.id, type: "team" }));
   // var
   const toggleLike = useLikes(current_user_id, likes, "team", team.id) as () => void;

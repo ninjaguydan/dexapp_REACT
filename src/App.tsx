@@ -3,7 +3,6 @@ import { Routes, Route, BrowserRouter as MyRouter } from "react-router-dom";
 // Comps
 import SiteHeader from "components/common/navigation/SiteHeader";
 import MobileNav from "components/common/navigation/MobileNav";
-import useDeviceWidth from "hooks/useDeviceWidth";
 
 //Pages
 import Login from "components/pages/login/Login";
@@ -18,13 +17,12 @@ import PageNotFound from "components/pages/error404/PageNotFound";
 import ScrolltoTop from "hooks/ScrollToTop";
 
 function App() {
-  const [breakpoint] = useDeviceWidth();
-
+  console.count("App counter");
   return (
     <MyRouter>
       <ScrolltoTop />
       <SiteHeader />
-      {breakpoint === "MOBILE" && <MobileNav />}
+      <MobileNav />
       <main className="py-24 profile main flex items-center flex-col gap-x-4 max-w-5xl mx-auto lg:flex-row-reverse lg:items-start">
         <Routes>
           <Route

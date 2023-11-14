@@ -18,6 +18,7 @@ import Card from "components/modules/Card";
 import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IReply } from "utils/Interfaces";
+import { selectUserById } from "redux/slices/userSlice";
 
 interface Props {
   reply: IReply;
@@ -28,10 +29,10 @@ function ReplyCard({ reply }: Props) {
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized likes
-  const selectReplyLikes = useMemo(makeSelectLikesBy, []);
+  const selectReplyLikes = useMemo(makeSelectLikesBy, [reply.id]);
   const likes = useAppSelector((state) => selectReplyLikes(state.likes, { id: reply.id, type: "reply" }));
-
-  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === reply.added_by)[0]);
+  // get user
+  const user = useAppSelector((state) => selectUserById(state.users, reply.added_by));
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "reply", reply.id) as () => void;
   const [showPopup, setShowPopup] = useState(false);
 

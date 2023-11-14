@@ -17,13 +17,13 @@ import { makeSelectRepliesBy } from "redux/slices/replySlice";
 
 function TeamProfile() {
   const { teamName } = useParams();
+  const team: ITeam = useSelector((state: RootState) => state.teams.filter((team) => team.name === teamName)[0]);
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized replies
-  const selectTeamReplies = useMemo(makeSelectRepliesBy, []);
+  const selectTeamReplies = useMemo(makeSelectRepliesBy, [team.id]);
   const replies = useAppSelector((state) => selectTeamReplies(state.replies, { id: team.id, type: "team" }));
 
-  const team: ITeam = useSelector((state: RootState) => state.teams.filter((team) => team.name === teamName)[0]);
   const created_by: string = useSelector(
     (state: RootState) => state.users.filter((user) => user.id === team.added_by)[0].username
   );

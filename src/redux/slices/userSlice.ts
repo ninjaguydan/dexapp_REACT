@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "utils/Interfaces";
 
 const initialState: IUser[] = [
@@ -62,3 +62,10 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+// Selectors
+export const selectUsers = (state: IUser[]) => state;
+export const selectUserById = createSelector(
+  [selectUsers, (state, userId) => userId],
+  (users, userId) => users.filter((user) => user.id === userId)[0]
+);
