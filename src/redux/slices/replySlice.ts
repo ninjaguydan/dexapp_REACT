@@ -1,4 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 import { IReply } from "utils/Interfaces";
 
 const initialState: IReply[] = [
@@ -70,16 +71,23 @@ const replySlice = createSlice({
 export default replySlice.reducer;
 
 // Selectors
-export const selectReplies = (state: IReply[]) => state;
+export const selectReplies = (state: RootState) => state.replies;
 
-type Details = {
-  id: string | number;
-  type: "post" | "review" | "team";
-};
-export const makeSelectRepliesBy = () =>
-  createSelector([selectReplies, (state: IReply[], details: Details) => details], (replies, details) =>
+export const makeSelectRepliesByPost = () =>
+  createSelector([selectReplies, (state, postId) => postId], (replies, postId) =>
     replies.filter((reply) => {
-      console.log("Reply Selector");
-      return reply.for === details.type && reply.forId === details.id;
+      return reply.for === "post" && reply.forId === postId;
+    })
+  );
+export const makeSelectRepliesByReview = () =>
+  createSelector([selectReplies, (state, reviewId) => reviewId], (replies, reviewId) =>
+    replies.filter((reply) => {
+      return reply.for === "review" && reply.forId === reviewId;
+    })
+  );
+export const makeSelectRepliesByTeam = () =>
+  createSelector([selectReplies, (state, teamId) => teamId], (replies, teamId) =>
+    replies.filter((reply) => {
+      return reply.for === "team" && reply.forId === teamId;
     })
   );

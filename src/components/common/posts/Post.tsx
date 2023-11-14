@@ -17,8 +17,8 @@ import { IPost } from "utils/Interfaces";
 
 import { RootState } from "redux/store";
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { makeSelectLikesBy } from "redux/slices/likeSlice";
-import { makeSelectRepliesBy } from "redux/slices/replySlice";
+import { MakeSelectLikesByPost } from "redux/slices/likeSlice";
+import { makeSelectRepliesByPost } from "redux/slices/replySlice";
 
 interface IPostProps {
   post: IPost;
@@ -29,17 +29,17 @@ function Post({ post }: IPostProps) {
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized likes
-  const selectPostLikes = useMemo(makeSelectLikesBy, []);
-  // const likes = useAppSelector((state) => selectPostLikes(state.likes, { id: post.id, type: "post" }));
+  const selectPostLikes = useMemo(MakeSelectLikesByPost, []);
+  const likes = useAppSelector((state) => selectPostLikes(state, post.id));
   // get memoized replies
-  // const selectPostReplies = useMemo(makeSelectRepliesBy, []);
-  // const replies = useAppSelector((state) => selectPostReplies(state.replies, { id: post.id, type: "post" }));
+  const selectPostReplies = useMemo(makeSelectRepliesByPost, []);
+  const replies = useAppSelector((state) => selectPostReplies(state, post.id));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const user = useSelector((state: RootState) => state.users.filter((user) => user.id === post.added_by)[0]);
 
-  // const toggleLike = useLikes(currentUser.userInfo.id, likes, "post", post.id) as () => void;
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "post", post.id) as () => void;
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -50,21 +50,20 @@ function Post({ post }: IPostProps) {
     state: true,
     classList: "absolute top-4 right-4",
   };
-  // const likeBtnData = {
-  //   label: ICON_KEY.LIKES,
-  //   content: likes.length,
-  //   action: () => toggleLike(),
-  //   state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
-  // };
-  // const commentBtnData = {
-  //   label: ICON_KEY.COMMENTS,
-  //   content: replies.length,
-  //   action: () => {
-  //     setRepliesVisible(!repliesVisible);
-  //   },
-  //   state: false,
-  // };
-  console.count("Post counter");
+  const likeBtnData = {
+    label: ICON_KEY.LIKES,
+    content: likes.length,
+    action: () => toggleLike(),
+    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
+  };
+  const commentBtnData = {
+    label: ICON_KEY.COMMENTS,
+    content: replies.length,
+    action: () => {
+      setRepliesVisible(!repliesVisible);
+    },
+    state: false,
+  };
 
   return (
     <Card>
@@ -85,18 +84,18 @@ function Post({ post }: IPostProps) {
         </h2>
         <p className="text-xs sm:text-sm">{post.content}</p>
         <div className="flex gap-x-8">
-          {/* <IconBtn btnData={likeBtnData} /> */}
-          {/* <IconBtn btnData={commentBtnData} /> */}
+          <IconBtn btnData={likeBtnData} />
+          <IconBtn btnData={commentBtnData} />
         </div>
       </div>
       <div className="w-full">
-        {/* {repliesVisible && (
+        {repliesVisible && (
           <ReplyList
             replies={replies}
             user={user.username}
             kind={{ name: "post", id: post.id }}
           />
-        )} */}
+        )}
       </div>
       {showPopup && (
         <DeletePost

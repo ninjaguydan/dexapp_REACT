@@ -1,13 +1,11 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
 
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import useLikes from "hooks/dispatch/useLikes";
 
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { makeSelectLikesBy } from "redux/slices/likeSlice";
+import { MakeSelectLikesByReply } from "redux/slices/likeSlice";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
@@ -29,8 +27,8 @@ function ReplyCard({ reply }: Props) {
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized likes
-  const selectReplyLikes = useMemo(makeSelectLikesBy, [reply.id]);
-  const likes = useAppSelector((state) => selectReplyLikes(state.likes, { id: reply.id, type: "reply" }));
+  const selectReplyLikes = useMemo(MakeSelectLikesByReply, []);
+  const likes = useAppSelector((state) => selectReplyLikes(state, reply.id));
   // get user
   const user = useAppSelector((state) => selectUserById(state.users, reply.added_by));
   const toggleLike = useLikes(currentUser.userInfo.id, likes, "reply", reply.id) as () => void;
@@ -70,7 +68,8 @@ function ReplyCard({ reply }: Props) {
         </h3>
         <p className="text-xs sm:text-sm">{reply.content}</p>
         <div className="flex gap-x-8">
-          <IconBtn btnData={likeBtnData} />
+          {" "}
+          <IconBtn btnData={likeBtnData} />{" "}
         </div>
       </div>
       {showPopup && (

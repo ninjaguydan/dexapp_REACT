@@ -18,8 +18,6 @@ const DesktopNav = () => {
 
   if (breakpoint === "MOBILE") return <></>;
 
-  console.count("Desktop Nav counter");
-
   let menuNode = !!currentUser.userToken ? (
     <div className="nav-user-desk flex items-center gap-x-1">
       <Avatar

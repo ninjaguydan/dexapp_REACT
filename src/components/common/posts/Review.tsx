@@ -21,8 +21,8 @@ import setImage from "utils/setDefaultImg";
 
 import { RootState } from "redux/store";
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { makeSelectLikesBy } from "redux/slices/likeSlice";
-import { makeSelectRepliesBy } from "redux/slices/replySlice";
+import { MakeSelectLikesByReview } from "redux/slices/likeSlice";
+import { makeSelectRepliesByReview } from "redux/slices/replySlice";
 
 interface Props {
   review: IReview;
@@ -56,11 +56,11 @@ const Review = ({ review, TL_view = false }: Props) => {
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized likes
-  // const selectReviewLikes = useMemo(makeSelectLikesBy, []);
-  // const likes = useAppSelector((state) => selectReviewLikes(state.likes, { id: review.id, type: "review" }));
+  const selectReviewLikes = useMemo(MakeSelectLikesByReview, []);
+  const likes = useAppSelector((state) => selectReviewLikes(state, review.id));
   // get memoized replies
-  // const selectReviewReplies = useMemo(makeSelectRepliesBy, []);
-  // const replies = useAppSelector((state) => selectReviewReplies(state.replies, { id: review.id, type: "review" }));
+  const selectReviewReplies = useMemo(makeSelectRepliesByReview, []);
+  const replies = useAppSelector((state) => selectReviewReplies(state, review.id));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -69,7 +69,7 @@ const Review = ({ review, TL_view = false }: Props) => {
   const { data: pkmnData, isLoading }: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(
     review.pkmn
   );
-  // const toggleLike = useLikes(currentUser.userInfo.id, likes, "review", review.id) as () => void;
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "review", review.id) as () => void;
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -81,21 +81,21 @@ const Review = ({ review, TL_view = false }: Props) => {
     classList: "absolute top-4 right-4",
   };
 
-  // const likeBtnData = {
-  //   label: ICON_KEY.LIKES,
-  //   content: likes.length,
-  //   action: () => toggleLike(),
-  //   state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
-  // };
+  const likeBtnData = {
+    label: ICON_KEY.LIKES,
+    content: likes.length,
+    action: () => toggleLike(),
+    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
+  };
 
-  // const commentBtnData = {
-  //   label: ICON_KEY.COMMENTS,
-  //   content: replies.length,
-  //   action: () => {
-  //     setRepliesVisible(!repliesVisible);
-  //   },
-  //   state: false,
-  // };
+  const commentBtnData = {
+    label: ICON_KEY.COMMENTS,
+    content: replies.length,
+    action: () => {
+      setRepliesVisible(!repliesVisible);
+    },
+    state: false,
+  };
 
   if (isLoading || !pkmnData) {
     return <Spinner />;
@@ -143,18 +143,18 @@ const Review = ({ review, TL_view = false }: Props) => {
         <span className="flex text-xs sm:text-sm my-1 sm:my-2 text-gray3">{setRating(review.rating)}</span>
         <p className="text-xs sm:text-sm">{review.content}</p>
         <div className="flex gap-x-8">
-          {/* <IconBtn btnData={likeBtnData} /> */}
-          {/* <IconBtn btnData={commentBtnData} /> */}
+          <IconBtn btnData={likeBtnData} />
+          <IconBtn btnData={commentBtnData} />
         </div>
       </div>
       <div className="w-full">
-        {/* {repliesVisible && (
+        {repliesVisible && (
           <ReplyList
             replies={replies}
             user={user.username}
             kind={{ name: "review", id: review.id }}
           />
-        )} */}
+        )}
       </div>
       {showPopup && (
         <DeletePost

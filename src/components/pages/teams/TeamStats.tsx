@@ -1,18 +1,19 @@
 import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "redux/store";
 
 import IconBtn from "components/common/buttons/IconBtn";
 
-import useLikes from "hooks/dispatch/useLikes";
-import { ICON_KEY } from "utils/iconKey";
-import { ITeam, IUser, ISTable } from "utils/Interfaces";
-import Button from "components/modules/Button";
-import EditTeam from "components/common/modals/EditTeam";
-import useSetStats from "hooks/fetchers/useSetStats";
-import { makeSelectLikesBy } from "redux/slices/likeSlice";
 import { useAppSelector } from "hooks/hooks";
+import useLikes from "hooks/dispatch/useLikes";
+import useSetStats from "hooks/fetchers/useSetStats";
+
+import EditTeam from "components/common/modals/EditTeam";
+import Button from "components/modules/Button";
+
+import { ICON_KEY } from "utils/iconKey";
+import { ITeam } from "utils/Interfaces";
+
+import { MakeSelectLikesByTeam } from "redux/slices/likeSlice";
 
 interface ITeamStatsProps {
   current_user_id: string | number;
@@ -27,8 +28,8 @@ export default function TeamStats({ current_user_id, team, created_by }: ITeamSt
   // hooks
   const { statTable: stats } = useSetStats(team.members);
   // get memoized likes
-  const selectTeamLikes = useMemo(makeSelectLikesBy, [team.id]);
-  const likes = useAppSelector((state) => selectTeamLikes(state.likes, { id: team.id, type: "team" }));
+  const selectTeamLikes = useMemo(MakeSelectLikesByTeam, []);
+  const likes = useAppSelector((state) => selectTeamLikes(state, team.id));
   // var
   const toggleLike = useLikes(current_user_id, likes, "team", team.id) as () => void;
   const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();

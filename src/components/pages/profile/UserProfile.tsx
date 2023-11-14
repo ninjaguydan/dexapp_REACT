@@ -1,21 +1,26 @@
-import { useSelector } from "react-redux";
-import { useAppSelector } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+
+import { useAppSelector } from "hooks/hooks";
 
 import PostForm from "components/common/posts/PostForm";
 import UserSummary from "components/pages/profile/UserSummary";
-
 import PostList from "components/common/posts/PostList";
 
 import { IUser } from "utils/Interfaces";
-import { RootState } from "redux/store";
+
+import { selectCurrentUser } from "redux/slices/authSlice";
+import { selectPostById } from "redux/slices/postSlice";
 
 const UserProfile = () => {
+  // parameter: "profile/username"
   const { username } = useParams();
+  // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
-  const user = useSelector((state: RootState) => state.users.filter((u) => u.username === username)[0]);
-  const posts = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).reverse());
+  const user = useAppSelector((state) => state.users.filter((u) => u.username === username)[0]);
+  // get memoized posts
+  const selectPosts = useMemo(selectPostById, []);
+  const posts = useAppSelector((state) => selectPosts(state, user.id));
 
   return (
     <div className="flex flex-col w-full gap-x-4 gap-y-4 sm:flex-row">

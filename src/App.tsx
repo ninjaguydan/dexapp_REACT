@@ -17,7 +17,6 @@ import PageNotFound from "components/pages/error404/PageNotFound";
 import ScrolltoTop from "hooks/ScrollToTop";
 
 function App() {
-  console.count("App counter");
   return (
     <MyRouter>
       <ScrolltoTop />

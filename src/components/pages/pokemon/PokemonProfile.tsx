@@ -1,25 +1,30 @@
-import { useSelector } from "react-redux";
-import { useAppSelector } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
-import { RootState } from "redux/store";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+
+import { useAppSelector } from "hooks/hooks";
+import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
 
 import PostForm from "components/common/posts/PostForm";
 import PokemonSummary from "components/pages/pokemon/PokemonSummary";
 import ReviewList from "components/common/posts/ReviewList";
 
-import useFetchPkmn from "hooks/fetchers/useFetchPkmn";
-
 import { titleCase } from "utils/Helpers";
 import { IPokemon } from "utils/Interfaces";
 
+import { selectCurrentUser } from "redux/slices/authSlice";
+import { selectReviewsByPkmn } from "redux/slices/reviewSlice";
+
 const PokemonProfile = () => {
-  const { id } = useParams();
+  // parameter: "pokemon/number"
+  const { id } = useParams<string>();
+  const pkmnId: number = parseInt(id!);
+  // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
-  const { data: pkmnData, isLoading }: { data: IPokemon | undefined; isLoading: boolean } = useFetchPkmn(parseInt(id!));
-  const reviews = useSelector((state: RootState) =>
-    state.reviews.filter((review) => review.pkmn === parseInt(id as string)).reverse()
-  );
+  // get memoized reviews
+  const selectReviews = useMemo(selectReviewsByPkmn, []);
+  const reviews = useAppSelector((state) => selectReviews(state, pkmnId));
+  // fetch Pokemon
+  const { data: pkmnData, isLoading }: { data: IPokemon | undefined; isLoading: boolean } = useFetchPkmn(pkmnId);
 
   return (
     <div className="flex flex-col w-full gap-x-4 gap-y-4 sm:flex-row">

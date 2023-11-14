@@ -13,7 +13,7 @@ import TeamGrid from "components/common/posts/TeamGrid";
 import { ITeam } from "utils/Interfaces";
 
 import { RootState } from "redux/store";
-import { makeSelectRepliesBy } from "redux/slices/replySlice";
+import { makeSelectRepliesByTeam } from "redux/slices/replySlice";
 
 function TeamProfile() {
   const { teamName } = useParams();
@@ -21,8 +21,8 @@ function TeamProfile() {
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized replies
-  const selectTeamReplies = useMemo(makeSelectRepliesBy, [team.id]);
-  const replies = useAppSelector((state) => selectTeamReplies(state.replies, { id: team.id, type: "team" }));
+  const selectTeamReplies = useMemo(makeSelectRepliesByTeam, []);
+  const replies = useAppSelector((state) => selectTeamReplies(state, team.id));
 
   const created_by: string = useSelector(
     (state: RootState) => state.users.filter((user) => user.id === team.added_by)[0].username

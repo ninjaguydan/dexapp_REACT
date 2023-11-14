@@ -1,23 +1,21 @@
-import { useSelector } from "react-redux";
-import { useAppSelector } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
-
 import PostForm from "components/common/posts/PostForm";
 import TimelineCard from "components/pages/home/TimelineCard";
 
+import { useAppSelector } from "hooks/hooks";
+
 import generateTimeline from "utils/generateTimeline";
-import { RootState } from "redux/store";
+
+import { selectCurrentUser } from "redux/slices/authSlice";
 
 function Timeline() {
-  const currentUser = useAppSelector(selectCurrentUser).userInfo;
-  const posts = useSelector((state: RootState) => state.posts);
-  const reviews = useSelector((state: RootState) => state.reviews);
-  const teams = useSelector((state: RootState) => state.teams);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const posts = useAppSelector((state) => state.posts);
+  const reviews = useAppSelector((state) => state.reviews);
+  const teams = useAppSelector((state) => state.teams);
   const timeline = generateTimeline(posts, reviews, teams);
-  console.count("TL counter");
   return (
     <div className="post-column main w-full max-w-2xl lg:max-w-none">
-      {!!currentUser.id && (
+      {!!currentUser.userToken && (
         <PostForm
           btnText={"Post"}
           placeholder={"What's on your mind?"}

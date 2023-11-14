@@ -41,13 +41,21 @@ export default likeSlice.reducer;
 export const { like_ADD, like_REMOVE } = likeSlice.actions;
 
 // Selectors
-export const selectLikes = (state: ILike[]) => state;
+const selectLikes = (state: RootState) => state.likes;
 
-type Details = {
-  id: string | number;
-  type: "post" | "review" | "team" | "reply";
-};
-export const makeSelectLikesBy = () =>
-  createSelector([selectLikes, (state: ILike[], details: Details) => details], (likes, details) =>
-    likes.filter((like) => like.postType === details.type && like.forId === details.id)
+export const MakeSelectLikesByReview = () =>
+  createSelector([selectLikes, (state: RootState, reviewId: number | string) => reviewId], (likes, reviewId) =>
+    likes.filter((like) => like.postType === "review" && like.forId === reviewId)
+  );
+export const MakeSelectLikesByPost = () =>
+  createSelector([selectLikes, (state: RootState, postId: number | string) => postId], (likes, postId) =>
+    likes.filter((like) => like.postType === "post" && like.forId === postId)
+  );
+export const MakeSelectLikesByReply = () =>
+  createSelector([selectLikes, (state: RootState, replyId: number | string) => replyId], (likes, replyId) =>
+    likes.filter((like) => like.postType === "reply" && like.forId === replyId)
+  );
+export const MakeSelectLikesByTeam = () =>
+  createSelector([selectLikes, (state: RootState, teamId: number | string) => teamId], (likes, teamId) =>
+    likes.filter((like) => like.postType === "team" && like.forId === teamId)
   );

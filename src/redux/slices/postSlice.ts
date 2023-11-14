@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 import { IPost } from "utils/Interfaces";
 
 const initialState: IPost[] = [
@@ -38,3 +39,9 @@ const postSlice = createSlice({
 });
 
 export default postSlice.reducer;
+
+export const selectPostById = () =>
+  createSelector(
+    [(state: RootState) => state.posts, (state: RootState, userId: number | string) => userId],
+    (posts, userId) => posts.filter((post) => post.added_by === userId)
+  );

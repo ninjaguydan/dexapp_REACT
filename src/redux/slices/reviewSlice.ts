@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 import { IReview } from "utils/Interfaces";
 
 const initialState: IReview[] = [
@@ -49,3 +50,9 @@ const reviewSlice = createSlice({
 });
 
 export default reviewSlice.reducer;
+
+// Selectors
+export const selectReviewsByPkmn = () =>
+  createSelector([(state: RootState) => state.reviews, (state: RootState, pkmnId: number) => pkmnId], (reviews, pkmnId) =>
+    reviews.filter((review) => review.pkmn === pkmnId)
+  );

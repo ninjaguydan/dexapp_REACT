@@ -25,7 +25,6 @@ const SiteHeader = () => {
       setMenuIsOpen(false);
     },
   };
-  console.count("Site Header counter");
 
   return (
     <header className="flex justify-between items-center bg-gray2 p-4 sm:px-8 fixed w-full z-[1] border-b border-gray3 border-solid">

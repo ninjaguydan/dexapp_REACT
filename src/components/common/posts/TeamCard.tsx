@@ -15,8 +15,8 @@ import { getTimeDifference } from "utils/Helpers";
 import { IReply, ITeam } from "utils/Interfaces";
 
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { makeSelectLikesBy } from "redux/slices/likeSlice";
-import { makeSelectRepliesBy } from "redux/slices/replySlice";
+import { MakeSelectLikesByTeam } from "redux/slices/likeSlice";
+import { makeSelectRepliesByTeam } from "redux/slices/replySlice";
 import { selectUserById } from "redux/slices/userSlice";
 
 interface ITeamProps {
@@ -27,33 +27,33 @@ function TeamCard({ team }: ITeamProps) {
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
   // get memoized likes
-  // const selectTeamLikes = useMemo(makeSelectLikesBy, [team.id]);
-  // const likes = useAppSelector((state) => selectTeamLikes(state.likes, { id: team.id, type: "team" }));
+  const selectTeamLikes = useMemo(MakeSelectLikesByTeam, []);
+  const likes = useAppSelector((state) => selectTeamLikes(state, team.id));
   // get memoized replies
-  // const selectTeamReplies = useMemo(makeSelectRepliesBy, [team.id]);
-  // const replies = useAppSelector((state) => selectTeamReplies(state.replies, { id: team.id, type: "team" }));
+  const selectTeamReplies = useMemo(makeSelectRepliesByTeam, []);
+  const replies = useAppSelector((state) => selectTeamReplies(state, team.id));
   // get user
   const user = useAppSelector((state) => selectUserById(state.users, team.added_by));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
-  // const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
+  const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
   const arr = [...Array(6).keys()];
 
-  // const likeBtnData = {
-  //   label: ICON_KEY.LIKES,
-  //   content: likes.length,
-  //   action: () => toggleLike(),
-  //   state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
-  // };
+  const likeBtnData = {
+    label: ICON_KEY.LIKES,
+    content: likes.length,
+    action: () => toggleLike(),
+    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
+  };
 
-  // const commentBtnData = {
-  //   label: ICON_KEY.COMMENTS,
-  //   content: replies.length,
-  //   action: () => {
-  //     setRepliesVisible(!repliesVisible);
-  //   },
-  //   state: false,
-  // };
+  const commentBtnData = {
+    label: ICON_KEY.COMMENTS,
+    content: replies.length,
+    action: () => {
+      setRepliesVisible(!repliesVisible);
+    },
+    state: false,
+  };
 
   return (
     <Card>
@@ -98,18 +98,18 @@ function TeamCard({ team }: ITeamProps) {
           })}
         </span>
         <div className="flex gap-x-8">
-          {/* <IconBtn btnData={likeBtnData} /> */}
+          <IconBtn btnData={likeBtnData} />
           {/* <IconBtn btnData={commentBtnData} /> */}
         </div>
       </div>
       <div className="w-full">
-        {/* {repliesVisible && (
+        {repliesVisible && (
           <ReplyList
             replies={replies}
             user={user.username}
             kind={{ name: "team", id: team.id }}
           />
-        )} */}
+        )}
       </div>
     </Card>
   );
