@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useAppSelector } from "hooks/hooks";
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import useLikes from "hooks/dispatch/useLikes";
 
 import IconBtn from "components/common/buttons/IconBtn";
@@ -15,20 +15,18 @@ import { getTimeDifference } from "utils/Helpers";
 import { IReply, ITeam } from "utils/Interfaces";
 
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { MakeSelectLikesByTeam } from "redux/slices/likeSlice";
 import { makeSelectRepliesByTeam } from "redux/slices/replySlice";
 import { selectUserById } from "redux/slices/userSlice";
+import { team_LIKE, team_UNLIKE } from "redux/slices/teamSlice";
 
 interface ITeamProps {
   team: ITeam;
 }
 
 function TeamCard({ team }: ITeamProps) {
+  const dispatch = useAppDispatch();
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
-  // get memoized likes
-  const selectTeamLikes = useMemo(MakeSelectLikesByTeam, []);
-  const likes = useAppSelector((state) => selectTeamLikes(state, team.id));
   // get memoized replies
   const selectTeamReplies = useMemo(makeSelectRepliesByTeam, []);
   const replies = useAppSelector((state) => selectTeamReplies(state, team.id));
@@ -36,14 +34,22 @@ function TeamCard({ team }: ITeamProps) {
   const user = useAppSelector((state) => selectUserById(state.users, team.added_by));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
-  const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
+  // const toggleLike = useLikes(currentUser.userInfo.id, likes, "team", team.id) as () => void;
+  const toggleLike = () => {
+    const payload = { teamId: team.id, userId: currentUser.userInfo.id };
+    if (team.likes.includes(currentUser.userInfo.id)) {
+      dispatch(team_UNLIKE(payload));
+    } else {
+      dispatch(team_LIKE(payload));
+    }
+  };
   const arr = [...Array(6).keys()];
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,
-    content: likes.length,
+    content: team.likes.length,
     action: () => toggleLike(),
-    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
+    state: !!currentUser.userToken && !!team.likes.find((like) => like === currentUser.userInfo.id),
   };
 
   const commentBtnData = {
@@ -54,6 +60,8 @@ function TeamCard({ team }: ITeamProps) {
     },
     state: false,
   };
+
+  console.count("Team Card");
 
   return (
     <Card>
@@ -99,7 +107,7 @@ function TeamCard({ team }: ITeamProps) {
         </span>
         <div className="flex gap-x-8">
           <IconBtn btnData={likeBtnData} />
-          {/* <IconBtn btnData={commentBtnData} /> */}
+          <IconBtn btnData={commentBtnData} />
         </div>
       </div>
       <div className="w-full">
@@ -115,4 +123,4 @@ function TeamCard({ team }: ITeamProps) {
   );
 }
 
-export default TeamCard;
+export default memo(TeamCard);

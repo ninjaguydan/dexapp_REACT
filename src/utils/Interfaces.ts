@@ -49,6 +49,7 @@ export interface IReply {
   added_by: number | string;
   for: string;
   forId: number;
+  likes: (string | number)[];
 }
 export interface ITeam {
   id: number | string;
@@ -58,6 +59,11 @@ export interface ITeam {
   added_by: number | string;
   created: number;
   [key: string]: any;
+}
+
+export interface ITimeLineCard {
+  role: "team" | "review" | "post";
+  content: ITeam | IReview | IPost;
 }
 export interface ILike {
   postType: string;

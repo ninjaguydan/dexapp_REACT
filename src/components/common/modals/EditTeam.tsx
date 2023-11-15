@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux";
-import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import DeletePost from "components/common/modals/DeletePost";
 
 import Modal from "components/modules/Modal";
 import Button from "components/modules/Button";
 
+import { useAppSelector, useAppDispatch } from "hooks/hooks";
+
 import { ITeam } from "utils/Interfaces";
 import { setTeamNameError } from "utils/Validator";
-import { RootState } from "redux/store";
-import { useNavigate } from "react-router-dom";
+
+import { reply_DESTROY_ALL_BY_ } from "redux/slices/replySlice";
+import { selectAllTeamNames, team_DELETE, team_UPDATE } from "redux/slices/teamSlice";
 
 type Props = {
   onClose: () => void;
@@ -19,8 +23,9 @@ export default function EditTeam({ onClose, team }: Props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [showDelete, setShowDelete] = useState(false);
   const [checkedState, setCheckedState] = useState(new Array(team.members.length).fill(false));
-  const allTeamNames: string[] = useSelector((state: RootState) => state.teams.map((team) => team.name));
+  const allTeamNames = useAppSelector(selectAllTeamNames);
   const teamName: React.MutableRefObject<HTMLInputElement | undefined> = useRef();
 
   const handleChange = (position: number) => {
@@ -28,12 +33,17 @@ export default function EditTeam({ onClose, team }: Props) {
     setCheckedState(updatedCheckedState);
   };
 
-  const handleUpdate = (data: { name: string; members: (string | number | undefined)[] }) => {
-    dispatch({ type: "team/UPDATE", teamData: data, teamId: team.id });
+  const handleUpdate = (data: { name: string; members: (number | undefined)[] }) => {
+    if (data.members.length === 0) {
+      setShowDelete(true);
+      return;
+    }
+    dispatch(team_UPDATE({ id: team.id, teamName: data.name, members: data.members as number[] }));
     onClose();
   };
   const handleDelete = () => {
-    dispatch({ type: "team/DELETE", teamId: team.id });
+    dispatch(team_DELETE(team.id));
+    dispatch(reply_DESTROY_ALL_BY_({ id: team.id, type: "team" }));
     navigate("/dexapp_REACT");
   };
 
@@ -69,6 +79,13 @@ export default function EditTeam({ onClose, team }: Props) {
 
   return (
     <Modal closeModal={onClose}>
+      {showDelete && (
+        <DeletePost
+          label="team"
+          onClose={() => setShowDelete(false)}
+          onConfirm={handleDelete}
+        />
+      )}
       <Modal.Header>Edit Team</Modal.Header>
       <Modal.Body>
         <form
@@ -111,7 +128,7 @@ export default function EditTeam({ onClose, team }: Props) {
           </div>
           <div className="flex flex-col sm:flex-row-reverse gap-4">
             <Button.Primary>Save</Button.Primary>
-            <Button.Secondary action={handleDelete}>Delete Team</Button.Secondary>
+            <Button.Secondary action={() => setShowDelete(true)}>Delete Team</Button.Secondary>
           </div>
         </form>
       </Modal.Body>

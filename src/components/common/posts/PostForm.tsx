@@ -9,6 +9,9 @@ import Card from "components/modules/Card";
 import Button from "components/modules/Button";
 
 import { IReply, IReview } from "utils/Interfaces";
+import { post_CREATE } from "redux/slices/postSlice";
+import { review_CREATE } from "redux/slices/reviewSlice";
+import { reply_CREATE } from "redux/slices/replySlice";
 
 interface Props {
   btnText: string;
@@ -60,7 +63,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           rating: formData.rating,
           pkmn: type.id,
         };
-        dispatch({ type: "review/CREATE", newReview });
+        dispatch(review_CREATE(newReview));
         break;
       case "REPLY":
         let newReply: IReply = {
@@ -78,10 +81,10 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
           default:
             newReply["for"] = "post";
         }
-        dispatch({ type: "reply/CREATE", newReply });
+        dispatch(reply_CREATE(newReply));
         break;
       default:
-        dispatch({ type: "post/CREATE", newPost });
+        dispatch(post_CREATE(newPost));
     }
     setFormData(empty);
   }

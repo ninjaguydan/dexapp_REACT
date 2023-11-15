@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import useLikes from "hooks/dispatch/useLikes";
@@ -19,10 +18,9 @@ import { getTimeDifference, titleCase, truncateStr } from "utils/Helpers";
 import { IReview } from "utils/Interfaces";
 import setImage from "utils/setDefaultImg";
 
-import { RootState } from "redux/store";
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { MakeSelectLikesByReview } from "redux/slices/likeSlice";
-import { makeSelectRepliesByReview } from "redux/slices/replySlice";
+import { makeSelectRepliesByReview, reply_DESTROY_ALL_BY_ } from "redux/slices/replySlice";
+import { review_DELETE, review_LIKE, review_UNLIKE } from "redux/slices/reviewSlice";
 
 interface Props {
   review: IReview;
@@ -55,9 +53,6 @@ const Review = ({ review, TL_view = false }: Props) => {
   const dispatch = useAppDispatch();
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
-  // get memoized likes
-  const selectReviewLikes = useMemo(MakeSelectLikesByReview, []);
-  const likes = useAppSelector((state) => selectReviewLikes(state, review.id));
   // get memoized replies
   const selectReviewReplies = useMemo(makeSelectRepliesByReview, []);
   const replies = useAppSelector((state) => selectReviewReplies(state, review.id));
@@ -65,11 +60,19 @@ const Review = ({ review, TL_view = false }: Props) => {
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === review.added_by)[0]);
+  const user = useAppSelector((state) => state.users.filter((user) => user.id === review.added_by)[0]);
   const { data: pkmnData, isLoading }: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(
     review.pkmn
   );
-  const toggleLike = useLikes(currentUser.userInfo.id, likes, "review", review.id) as () => void;
+  // const toggleLike = useLikes(currentUser.userInfo.id, likes, "review", review.id) as () => void;
+  const toggleLike = () => {
+    const payload = { reviewId: review.id, userId: currentUser.userInfo.id };
+    if (review.likes.includes(currentUser.userInfo.id)) {
+      dispatch(review_UNLIKE(payload));
+    } else {
+      dispatch(review_LIKE(payload));
+    }
+  };
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -83,9 +86,9 @@ const Review = ({ review, TL_view = false }: Props) => {
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,
-    content: likes.length,
+    content: review.likes.length,
     action: () => toggleLike(),
-    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
+    state: !!currentUser.userToken && !!review.likes.find((like) => like === currentUser.userInfo.id),
   };
 
   const commentBtnData = {
@@ -100,6 +103,8 @@ const Review = ({ review, TL_view = false }: Props) => {
   if (isLoading || !pkmnData) {
     return <Spinner />;
   }
+
+  console.count("Review card");
 
   return (
     <Card>
@@ -138,7 +143,7 @@ const Review = ({ review, TL_view = false }: Props) => {
             </Link>
           )}
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(review.created)}</span>
-          {currentUser.userToken === review.added_by && <IconBtn btnData={deleteBtnData} />}
+          {currentUser.userInfo.id === review.added_by && <IconBtn btnData={deleteBtnData} />}
         </h2>
         <span className="flex text-xs sm:text-sm my-1 sm:my-2 text-gray3">{setRating(review.rating)}</span>
         <p className="text-xs sm:text-sm">{review.content}</p>
@@ -161,7 +166,10 @@ const Review = ({ review, TL_view = false }: Props) => {
           onClose={() => {
             setShowPopup(false);
           }}
-          onConfirm={() => dispatch({ type: "review/DELETE", reviewId: review.id })}
+          onConfirm={() => {
+            dispatch(review_DELETE(review.id));
+            dispatch(reply_DESTROY_ALL_BY_({ id: review.id, type: "review" }));
+          }}
           label="review"
         />
       )}
@@ -169,4 +177,4 @@ const Review = ({ review, TL_view = false }: Props) => {
   );
 };
 
-export default Review;
+export default memo(Review);

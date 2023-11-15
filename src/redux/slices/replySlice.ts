@@ -3,7 +3,7 @@ import { RootState } from "redux/store";
 import { IReply } from "utils/Interfaces";
 
 const initialState: IReply[] = [
-  { id: 1, content: "Wow son you a big ass hater", created: 1649163929404, added_by: 2, for: "review", forId: 1 },
+  { id: 1, content: "Wow son you a big ass hater", created: 1649163929404, added_by: 2, for: "review", forId: 1, likes: [] },
   {
     id: 2,
     content: "It's not even the best Kanto starter.",
@@ -11,6 +11,7 @@ const initialState: IReply[] = [
     added_by: 1,
     for: "review",
     forId: 1,
+    likes: [],
   },
   {
     id: 3,
@@ -19,10 +20,19 @@ const initialState: IReply[] = [
     added_by: 1,
     for: "review",
     forId: 2,
+    likes: [],
   },
-  { id: 4, content: "Agreed!!!", created: 1651801529404, added_by: 2, for: "post", forId: 3 },
-  { id: 5, content: "We can be friends!", created: 1651801009404, added_by: 2, for: "post", forId: 1 },
-  { id: 6, content: "Cool team!!! Red was the best trainer", created: 1651801009404, added_by: 3, for: "team", forId: 1 },
+  { id: 4, content: "Agreed!!!", created: 1651801529404, added_by: 2, for: "post", forId: 3, likes: [1] },
+  { id: 5, content: "We can be friends!", created: 1651801009404, added_by: 2, for: "post", forId: 1, likes: [] },
+  {
+    id: 6,
+    content: "Cool team!!! Red was the best trainer",
+    created: 1651801009404,
+    added_by: 3,
+    for: "team",
+    forId: 1,
+    likes: [],
+  },
   {
     id: "b7825e56-078f-4652-be34-af373c8e9c7a",
     content: "guys. please. they all suck",
@@ -30,6 +40,7 @@ const initialState: IReply[] = [
     added_by: 3,
     for: "review",
     forId: 1,
+    likes: [],
   },
   {
     id: 7,
@@ -38,6 +49,7 @@ const initialState: IReply[] = [
     added_by: 1,
     for: "post",
     forId: 5,
+    likes: [],
   },
   {
     id: 8,
@@ -46,6 +58,7 @@ const initialState: IReply[] = [
     added_by: 3,
     for: "post",
     forId: 5,
+    likes: [],
   },
 ];
 
@@ -61,13 +74,14 @@ const replySlice = createSlice({
       const postId = action.payload;
       return state.filter((reply) => reply.id !== postId);
     },
-    reply_DESTROY_BY_POST(state, action: PayloadAction<number | string>) {
-      const postId = action.payload;
-      return state.filter((reply) => reply.forId !== postId);
+    reply_DESTROY_ALL_BY_(state, action: PayloadAction<{ id: number | string; type: string }>) {
+      const { id, type } = action.payload;
+      return state.filter((reply) => reply.forId !== id && reply.for === type);
     },
   },
 });
 
+export const { reply_CREATE, reply_DESTROY, reply_DESTROY_ALL_BY_ } = replySlice.actions;
 export default replySlice.reducer;
 
 // Selectors

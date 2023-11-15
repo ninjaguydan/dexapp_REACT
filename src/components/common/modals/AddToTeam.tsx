@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { useCallback, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "hooks/hooks";
-import { RootState } from "redux/store";
+import { useAppDispatch, useAppSelector } from "hooks/hooks";
 import { useNavigate } from "react-router-dom";
 
 import Modal from "components/modules/Modal";
@@ -11,6 +9,7 @@ import Button from "components/modules/Button";
 import { titleCase } from "utils/Helpers";
 import { ITeam } from "utils/Interfaces";
 import { setTeamNameError } from "utils/Validator";
+import { selectAllTeamNames, selectTeamsByCreator, team_CREATE, team_UPDATE } from "redux/slices/teamSlice";
 
 type Props = {
   onClose: () => void;
@@ -23,26 +22,27 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
   const navigate = useNavigate();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [error, setError] = useState<string>("");
-  const myTeams: ITeam[] = useSelector((state: RootState) =>
-    state.teams.filter((team) => {
-      return team.added_by === userId && team.members.length < 6;
-    })
-  );
-  const allTeamNames: string[] = useSelector((state: RootState) => state.teams.map((team) => team.name));
+  const myTeams = useAppSelector((state) => selectTeamsByCreator(state, userId));
+  const allTeamNames = useAppSelector(selectAllTeamNames);
+  // Refs
   const selectedTeam: React.MutableRefObject<HTMLInputElement | undefined> = useRef();
   const teamName: React.MutableRefObject<HTMLInputElement | undefined> = useRef();
 
   const formHandler = useCallback(
     () => (event: any) => {
       event.preventDefault();
-      const data: { team: string | undefined; newTeamName: string | undefined } = {
-        team: selectedTeam.current?.value!,
+
+      const data: { teamName: string | undefined; newTeamName: string | undefined } = {
+        teamName: selectedTeam.current?.value!,
         newTeamName: titleCase(teamName.current?.value),
       };
-      if (!!data.team) {
+
+      if (!!data.teamName) {
+        let existingTeam = myTeams.find((team) => team.name == data.teamName)!;
+        let newMembers = [...existingTeam.members, pkmnId];
         onClose();
-        dispatch({ type: "team/ADD", pkmnId, teamName: data.team });
-        navigate(`/team/${data.team}`);
+        dispatch(team_UPDATE({ id: existingTeam.id, teamName: existingTeam.name, members: newMembers }));
+        navigate(`/team/${data.teamName}`);
       } else {
         setError(setTeamNameError(data.newTeamName!, allTeamNames));
         if (setTeamNameError(data.newTeamName!, allTeamNames) === "") {
@@ -54,7 +54,7 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
             added_by: userId,
             created: new Date().getTime(),
           };
-          dispatch({ type: "team/CREATE", newTeam });
+          dispatch(team_CREATE(newTeam));
           onClose();
           navigate(`/team/${data.newTeamName!}`);
         }
@@ -78,9 +78,9 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
                 className="w-full text-black p-1 rounded"
                 name="select-team"
                 id="select-team">
-                {myTeams.map((team) => (
-                  <option key={team.id}>{team.name}</option>
-                ))}
+                {myTeams.map((team) => {
+                  if (team.members.length < 6) return <option key={team.id}>{team.name}</option>;
+                })}
               </select>
             </div>
             {myTeams.length === 0 && <p>No teams with available slots. Try creating a new one!</p>}

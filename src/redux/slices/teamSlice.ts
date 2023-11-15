@@ -1,8 +1,9 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 import { ITeam } from "utils/Interfaces";
 
 const initialState: ITeam[] = [
-  { id: 1, name: "Genwunners", members: [25, 3, 6, 9, 143, 131], likes: [2], added_by: 1, created: 1654279977000 },
+  { id: 1, name: "Genwunners", members: [25, 3, 6, 9, 143, 131], likes: [1, 10], added_by: 1, created: 1654279977000 },
   { id: 2, name: "Blue Balls", members: [18, 65, 112, 103, 130, 6], likes: [], added_by: 2, created: 1635000000000 },
   { id: 3, name: "Try Hards", members: [442, 407, 423, 445, 448, 350], likes: [], added_by: 2, created: 1533219944000 },
   {
@@ -41,16 +42,44 @@ const teamSlice = createSlice({
     },
     team_DELETE(state, action: PayloadAction<string | number>) {
       const teamId = action.payload;
-      state = state.filter((team) => team.id !== teamId);
+      return state.filter((team) => team.id !== teamId);
     },
-    team_UPDATE(state, action: PayloadAction<{ name: string; id: string | number; members: number[] }>) {
-      const { name, members, id } = action.payload;
-      state = state.map((team) => {
-        if (team.id !== id) return team;
-        return { ...team, name: name, members: members };
-      });
+    team_UPDATE(state, action: PayloadAction<{ id: number | string; members: number[]; teamName: string }>) {
+      const { id, members, teamName } = action.payload;
+      const team = state.find((team) => team.id === id);
+      if (team) {
+        team.name = teamName;
+        team.members = members;
+      }
+    },
+    team_LIKE(state, action: PayloadAction<{ teamId: number | string; userId: number | string }>) {
+      const { teamId, userId } = action.payload;
+      const likedTeam = state.find((team) => team.id === teamId);
+      if (likedTeam) {
+        likedTeam.likes.push(userId);
+      }
+    },
+    team_UNLIKE(state, action: PayloadAction<{ teamId: number | string; userId: number | string }>) {
+      const { teamId, userId } = action.payload;
+      const unlikedTeam = state.find((team) => team.id === teamId);
+      if (unlikedTeam) {
+        unlikedTeam.likes = unlikedTeam.likes.filter((like) => like !== userId);
+      }
     },
   },
 });
 
+export const { team_CREATE, team_DELETE, team_UPDATE, team_LIKE, team_UNLIKE } = teamSlice.actions;
 export default teamSlice.reducer;
+
+// selectors
+export const selectTeams = (state: RootState) => state.teams;
+export const selectAllTeamNames = createSelector([selectTeams], (teams) => {
+  return teams.map((team) => team.name);
+});
+export const selectTeamsByCreator = createSelector(
+  [selectTeams, (state: RootState, userId: number | string) => userId],
+  (teams, userId) => {
+    return teams.filter((team) => team.added_by === userId);
+  }
+);

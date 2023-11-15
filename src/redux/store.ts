@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "redux/slices/authSlice";
-import likesReducer from "redux/slices/likeSlice";
 import postReducer from "redux/slices/postSlice";
 import replyReducer from "redux/slices/replySlice";
 import reviewReducer from "redux/slices/reviewSlice";
@@ -12,7 +11,6 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     users: usersReducer,
-    likes: likesReducer,
     posts: postReducer,
     replies: replyReducer,
     reviews: reviewReducer,

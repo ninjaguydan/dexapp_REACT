@@ -9,6 +9,7 @@ type Props = {
   closeModal: () => void;
   onConfirm?: () => void;
   children: React.ReactNode;
+  classList?: string;
 };
 
 const ModalContext = createContext({
@@ -32,7 +33,7 @@ function clickedOutside(event: PointerEvent, element: React.MutableRefObject<Ele
   }
 }
 
-export default function Modal({ children, closeModal, onConfirm = () => {} }: Props) {
+export default function Modal({ children, closeModal, onConfirm = () => {}, classList }: Props) {
   const modalRef: React.MutableRefObject<HTMLElement | undefined> = useRef();
   const keyListenersMap: Map<number, (e: KeyboardEvent, modalRef: React.MutableRefObject<Element | undefined>) => void> =
     new Map([
@@ -62,7 +63,7 @@ export default function Modal({ children, closeModal, onConfirm = () => {} }: Pr
 
   return createPortal(
     <div
-      className="flex block p-4 bg-black_80 fixed z-20 top-0 left-0 w-full h-full overflow-auto backdrop-blur-sm"
+      className={`flex block p-4 bg-black_80 fixed z-20 top-0 left-0 w-full h-full overflow-auto backdrop-blur-sm ${classList}`}
       aria-modal="true">
       <figure
         className="bg-gray2 w-full max-w-lg m-auto p-4 sm:p-6 rounded flex flex-col gap-y-2"

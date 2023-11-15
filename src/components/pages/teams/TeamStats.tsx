@@ -1,9 +1,9 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import IconBtn from "components/common/buttons/IconBtn";
 
-import { useAppSelector } from "hooks/hooks";
+import { useAppDispatch } from "hooks/hooks";
 import useLikes from "hooks/dispatch/useLikes";
 import useSetStats from "hooks/fetchers/useSetStats";
 
@@ -13,7 +13,7 @@ import Button from "components/modules/Button";
 import { ICON_KEY } from "utils/iconKey";
 import { ITeam } from "utils/Interfaces";
 
-import { MakeSelectLikesByTeam } from "redux/slices/likeSlice";
+import { team_LIKE, team_UNLIKE } from "redux/slices/teamSlice";
 
 interface ITeamStatsProps {
   current_user_id: string | number;
@@ -22,23 +22,30 @@ interface ITeamStatsProps {
 }
 
 export default function TeamStats({ current_user_id, team, created_by }: ITeamStatsProps) {
+  const dispatch = useAppDispatch();
   // local state
   const [showStats, setShowStats] = useState(true);
   const [showEditTeam, setShowEditTeam] = useState(false);
   // hooks
   const { statTable: stats } = useSetStats(team.members);
-  // get memoized likes
-  const selectTeamLikes = useMemo(MakeSelectLikesByTeam, []);
-  const likes = useAppSelector((state) => selectTeamLikes(state, team.id));
-  // var
-  const toggleLike = useLikes(current_user_id, likes, "team", team.id) as () => void;
+  // button ref for focus trap
   const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
   const focus = () => buttonRef.current?.focus();
+
+  const toggleLike = () => {
+    const payload = { teamId: team.id, userId: current_user_id };
+    if (team.likes.includes(current_user_id)) {
+      dispatch(team_UNLIKE(payload));
+    } else {
+      dispatch(team_LIKE(payload));
+    }
+  };
+
   const likeBtnData = {
     label: ICON_KEY.LIKES,
-    content: likes.length,
+    content: team.likes.length,
     action: () => toggleLike(),
-    state: !current_user_id && !!likes.find((like) => like.user === current_user_id),
+    state: !!current_user_id && !!team.likes.find((like) => like === current_user_id),
     classList: "!text-lg",
   };
 

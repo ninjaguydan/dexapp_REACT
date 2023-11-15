@@ -18,7 +18,6 @@ export default function TopTenCard({ id }: { id: number }) {
       </div>
     );
   }
-
   return (
     <li
       className="list-group-item flex items-center gap-x-2 sm:gap-x-4 border border-white border-solid border-opacity-10 p-2 sm:p-4 min-w-max lg:min-w-0"

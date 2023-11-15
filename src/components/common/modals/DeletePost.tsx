@@ -12,7 +12,8 @@ export default function DeletePost({ onClose, onConfirm, label }: Props) {
   return (
     <Modal
       closeModal={onClose}
-      onConfirm={onConfirm}>
+      onConfirm={onConfirm}
+      classList="!z-30">
       <Modal.Header>Delete {titleCase(label)}</Modal.Header>
       <Modal.Body>
         <p className="my-4">Are you sure you want to delete this {label}? This action can't be undone.</p>

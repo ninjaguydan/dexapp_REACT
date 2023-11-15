@@ -5,7 +5,6 @@ import { useAppSelector, useAppDispatch } from "hooks/hooks";
 import useLikes from "hooks/dispatch/useLikes";
 
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { MakeSelectLikesByReply } from "redux/slices/likeSlice";
 
 import Avatar from "components/common/buttons/Avatar";
 import IconBtn from "components/common/buttons/IconBtn";
@@ -17,6 +16,7 @@ import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IReply } from "utils/Interfaces";
 import { selectUserById } from "redux/slices/userSlice";
+import { reply_DESTROY } from "redux/slices/replySlice";
 
 interface Props {
   reply: IReply;
@@ -26,13 +26,18 @@ function ReplyCard({ reply }: Props) {
   const dispatch = useAppDispatch();
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
-  // get memoized likes
-  const selectReplyLikes = useMemo(MakeSelectLikesByReply, []);
-  const likes = useAppSelector((state) => selectReplyLikes(state, reply.id));
   // get user
   const user = useAppSelector((state) => selectUserById(state.users, reply.added_by));
-  const toggleLike = useLikes(currentUser.userInfo.id, likes, "reply", reply.id) as () => void;
   const [showPopup, setShowPopup] = useState(false);
+
+  const toggleLike = () => {
+    const payload = { replyId: reply.id, userId: currentUser.userInfo.id };
+    if (reply.likes.includes(currentUser.userInfo.id)) {
+      // dispatch(post_UNLIKE(payload));
+    } else {
+      // dispatch(post_LIKE(payload));
+    }
+  };
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -44,9 +49,9 @@ function ReplyCard({ reply }: Props) {
 
   const likeBtnData = {
     label: ICON_KEY.LIKES,
-    content: likes.length,
+    content: reply.likes.length,
     action: () => toggleLike(),
-    state: currentUser && !!likes.find((like) => like.user === currentUser.userInfo.id),
+    state: currentUser && !!reply.likes.find((like) => like === currentUser.userInfo.id),
   };
 
   return (
@@ -77,7 +82,7 @@ function ReplyCard({ reply }: Props) {
           onClose={() => {
             setShowPopup(false);
           }}
-          onConfirm={() => dispatch({ type: "reply/DELETE", replyId: reply.id })}
+          onConfirm={() => dispatch(reply_DESTROY(reply.id))}
           label="comment"
         />
       )}

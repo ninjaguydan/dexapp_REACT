@@ -1,9 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, memo } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { useAppSelector, useAppDispatch } from "hooks/hooks";
-import useLikes from "hooks/dispatch/useLikes";
 
 import DeletePost from "components/common/modals/DeletePost";
 import Avatar from "components/common/buttons/Avatar";
@@ -15,10 +13,9 @@ import { ICON_KEY } from "utils/iconKey";
 import { getTimeDifference, truncateStr } from "utils/Helpers";
 import { IPost } from "utils/Interfaces";
 
-import { RootState } from "redux/store";
 import { selectCurrentUser } from "redux/slices/authSlice";
-import { MakeSelectLikesByPost } from "redux/slices/likeSlice";
-import { makeSelectRepliesByPost } from "redux/slices/replySlice";
+import { post_DELETE, post_LIKE, post_UNLIKE } from "redux/slices/postSlice";
+import { makeSelectRepliesByPost, reply_DESTROY_ALL_BY_ } from "redux/slices/replySlice";
 
 interface IPostProps {
   post: IPost;
@@ -28,18 +25,22 @@ function Post({ post }: IPostProps) {
   const dispatch = useAppDispatch();
   // logged in user
   const currentUser = useAppSelector(selectCurrentUser);
-  // get memoized likes
-  const selectPostLikes = useMemo(MakeSelectLikesByPost, []);
-  const likes = useAppSelector((state) => selectPostLikes(state, post.id));
   // get memoized replies
   const selectPostReplies = useMemo(makeSelectRepliesByPost, []);
   const replies = useAppSelector((state) => selectPostReplies(state, post.id));
   // init state
   const [repliesVisible, setRepliesVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === post.added_by)[0]);
+  const user = useAppSelector((state) => state.users.filter((user) => user.id === post.added_by)[0]);
 
-  const toggleLike = useLikes(currentUser.userInfo.id, likes, "post", post.id) as () => void;
+  const toggleLike = () => {
+    const payload = { postId: post.id, userId: currentUser.userInfo.id };
+    if (post.likes.includes(currentUser.userInfo.id)) {
+      dispatch(post_UNLIKE(payload));
+    } else {
+      dispatch(post_LIKE(payload));
+    }
+  };
 
   const deleteBtnData = {
     label: ICON_KEY.DELETE,
@@ -52,9 +53,9 @@ function Post({ post }: IPostProps) {
   };
   const likeBtnData = {
     label: ICON_KEY.LIKES,
-    content: likes.length,
+    content: post.likes.length,
     action: () => toggleLike(),
-    state: !!currentUser.userToken && !!likes.find((like) => like.user === currentUser.userInfo.id),
+    state: !!currentUser.userToken && !!post.likes.find((like) => like === currentUser.userInfo.id),
   };
   const commentBtnData = {
     label: ICON_KEY.COMMENTS,
@@ -64,6 +65,8 @@ function Post({ post }: IPostProps) {
     },
     state: false,
   };
+
+  console.count("Post card");
 
   return (
     <Card>
@@ -80,7 +83,7 @@ function Post({ post }: IPostProps) {
           </Link>
           <span className="text-gray4 font-normal"> {truncateStr(user.username)}</span>
           <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(post.created)}</span>
-          {currentUser.userToken === post.added_by && <IconBtn btnData={deleteBtnData} />}
+          {currentUser.userInfo.id === post.added_by && <IconBtn btnData={deleteBtnData} />}
         </h2>
         <p className="text-xs sm:text-sm">{post.content}</p>
         <div className="flex gap-x-8">
@@ -102,7 +105,10 @@ function Post({ post }: IPostProps) {
           onClose={() => {
             setShowPopup(false);
           }}
-          onConfirm={() => dispatch({ type: "post/DELETE", postId: post.id })}
+          onConfirm={() => {
+            dispatch(post_DELETE(post.id));
+            dispatch(reply_DESTROY_ALL_BY_({ id: post.id, type: "post" }));
+          }}
           label="post"
         />
       )}
@@ -110,4 +116,4 @@ function Post({ post }: IPostProps) {
   );
 }
 
-export default Post;
+export default memo(Post);
