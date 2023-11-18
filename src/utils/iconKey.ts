@@ -1,7 +1,7 @@
 export const ICON_KEY = {
-  LIKES: "likes",
-  COMMENTS: "comments",
-  DELETE: "delete",
-  FAVORITE: "favorite",
-  CLOSE: "close",
-};
+	LIKES: 'likes',
+	COMMENTS: 'comments',
+	DELETE: 'delete',
+	FAVORITE: 'favorite',
+	CLOSE: 'close',
+}

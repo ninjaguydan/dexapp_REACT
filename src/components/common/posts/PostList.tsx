@@ -1,23 +1,18 @@
-import Post from "components/common/posts/Post";
+import Post from 'components/common/posts/Post'
 
-import { IPost } from "utils/Interfaces";
+import { IPost } from 'utils/Interfaces'
 
 interface IPostListProps {
-  posts: IPost[];
+	posts: IPost[]
 }
 const PostList = ({ posts }: IPostListProps) => {
-  return (
-    <>
-      {posts.map((post) => {
-        return (
-          <Post
-            post={post}
-            key={post.id}
-          />
-        );
-      })}
-    </>
-  );
-};
+	return (
+		<>
+			{posts.map(post => {
+				return <Post post={post} key={post.id} />
+			})}
+		</>
+	)
+}
 
-export default PostList;
+export default PostList

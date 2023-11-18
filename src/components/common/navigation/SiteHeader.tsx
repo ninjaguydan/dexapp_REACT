@@ -1,39 +1,40 @@
-import { useState } from "react";
-import { useAppSelector } from "hooks/hooks";
-import { selectCurrentUser } from "redux/slices/authSlice";
+import { useState } from 'react'
 
-import MenuBtn from "components/common/buttons/MenuBtn";
-import Logo from "components/common/buttons/Logo";
-import DesktopNav from "components/common/navigation/DesktopNav";
-import MobileMenu from "components/common/navigation/MobileMenu";
+import Logo from 'components/common/buttons/Logo'
+import MenuBtn from 'components/common/buttons/MenuBtn'
+import DesktopNav from 'components/common/navigation/DesktopNav'
+import MobileMenu from 'components/common/navigation/MobileMenu'
+
+import { useAppSelector } from 'hooks/hooks'
+import { selectCurrentUser } from 'redux/slices/authSlice'
 
 const SiteHeader = () => {
-  const currentUser = useAppSelector(selectCurrentUser);
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
+	const currentUser = useAppSelector(selectCurrentUser)
+	const [menuIsOpen, setMenuIsOpen] = useState(false)
 
-  const menuBtnData = {
-    isOpen: menuIsOpen,
-    isVisible: !!currentUser.userToken,
-    action: () => {
-      setMenuIsOpen(!menuIsOpen);
-    },
-  };
-  const menuData = {
-    isOpen: menuIsOpen,
-    user: currentUser.userInfo,
-    closeMenu: () => {
-      setMenuIsOpen(false);
-    },
-  };
+	const menuBtnData = {
+		isOpen: menuIsOpen,
+		isVisible: !!currentUser.userToken,
+		action: () => {
+			setMenuIsOpen(!menuIsOpen)
+		},
+	}
+	const menuData = {
+		isOpen: menuIsOpen,
+		user: currentUser.userInfo,
+		closeMenu: () => {
+			setMenuIsOpen(false)
+		},
+	}
 
-  return (
-    <header className="flex justify-between items-center bg-gray2 p-4 sm:px-8 fixed w-full z-[1] border-b border-gray3 border-solid">
-      <Logo />
-      <MenuBtn data={menuBtnData} />
-      <MobileMenu data={menuData} />
-      <DesktopNav />
-    </header>
-  );
-};
+	return (
+		<header className="fixed z-[1] flex w-full items-center justify-between border-b border-solid border-gray3 bg-gray2 p-4 sm:px-8">
+			<Logo />
+			<MenuBtn data={menuBtnData} />
+			<MobileMenu data={menuData} />
+			<DesktopNav />
+		</header>
+	)
+}
 
-export default SiteHeader;
+export default SiteHeader
