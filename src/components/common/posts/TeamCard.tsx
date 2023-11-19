@@ -1,112 +1,118 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "redux/store";
-import { Link } from "react-router-dom";
+import { memo, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import placeholder from "media/0.png";
+import IconBtn from 'components/common/buttons/IconBtn'
+import ReplyList from 'components/common/posts/ReplyList'
+import Card from 'components/modules/Card'
 
-import ReplyList from "components/common/posts/ReplyList";
-import IconBtn from "components/common/buttons/IconBtn";
-import Card from "components/modules/Card";
-
-import useLikes from "hooks/dispatch/useLikes";
-
-import { ICON_KEY } from "utils/iconKey";
-import { getTimeDifference } from "utils/Helpers";
-import { ITeam } from "utils/Interfaces";
+import useLikes from 'hooks/dispatch/useLikes'
+import { useAppDispatch, useAppSelector } from 'hooks/hooks'
+import placeholder from 'media/0.png'
+import { selectCurrentUser } from 'redux/slices/authSlice'
+import { makeSelectRepliesByTeam } from 'redux/slices/replySlice'
+import { team_LIKE, team_UNLIKE } from 'redux/slices/teamSlice'
+import { selectUserById } from 'redux/slices/userSlice'
+import { getTimeDifference } from 'utils/Helpers'
+import { IReply, ITeam } from 'utils/Interfaces'
+import { ICON_KEY } from 'utils/iconKey'
 
 interface ITeamProps {
-  team: ITeam;
+	team: ITeam
 }
 
-function Team({ team }: ITeamProps) {
-  const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.users.filter((user) => user.id === team.added_by)[0]);
-  const [repliesVisible, setRepliesVisible] = useState(false);
-  const replies = useSelector((state: RootState) =>
-    state.replies.filter((reply) => reply.for === "team" && reply.forId === team.id)
-  );
-  const likes = useSelector((state: RootState) =>
-    state.likes.filter((like) => like.postType === "team" && like.forId === team.id)
-  );
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const toggleLike = useLikes(currentUser.id, likes, "team", team.id) as () => void;
-  const arr = [...Array(6).keys()];
+function TeamCard({ team }: ITeamProps) {
+	const dispatch = useAppDispatch()
+	// logged in user
+	const currentUser = useAppSelector(selectCurrentUser)
+	// get memoized replies
+	const selectTeamReplies = useMemo(makeSelectRepliesByTeam, [])
+	const replies = useAppSelector(state => selectTeamReplies(state, team.id))
+	// get user
+	const user = useAppSelector(state => selectUserById(state.users, team.added_by))
+	// init state
+	const [repliesVisible, setRepliesVisible] = useState(false)
+	const toggleLike = () => {
+		const payload = { teamId: team.id, userId: currentUser.userInfo!.id }
+		if (team.likes.includes(currentUser.userInfo!.id)) {
+			dispatch(team_UNLIKE(payload))
+		} else {
+			dispatch(team_LIKE(payload))
+		}
+	}
+	const arr = [...Array(6).keys()]
 
-  const likeBtnData = {
-    label: ICON_KEY.LIKES,
-    content: likes.length,
-    action: () => toggleLike(),
-    state: currentUser && !!likes.find((like) => like.user === currentUser.id),
-  };
+	const likeBtnData = {
+		label: ICON_KEY.LIKES,
+		content: team.likes.length,
+		action: () => toggleLike(),
+		state:
+			!!currentUser.userInfo && !!team.likes.find(like => like === currentUser.userInfo?.id),
+	}
 
-  const commentBtnData = {
-    label: ICON_KEY.COMMENTS,
-    content: replies.length,
-    action: () => {
-      setRepliesVisible(!repliesVisible);
-    },
-    state: false,
-  };
+	const commentBtnData = {
+		label: ICON_KEY.COMMENTS,
+		content: replies.length,
+		action: () => {
+			setRepliesVisible(!repliesVisible)
+		},
+		state: false,
+	}
 
-  return (
-    <Card>
-      <div className="content team flex flex-col gap-y-1">
-        <h2 className="font-bold text-sm sm:text-base">
-          <Link
-            to={`/profile/${user.username}`}
-            className="hover:underline">
-            {user.username}
-          </Link>
-          <span className="text-gray4 font-normal"> created the team, </span>
-          <Link
-            to={`/team/${team.name}`}
-            className="hover:underline capitalize">
-            {" "}
-            {team.name}
-          </Link>
-          <span className="text-gray4 font-normal italic text-xs"> &#8226; {getTimeDifference(team.created)}</span>
-        </h2>
-        <span className="grid gap-x-4 sm:gap-x-8 my-1 sm:my-3 grid-cols-6">
-          {arr.map((index) => {
-            if (team.members[index]) {
-              return (
-                <Link
-                  to={`/pokemon/${team.members[index]}`}
-                  key={index}>
-                  <img
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${team.members[index]}.png`}
-                    className="bg-gray1 rounded-full hover:ring-2 hover:ring-gray3"
-                  />
-                </Link>
-              );
-            } else {
-              return (
-                <img
-                  key={index}
-                  src={placeholder}
-                  className="bg-gray1 rounded-full"
-                />
-              );
-            }
-          })}
-        </span>
-        <div className="flex gap-x-8">
-          <IconBtn btnData={likeBtnData} />
-          <IconBtn btnData={commentBtnData} />
-        </div>
-      </div>
-      <div className="w-full">
-        {repliesVisible && (
-          <ReplyList
-            replies={replies}
-            user={user.username}
-            kind={{ name: "team", id: team.id }}
-          />
-        )}
-      </div>
-    </Card>
-  );
+	return (
+		<Card>
+			<div className="content team flex flex-col gap-y-1">
+				<h2 className="text-sm font-bold sm:text-base">
+					<Link to={`/profile/${user.username}`} className="hover:underline">
+						{user.username}
+					</Link>
+					<span className="font-normal text-gray4"> created the team, </span>
+					<Link to={`/team/${team.name}`} className="capitalize hover:underline">
+						{' '}
+						{team.name}
+					</Link>
+					<span className="text-xs font-normal italic text-gray4">
+						{' '}
+						&#8226; {getTimeDifference(team.created)}
+					</span>
+				</h2>
+				<span className="my-1 grid grid-cols-6 gap-x-4 sm:my-3 sm:gap-x-8">
+					{arr.map(index => {
+						if (team.members[index]) {
+							return (
+								<Link to={`/pokemon/${team.members[index]}`} key={index}>
+									<img
+										src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${team.members[index]}.png`}
+										className="rounded-full bg-gray1 hover:ring-2 hover:ring-gray3"
+									/>
+								</Link>
+							)
+						} else {
+							return (
+								<img
+									key={index}
+									src={placeholder}
+									className="rounded-full bg-gray1"
+								/>
+							)
+						}
+					})}
+				</span>
+				<div className="flex gap-x-8">
+					<IconBtn btnData={likeBtnData} />
+					<IconBtn btnData={commentBtnData} />
+				</div>
+			</div>
+			<div className="w-full">
+				{repliesVisible && (
+					<ReplyList
+						replies={replies}
+						user={user.username}
+						kind={{ name: 'team', id: team.id }}
+					/>
+				)}
+			</div>
+		</Card>
+	)
 }
 
-export default Team;
+export default memo(TeamCard)

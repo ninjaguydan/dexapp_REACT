@@ -1,39 +1,31 @@
-import PokemonCard from "components/common/posts/PokemonCard";
+import PokemonCard from 'components/common/posts/PokemonCard'
 
-import placeholder from "media/0.png";
-
-import { IPokemon } from "utils/Interfaces";
+import placeholder from 'media/0.png'
+import { IPokemon } from 'utils/Interfaces'
 
 type Props = {
-  team: number[];
-};
+	team: number[]
+}
 
 export default function TeamGrid({ team }: Props) {
-  const arr = [...Array(6).keys()];
+	const arr = [...Array(6).keys()]
 
-  return (
-    <div className="bg-gray2 rounded border border-white border-opacity-10 border-solid p-4 grid grid-cols-2 gap-8 md:gap-6 sm:grid-cols-3">
-      {arr.map((index) => {
-        if (index < team.length) {
-          return (
-            <PokemonCard
-              key={index}
-              pokemon_id={team[index]}
-            />
-          );
-        } else {
-          return (
-            <div
-              key={index}
-              className="bg-gray6 rounded-2xl flex items-center justify-center">
-              <img
-                src={placeholder}
-                alt="placeholder"
-              />
-            </div>
-          );
-        }
-      })}
-    </div>
-  );
+	return (
+		<div className="grid grid-cols-2 gap-8 rounded border border-solid border-white border-opacity-10 bg-gray2 p-4 sm:grid-cols-3 md:gap-6">
+			{arr.map(index => {
+				if (index < team.length) {
+					return <PokemonCard key={index} pokemon_id={team[index]} />
+				} else {
+					return (
+						<div
+							key={index}
+							className="flex items-center justify-center rounded-2xl bg-gray6"
+						>
+							<img src={placeholder} alt="placeholder" />
+						</div>
+					)
+				}
+			})}
+		</div>
+	)
 }

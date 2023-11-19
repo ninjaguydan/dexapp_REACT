@@ -1,61 +1,40 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState } from 'react'
 
-import MenuBtn from "components/common/buttons/MenuBtn";
-import DesktopNav from "components/common/navigation/DesktopNav";
-import MobileMenu from "components/common/navigation/MobileMenu";
+import Logo from 'components/common/buttons/Logo'
+import MenuBtn from 'components/common/buttons/MenuBtn'
+import DesktopNav from 'components/common/navigation/DesktopNav'
+import MobileMenu from 'components/common/navigation/MobileMenu'
 
-import useDeviceWidth from "hooks/useDeviceWidth";
-import dex_logo_icon from "media/dex-icon-4c.svg";
-import dex_logo_full from "media/dex-logo-w.svg";
-import { RootState } from "redux/store";
+import { useAppSelector } from 'hooks/hooks'
+import { selectCurrentUser } from 'redux/slices/authSlice'
 
 const SiteHeader = () => {
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [breakpoint] = useDeviceWidth();
-  const LOGO: { [key: string]: any } = {
-    MOBILE: dex_logo_icon,
-    TABLET: dex_logo_icon,
-    DESKTOP: dex_logo_full,
-  };
-  const menuBtnData = {
-    isOpen: menuIsOpen,
-    isVisible: !!currentUser.id,
-    action: () => {
-      setMenuIsOpen(!menuIsOpen);
-    },
-  };
-  const menuData = {
-    isOpen: menuIsOpen,
-    user: currentUser,
-    closeMenu: () => {
-      setMenuIsOpen(false);
-    },
-  };
+	const currentUser = useAppSelector(selectCurrentUser)
+	const [menuIsOpen, setMenuIsOpen] = useState(false)
 
-  return (
-    <header className="flex justify-between items-center bg-gray2 p-4 sm:px-8 fixed w-full z-[1] border-b border-gray3 border-solid">
-      <Link
-        to="/dexapp_REACT"
-        className="flex w-10 lg:w-40 h-10 lg:h-12">
-        <img
-          src={LOGO[breakpoint]}
-          alt="dexapp logo"
-          className={"w-full"}
-        />
-      </Link>
-      {breakpoint === "MOBILE" ? (
-        <>
-          <MenuBtn data={menuBtnData} />
-          <MobileMenu data={menuData} />
-        </>
-      ) : (
-        <DesktopNav />
-      )}
-    </header>
-  );
-};
+	const menuBtnData = {
+		isOpen: menuIsOpen,
+		isVisible: !!currentUser.userInfo,
+		action: () => {
+			setMenuIsOpen(!menuIsOpen)
+		},
+	}
+	const menuData = {
+		isOpen: menuIsOpen,
+		user: currentUser.userInfo!,
+		closeMenu: () => {
+			setMenuIsOpen(false)
+		},
+	}
 
-export default SiteHeader;
+	return (
+		<header className="fixed z-[1] flex w-full items-center justify-between border-b border-solid border-gray3 bg-gray2 p-4 sm:px-8">
+			<Logo />
+			<MenuBtn data={menuBtnData} />
+			<MobileMenu data={menuData} />
+			<DesktopNav />
+		</header>
+	)
+}
+
+export default SiteHeader

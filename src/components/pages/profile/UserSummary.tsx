@@ -1,100 +1,108 @@
-import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
-import { useState, useRef } from "react";
+import { useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import EditProfile from "components/common/modals/EditProfile";
-import Avatar from "components/common/buttons/Avatar";
+import Avatar from 'components/common/buttons/Avatar'
+import EditProfile from 'components/common/modals/EditProfile'
+import Button from 'components/modules/Button'
 
-import { IUser } from "utils/Interfaces";
-import Button from "components/modules/Button";
+import { useAppSelector } from 'hooks/hooks'
+import { selectCurrentUser } from 'redux/slices/authSlice'
+import { RootState } from 'redux/store'
+import { IUser } from 'utils/Interfaces'
 
 interface Props {
-  user: IUser;
+	user: IUser
 }
 
 function UserSummary({ user }: Props) {
-  const [editForm, setEditForm] = useState<boolean>(false);
-  const postCnt = useSelector((state: RootState) => state.posts.filter((post) => post.added_by === user.id).length);
-  const reviewCnt = useSelector((state: RootState) => state.reviews.filter((review) => review.added_by === user.id).length);
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef();
-  const focus = () => buttonRef.current?.focus();
+	const [editForm, setEditForm] = useState<boolean>(false)
+	const postCnt = useSelector(
+		(state: RootState) => state.posts.filter(post => post.added_by === user.id).length,
+	)
+	const reviewCnt = useSelector(
+		(state: RootState) => state.reviews.filter(review => review.added_by === user.id).length,
+	)
+	const currentUser = useAppSelector(selectCurrentUser)
+	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
+	const focus = () => buttonRef.current?.focus()
 
-  return (
-    <ul className="lg:min-w-[30%] group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
-      <li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center flex flex-col gap-y-3 sm:gap-y-4 items-center">
-        <div>
-          <h1 className="capitalize text-3xl">{user.name}</h1>
-          <p className="text-gray4">{user.username}</p>
-        </div>
-        <Avatar
-          user={user}
-          classList={"w-20 sm:w-full block max-w-[200px] sm:max-w-[120px]"}
-        />
-        {user?.bio && <p className="bio max-w-[30ch] text-xs sm:text-sm">{user.bio}</p>}
-        <div className="flex gap-x-4 text-sm sm:text-base">
-          <p className="text-gray4">
-            <span className="font-bold text-gray5">0 </span>
-            Following
-          </p>
-          <p className="text-gray4">
-            <span className="font-bold text-gray5">0 </span>
-            Followers
-          </p>
-        </div>
-      </li>
-      {currentUser?.id === user.id && (
-        <li className="border-b border-white border-opacity-10 border-solid p-6">
-          <Button
-            action={() => {
-              setEditForm(true);
-            }}>
-            <Button.Secondary ref={buttonRef}>Edit Profile</Button.Secondary>
-          </Button>
-        </li>
-      )}
-      {user?.location && (
-        <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-          <p className="font-bold">Location</p>
-          <span>{user.location}</span>
-        </li>
-      )}
-      {user?.pronouns && (
-        <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-          <p className="font-bold">Pronouns</p>
-          <span>He/Him</span>
-        </li>
-      )}
-      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-        <p className="font-bold">Joined</p>
-        <span>June 2022</span>
-      </li>
-      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-        <p className="font-bold">Posts</p>
-        <span>{postCnt}</span>
-      </li>
-      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-        <p className="font-bold">Reviews</p>
-        <span>{reviewCnt}</span>
-      </li>
-      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-        <p className="font-bold">Favorites</p>
-        <span>0</span>
-      </li>
-      <li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
-        <p className="font-bold">Teams</p>
-        <span>0</span>
-      </li>
-      {editForm && (
-        <EditProfile
-          closeEdit={() => {
-            setEditForm(false);
-            focus();
-          }}
-        />
-      )}
-    </ul>
-  );
+	return (
+		<ul className="group relative rounded border border-solid border-white border-opacity-10 bg-gray2 lg:min-w-[30%] [&_li:nth-child(even)]:bg-gray6">
+			<li className="flex flex-col items-center gap-y-3 border-b border-solid border-white border-opacity-10 p-3 text-center sm:gap-y-4 sm:p-6">
+				<div>
+					<h1 className="text-3xl capitalize">{user.name}</h1>
+					<p className="text-gray4">{user.username}</p>
+				</div>
+				<Avatar
+					user={user}
+					classList={'w-20 sm:w-full block max-w-[200px] sm:max-w-[120px]'}
+				/>
+				{user?.bio && <p className="bio max-w-[30ch] text-xs sm:text-sm">{user.bio}</p>}
+				<div className="flex gap-x-4 text-sm sm:text-base">
+					<p className="text-gray4">
+						<span className="font-bold text-gray5">0 </span>
+						Following
+					</p>
+					<p className="text-gray4">
+						<span className="font-bold text-gray5">0 </span>
+						Followers
+					</p>
+				</div>
+			</li>
+			{currentUser.userInfo?.id === user.id && (
+				<li className="border-b border-solid border-white border-opacity-10 p-6">
+					<Button.Secondary
+						ref={buttonRef}
+						action={() => {
+							setEditForm(true)
+						}}
+					>
+						Edit Profile
+					</Button.Secondary>
+				</li>
+			)}
+			{user?.location && (
+				<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+					<p className="font-bold">Location</p>
+					<span>{user.location}</span>
+				</li>
+			)}
+			{user?.pronouns && (
+				<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+					<p className="font-bold">Pronouns</p>
+					<span>He/Him</span>
+				</li>
+			)}
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+				<p className="font-bold">Joined</p>
+				<span>June 2022</span>
+			</li>
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+				<p className="font-bold">Posts</p>
+				<span>{postCnt}</span>
+			</li>
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+				<p className="font-bold">Reviews</p>
+				<span>{reviewCnt}</span>
+			</li>
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+				<p className="font-bold">Favorites</p>
+				<span>0</span>
+			</li>
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
+				<p className="font-bold">Teams</p>
+				<span>0</span>
+			</li>
+			{editForm && (
+				<EditProfile
+					closeEdit={() => {
+						setEditForm(false)
+						focus()
+					}}
+				/>
+			)}
+		</ul>
+	)
 }
 
-export default UserSummary;
+export default UserSummary

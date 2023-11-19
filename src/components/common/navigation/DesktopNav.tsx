@@ -1,72 +1,67 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
-import Avatar from "components/common/buttons/Avatar";
-import SearchBtn from "components/common//buttons/SearchBtn";
-import DesktopMenu from "components/common/navigation/DesktopMenu";
-import { FaAngleDown } from "components/common/icons/index";
+import SearchBtn from 'components/common//buttons/SearchBtn'
+import Avatar from 'components/common/buttons/Avatar'
+import { FaAngleDown } from 'components/common/icons/index'
+import DesktopMenu from 'components/common/navigation/DesktopMenu'
 
-import { truncateStr } from "utils/Helpers";
+import { useAppSelector } from 'hooks/hooks'
+import useDeviceWidth from 'hooks/useDeviceWidth'
+import { selectCurrentUser } from 'redux/slices/authSlice'
+import { truncateStr } from 'utils/Helpers'
 
 const DesktopNav = () => {
-  const user = useSelector((state: any) => state.loggedUser);
-  const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+	const currentUser = useAppSelector(selectCurrentUser)
+	const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
+	const [breakpoint] = useDeviceWidth()
 
-  let menuNode = !!user.id ? (
-    <div className="nav-user-desk flex items-center gap-x-1">
-      <Avatar
-        user={user}
-        classList="w-9 relative"
-      />
-      <button
-        className="flex items-center gap-x-2 px-3 py-1 hover:text-secondary"
-        onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
-        {truncateStr(user.username)}
-        <FaAngleDown />
-      </button>
-      {dropdownIsOpen && (
-        <DesktopMenu
-          username={user.username}
-          openDrop={() => setDropdownIsOpen(!dropdownIsOpen)}
-        />
-      )}
-    </div>
-  ) : (
-    <>
-      <NavLink
-        to="/register"
-        className={"hover:text-secondary font-bold"}>
-        Sign Up
-      </NavLink>
+	if (breakpoint === 'MOBILE') return <></>
 
-      <NavLink
-        to="/login"
-        className={"hover:text-secondary font-bold"}>
-        Login
-      </NavLink>
-    </>
-  );
+	let menuNode = currentUser.userInfo ? (
+		<div className="nav-user-desk flex items-center gap-x-1">
+			<Avatar user={currentUser.userInfo} classList="w-9 relative" />
+			<button
+				className="flex items-center gap-x-2 px-3 py-1 hover:text-secondary"
+				onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
+			>
+				{truncateStr(currentUser.userInfo.username)}
+				<FaAngleDown />
+			</button>
+			{dropdownIsOpen && (
+				<DesktopMenu
+					username={currentUser.userInfo.username}
+					openDrop={() => setDropdownIsOpen(!dropdownIsOpen)}
+				/>
+			)}
+		</div>
+	) : (
+		<>
+			<NavLink to="/register" className={'font-bold hover:text-secondary'}>
+				Sign Up
+			</NavLink>
 
-  return (
-    <nav className="flex justify-between items-center w-[400px]">
-      <SearchBtn />
+			<NavLink to="/login" className={'font-bold hover:text-secondary'}>
+				Login
+			</NavLink>
+		</>
+	)
 
-      <NavLink
-        to="/dexapp_REACT"
-        className={"hover:text-secondary"}>
-        Home
-      </NavLink>
+	return (
+		<nav className="flex w-[400px] items-center justify-between">
+			<SearchBtn />
 
-      <NavLink
-        to="/dexapp_REACT"
-        className={"hover:text-secondary"}>
-        Pokedex
-      </NavLink>
+			<NavLink to="/dexapp_REACT" className={'hover:text-secondary'}>
+				Home
+			</NavLink>
 
-      {menuNode}
-    </nav>
-  );
-};
+			<NavLink to="/dexapp_REACT" className={'hover:text-secondary'}>
+				Pokedex
+			</NavLink>
 
-export default DesktopNav;
+			{menuNode}
+		</nav>
+	)
+}
+
+export default DesktopNav

@@ -1,43 +1,36 @@
-import { useSelector } from "react-redux";
+import { memo } from 'react'
 
-import PostForm from "components/common/posts/PostForm";
-import TimelineCard from "components/pages/home/TimelineCard";
+import Post from 'components/common/posts/Post'
+import Review from 'components/common/posts/Review'
+import TeamCard from 'components/common/posts/TeamCard'
 
-import generateTimeline from "utils/generateTimeline";
-import { RootState } from "redux/store";
+import { useAppSelector } from 'hooks/hooks'
+import { IPost, IReview, ITeam } from 'utils/Interfaces'
+import generateTimeline from 'utils/generateTimeline'
 
 function Timeline() {
-  const posts = useSelector((state: RootState) => state.posts);
-  const reviews = useSelector((state: RootState) => state.reviews);
-  const teams = useSelector((state: RootState) => state.teams);
-  const currentUser = useSelector((state: RootState) => state.loggedUser);
-  const timeline = generateTimeline(posts, reviews, teams);
+	const posts = useAppSelector(state => state.posts)
+	const reviews = useAppSelector(state => state.reviews)
+	const teams = useAppSelector(state => state.teams)
+	const timeline = generateTimeline(posts, reviews, teams)
 
-  return (
-    <div className="post-column main w-full max-w-2xl lg:max-w-none">
-      {!!currentUser.id && (
-        <PostForm
-          btnText={"Post"}
-          placeholder={"What's on your mind?"}
-          type={{ name: "POST" }}
-        />
-      )}
-      {timeline.length === 0 ? (
-        <div className="card">Nothing to show!</div>
-      ) : (
-        timeline.map((item, index) => {
-          return (
-            <TimelineCard
-              data={item}
-              review={item.rating}
-              team={item.name}
-              key={index + 1}
-            />
-          );
-        })
-      )}
-    </div>
-  );
+	return (
+		<>
+			{timeline.length === 0 ? (
+				<div className="card">Nothing to show!</div>
+			) : (
+				timeline.map((item, index) => {
+					if (item.role === 'team')
+						return <TeamCard team={item.content as ITeam} key={index} />
+					if (item.role === 'review')
+						return (
+							<Review review={item.content as IReview} TL_view={true} key={index} />
+						)
+					return <Post post={item.content as IPost} key={index} />
+				})
+			)}
+		</>
+	)
 }
 
-export default Timeline;
+export default memo(Timeline)
