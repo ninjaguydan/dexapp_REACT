@@ -1,44 +1,43 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
-import FormInput from 'components/common/forms/FormInput'
 import Button from 'components/modules/Button'
 import FormRow from 'components/modules/FormRow'
 
-import { useAppDispatch } from 'hooks/hooks'
+import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import pkmn_img from 'media/pkmn.png'
+import { auth_LOGIN, selectCurrentUser } from 'redux/slices/authSlice'
 import { RootState } from 'redux/store'
 
 const Login = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
+	const currentUser = useAppSelector(selectCurrentUser)
 	const users = useSelector((state: RootState) => state.users)
 	const [error, setError] = useState(false)
 	const username: React.MutableRefObject<HTMLInputElement | undefined> = useRef()
-	const password = useRef()
-	const [creds, setCreds] = useState({
-		username: '',
-		password: '',
-	})
+	const password: React.MutableRefObject<HTMLInputElement | undefined> = useRef()
 
-	function handleChange(event: any) {
-		setCreds({ ...creds, [event.target.id]: event.target.value })
-	}
+	useEffect(() => {
+		if (currentUser.userInfo) {
+			navigate('/dexapp_REACT')
+		}
+	}, [])
 
 	function onSubmit(event: any) {
 		event.preventDefault()
-		// let logUser = users.filter((user) => user.username === username && user.password === password);
-		// if (logUser[0]) {
-		// console.log(username);
-		// dispatch({
-		//   type: "users/ON_LOGIN",
-		//   logUser,
-		// });
-		// navigate("/dexapp_REACT");
-		// } else {
-		// setError(true);
-		// }
+		let logUser = users.find(
+			user =>
+				user.username === username.current?.value &&
+				user.password === password.current?.value,
+		)
+		if (logUser) {
+			dispatch(auth_LOGIN(logUser))
+			navigate('/dexapp_REACT')
+		} else {
+			setError(true)
+		}
 	}
 
 	return (
@@ -53,22 +52,9 @@ const Login = () => {
 					<FormRow>
 						<FormRow.Text ref={username}>Username</FormRow.Text>
 					</FormRow>
-					<FormInput
-						label="Username"
-						name="username"
-						value={creds.username}
-						handleChange={handleChange}
-						type="text"
-						error={''}
-					/>
-					<FormInput
-						label="Password"
-						name="password"
-						value={creds.password}
-						handleChange={handleChange}
-						type="password"
-						error={''}
-					/>
+					<FormRow>
+						<FormRow.Password ref={password}>Password</FormRow.Password>
+					</FormRow>
 					<div className="flex flex-col items-center gap-x-3 gap-y-3 sm:flex-row">
 						<Button.Primary>Log In</Button.Primary>
 						<Link to="/register" className="block w-full">

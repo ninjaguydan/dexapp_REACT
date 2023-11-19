@@ -32,7 +32,7 @@ function TeamProfile() {
 		<div className="flex w-full flex-col gap-4 md:flex-row">
 			<aside className="flex flex-col gap-4 sm:flex-row md:w-6/12 md:flex-col">
 				<TeamStats
-					current_user_id={currentUser.userInfo.id}
+					current_user_id={currentUser.userInfo?.id}
 					team={team}
 					created_by={created_by}
 				/>
@@ -41,6 +41,7 @@ function TeamProfile() {
 
 			<div className="flex w-full flex-col gap-4">
 				<TeamGrid team={team.members} />
+
 				<ReplyList
 					replies={replies}
 					user={created_by}

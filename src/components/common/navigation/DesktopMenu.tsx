@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from 'hooks/hooks'
+import { auth_LOGOUT } from 'redux/slices/authSlice'
 
 interface IDesktopMenu {
 	username: string
@@ -13,7 +14,7 @@ const DesktopMenu = ({ username, openDrop }: IDesktopMenu) => {
 
 	const onLogout = () => {
 		openDrop()
-		dispatch({ type: 'users/ON_LOGOUT' })
+		dispatch(auth_LOGOUT())
 		navigate('/login')
 	}
 	return (

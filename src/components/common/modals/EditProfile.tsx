@@ -9,6 +9,8 @@ import Modal from 'components/modules/Modal'
 
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
+import { auth_LOGIN } from 'redux/slices/authSlice'
+import { user_UPDATE } from 'redux/slices/userSlice'
 
 interface IEditProfileProps {
 	closeEdit: () => void
@@ -35,7 +37,6 @@ function clickIcon(
 	state: initForm,
 	action: React.Dispatch<React.SetStateAction<initForm>>,
 ) {
-	console.log(event)
 	action({ ...state, [event.target.name]: event.target.id })
 }
 
@@ -65,17 +66,22 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
 	const user = useAppSelector(selectCurrentUser)
 	const dispatch = useAppDispatch()
 	const [formData, setFormData] = useState<initForm>({
-		name: user.userInfo.name,
-		location: user.userInfo.location,
-		bio: user.userInfo.bio,
-		user_img: user.userInfo.user_img,
-		bg_color: user.userInfo.bg_color,
+		name: user.userInfo!.name,
+		location: user.userInfo!.location,
+		bio: user.userInfo!.bio,
+		user_img: user.userInfo!.user_img,
+		bg_color: user.userInfo!.bg_color,
 	})
 
 	function updateProfile(event: any) {
 		event.preventDefault()
+		let payload = {
+			...user.userInfo!,
+			...formData,
+		}
 		closeEdit()
-		dispatch({ type: 'users/UPDATE', formData, userId: user.userInfo.id })
+		dispatch(user_UPDATE(payload))
+		dispatch(auth_LOGIN(payload))
 	}
 
 	return (

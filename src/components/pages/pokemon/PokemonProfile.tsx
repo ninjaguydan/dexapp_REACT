@@ -29,7 +29,7 @@ const PokemonProfile = () => {
 		<div className="flex w-full flex-col gap-x-4 gap-y-4 sm:flex-row">
 			<PokemonSummary pokemon={pkmnData} isLoading={isLoading} />
 			<div className="w-full">
-				{!!currentUser.userToken && pkmnData && (
+				{!!currentUser.userInfo && pkmnData && (
 					<PostForm
 						btnText={'Post'}
 						placeholder={`What do you think${

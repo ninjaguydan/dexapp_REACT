@@ -54,8 +54,8 @@ const Review = ({ review, TL_view = false }: Props) => {
 		isLoading,
 	}: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(review.pkmn)
 	const toggleLike = () => {
-		const payload = { reviewId: review.id, userId: currentUser.userInfo.id }
-		if (review.likes.includes(currentUser.userInfo.id)) {
+		const payload = { reviewId: review.id, userId: currentUser.userInfo!.id }
+		if (review.likes.includes(currentUser.userInfo!.id)) {
 			dispatch(review_UNLIKE(payload))
 		} else {
 			dispatch(review_LIKE(payload))
@@ -77,8 +77,8 @@ const Review = ({ review, TL_view = false }: Props) => {
 		content: review.likes.length,
 		action: () => toggleLike(),
 		state:
-			!!currentUser.userToken &&
-			!!review.likes.find(like => like === currentUser.userInfo.id),
+			!!currentUser.userInfo &&
+			!!review.likes.find(like => like === currentUser.userInfo?.id),
 	}
 
 	const commentBtnData = {
@@ -130,7 +130,7 @@ const Review = ({ review, TL_view = false }: Props) => {
 						{' '}
 						&#8226; {getTimeDifference(review.created)}
 					</span>
-					{currentUser.userInfo.id === review.added_by && (
+					{currentUser.userInfo?.id === review.added_by && (
 						<IconBtn btnData={deleteBtnData} />
 					)}
 				</h2>

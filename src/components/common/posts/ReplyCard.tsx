@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Avatar from 'components/common/buttons/Avatar'
@@ -9,7 +9,7 @@ import Card from 'components/modules/Card'
 import useLikes from 'hooks/dispatch/useLikes'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
-import { reply_DESTROY } from 'redux/slices/replySlice'
+import { reply_DESTROY, reply_LIKE, reply_UNLIKE } from 'redux/slices/replySlice'
 import { selectUserById } from 'redux/slices/userSlice'
 import { getTimeDifference, truncateStr } from 'utils/Helpers'
 import { IReply } from 'utils/Interfaces'
@@ -28,11 +28,11 @@ function ReplyCard({ reply }: Props) {
 	const [showPopup, setShowPopup] = useState(false)
 
 	const toggleLike = () => {
-		const payload = { replyId: reply.id, userId: currentUser.userInfo.id }
-		if (reply.likes.includes(currentUser.userInfo.id)) {
-			// dispatch(post_UNLIKE(payload));
+		const payload = { replyId: reply.id, userId: currentUser.userInfo!.id }
+		if (reply.likes.includes(currentUser.userInfo!.id)) {
+			dispatch(reply_UNLIKE(payload))
 		} else {
-			// dispatch(post_LIKE(payload));
+			dispatch(reply_LIKE(payload))
 		}
 	}
 
@@ -48,7 +48,7 @@ function ReplyCard({ reply }: Props) {
 		label: ICON_KEY.LIKES,
 		content: reply.likes.length,
 		action: () => toggleLike(),
-		state: currentUser && !!reply.likes.find(like => like === currentUser.userInfo.id),
+		state: currentUser && !!reply.likes.find(like => like === currentUser.userInfo?.id),
 	}
 
 	return (
@@ -64,7 +64,7 @@ function ReplyCard({ reply }: Props) {
 						{' '}
 						&#8226; {getTimeDifference(reply.created)}
 					</span>
-					{currentUser.userInfo.id === reply.added_by && (
+					{currentUser.userInfo?.id === reply.added_by && (
 						<IconBtn btnData={deleteBtnData} />
 					)}
 				</h3>
@@ -87,4 +87,4 @@ function ReplyCard({ reply }: Props) {
 	)
 }
 
-export default ReplyCard
+export default memo(ReplyCard)

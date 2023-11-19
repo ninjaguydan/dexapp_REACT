@@ -113,3 +113,9 @@ export const selectTeamsByCreator = createSelector(
 		return teams.filter(team => team.added_by === userId)
 	},
 )
+export const selectOpenTeamsByCreator = createSelector(
+	[selectTeams, (state: RootState, userId: number | string) => userId],
+	(teams, userId) => {
+		return teams.filter(team => team.added_by === userId && team.members.length < 6)
+	},
+)

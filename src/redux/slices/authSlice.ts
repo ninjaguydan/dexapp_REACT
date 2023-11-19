@@ -1,8 +1,8 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, current } from '@reduxjs/toolkit'
 import { RootState } from 'redux/store'
-import { IAuthUser } from 'utils/Interfaces'
+import { IAuthUser, IUser } from 'utils/Interfaces'
 
-const initialState: IAuthUser = {
+const initialState: IAuthUser | null = {
 	loading: false,
 	userInfo: {
 		id: 10,
@@ -25,31 +25,16 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		auth_LOGIN(state, action: PayloadAction<IAuthUser>) {
+		auth_LOGIN(state, action: PayloadAction<IUser>) {
 			const user_to_login = action.payload
-			state = user_to_login
+			state.userInfo = user_to_login
 		},
-		auth_LOGOUT(state, action: PayloadAction<IAuthUser>) {
-			state = {
-				loading: false,
-				userToken: null,
-				error: null,
-				success: false,
-				userInfo: {
-					id: 0,
-					bio: '',
-					location: '',
-					pronouns: '',
-					name: '',
-					username: '',
-					password: '',
-					user_img: '',
-					bg_color: '',
-				},
-			}
+		auth_LOGOUT(state) {
+			state.userInfo = null
 		},
 	},
 })
+export const { auth_LOGIN, auth_LOGOUT } = authSlice.actions
 export default authSlice.reducer
 
 // Selectors

@@ -32,8 +32,8 @@ function Post({ post }: IPostProps) {
 	const user = useAppSelector(state => state.users.filter(user => user.id === post.added_by)[0])
 
 	const toggleLike = () => {
-		const payload = { postId: post.id, userId: currentUser.userInfo.id }
-		if (post.likes.includes(currentUser.userInfo.id)) {
+		const payload = { postId: post.id, userId: currentUser.userInfo!.id }
+		if (post.likes.includes(currentUser.userInfo!.id)) {
 			dispatch(post_UNLIKE(payload))
 		} else {
 			dispatch(post_LIKE(payload))
@@ -53,8 +53,7 @@ function Post({ post }: IPostProps) {
 		label: ICON_KEY.LIKES,
 		content: post.likes.length,
 		action: () => toggleLike(),
-		state:
-			!!currentUser.userToken && !!post.likes.find(like => like === currentUser.userInfo.id),
+		state: !!currentUser && !!post.likes.find(like => like === currentUser.userInfo?.id),
 	}
 	const commentBtnData = {
 		label: ICON_KEY.COMMENTS,
@@ -64,8 +63,6 @@ function Post({ post }: IPostProps) {
 		},
 		state: false,
 	}
-
-	console.count('Post card')
 
 	return (
 		<Card>
@@ -80,7 +77,7 @@ function Post({ post }: IPostProps) {
 						{' '}
 						&#8226; {getTimeDifference(post.created)}
 					</span>
-					{currentUser.userInfo.id === post.added_by && (
+					{currentUser.userInfo?.id === post.added_by && (
 						<IconBtn btnData={deleteBtnData} />
 					)}
 				</h2>

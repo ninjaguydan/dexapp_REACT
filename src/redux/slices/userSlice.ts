@@ -53,14 +53,14 @@ const userSlice = createSlice({
 		},
 		user_UPDATE(state, action: PayloadAction<IUser>) {
 			const updatedUser = action.payload
-			state = state.map(user => {
+			return state.map(user => {
 				if (user.id === updatedUser.id) return updatedUser
 				return user
 			})
 		},
 	},
 })
-
+export const { user_ADDED, user_UPDATE } = userSlice.actions
 export default userSlice.reducer
 
 // Selectors

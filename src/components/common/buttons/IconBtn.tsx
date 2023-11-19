@@ -8,6 +8,8 @@ import {
 	Trash,
 } from 'components/common/icons/index'
 
+import { useAppSelector } from 'hooks/hooks'
+import { selectCurrentUser } from 'redux/slices/authSlice'
 import { ICON_KEY } from 'utils/iconKey'
 
 type Props = {
@@ -20,6 +22,7 @@ type Props = {
 	}
 }
 function IconBtn({ btnData: { label, content, action, state, classList } }: Props) {
+	const currentUser = useAppSelector(selectCurrentUser)
 	let node = <></>
 
 	if (label === ICON_KEY.LIKES) {
@@ -43,6 +46,7 @@ function IconBtn({ btnData: { label, content, action, state, classList } }: Prop
 			aria-label={label}
 			className={`flex items-center gap-x-1 p-1 text-xs text-gray3 hover:text-secondary ${classList}`}
 			onClick={action}
+			disabled={!currentUser.userInfo}
 		>
 			{node}
 			{content}

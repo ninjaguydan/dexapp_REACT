@@ -107,7 +107,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 			<ListItem classList="!justify-center">
 				<p className="font-bold">Featured on 0 Teams!</p>
 			</ListItem>
-			{!!currentUser.userToken && pokemon && (
+			{!!currentUser.userInfo && pokemon && (
 				<ListItem>
 					<Button.Secondary
 						action={() => {
@@ -127,7 +127,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 					onClose={() => {
 						setShowAddToTeam(false)
 					}}
-					userId={currentUser.userInfo.id}
+					userId={currentUser.userInfo!.id}
 					pkmnId={pokemon!.id}
 				/>
 			)}

@@ -24,7 +24,7 @@ const UserProfile = () => {
 		<div className="flex w-full flex-col gap-x-4 gap-y-4 sm:flex-row">
 			<UserSummary user={user as IUser} />
 			<div className="w-full">
-				{currentUser.userInfo.id === user.id ? (
+				{currentUser.userInfo?.id === user.id ? (
 					<PostForm
 						btnText={'Post'}
 						placeholder={`What's on your mind?	`}

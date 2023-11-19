@@ -12,7 +12,7 @@ const Home = () => {
 		<>
 			<TopTenList />
 			<div className="post-column main w-full max-w-2xl lg:max-w-none">
-				{!!currentUser.userToken && (
+				{currentUser.userInfo && (
 					<PostForm
 						btnText={'Post'}
 						placeholder={"What's on your mind?"}

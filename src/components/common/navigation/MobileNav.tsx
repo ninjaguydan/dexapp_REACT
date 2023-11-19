@@ -29,7 +29,7 @@ export default function MobileNav() {
 					aria-hidden="true"
 				/>
 			</Link>
-			{!!currentUser.id ? (
+			{currentUser ? (
 				<Avatar user={currentUser} classList="w-7" />
 			) : (
 				<Link to="/login" aria-label="Login or Signup">

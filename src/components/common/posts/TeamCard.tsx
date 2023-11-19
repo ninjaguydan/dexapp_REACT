@@ -32,8 +32,8 @@ function TeamCard({ team }: ITeamProps) {
 	// init state
 	const [repliesVisible, setRepliesVisible] = useState(false)
 	const toggleLike = () => {
-		const payload = { teamId: team.id, userId: currentUser.userInfo.id }
-		if (team.likes.includes(currentUser.userInfo.id)) {
+		const payload = { teamId: team.id, userId: currentUser.userInfo!.id }
+		if (team.likes.includes(currentUser.userInfo!.id)) {
 			dispatch(team_UNLIKE(payload))
 		} else {
 			dispatch(team_LIKE(payload))
@@ -46,7 +46,7 @@ function TeamCard({ team }: ITeamProps) {
 		content: team.likes.length,
 		action: () => toggleLike(),
 		state:
-			!!currentUser.userToken && !!team.likes.find(like => like === currentUser.userInfo.id),
+			!!currentUser.userInfo && !!team.likes.find(like => like === currentUser.userInfo?.id),
 	}
 
 	const commentBtnData = {
@@ -57,8 +57,6 @@ function TeamCard({ team }: ITeamProps) {
 		},
 		state: false,
 	}
-
-	console.count('Team Card')
 
 	return (
 		<Card>

@@ -5,7 +5,8 @@ import FormInput from 'components/common/forms/FormInput'
 
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import pk_ball from 'media/pokeball.png'
-import { selectCurrentUser } from 'redux/slices/authSlice'
+import { auth_LOGIN, selectCurrentUser } from 'redux/slices/authSlice'
+import { user_ADDED } from 'redux/slices/userSlice'
 import { IRegistrationObject } from 'utils/Interfaces'
 import { checkIfEmpty, checkIfValues, confirmPasswordMatch, validator } from 'utils/Validator'
 import { v4 as uuidv4 } from 'uuid'
@@ -28,7 +29,7 @@ const Register = () => {
 	}
 
 	useEffect(() => {
-		if (!!currentUser.userToken === true) {
+		if (currentUser.userInfo) {
 			navigate('/dexapp_REACT')
 		}
 	}, [])
@@ -49,10 +50,8 @@ const Register = () => {
 			user_img: 'dfault',
 			bg_color: 'bg-black',
 		}
-		dispatch({
-			type: 'users/REGISTER',
-			newUser,
-		})
+		dispatch(user_ADDED(newUser))
+		dispatch(auth_LOGIN(newUser))
 		navigate('/dexapp_REACT')
 	}
 

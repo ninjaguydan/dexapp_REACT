@@ -52,7 +52,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
 			id: uuidv4(),
 			content: formData.content,
 			created: new Date().getTime(),
-			added_by: currentUser.userInfo.id,
+			added_by: currentUser.userInfo!.id,
 			likes: [],
 		}
 		switch (type.name) {
@@ -90,7 +90,7 @@ function PostForm({ btnText, placeholder, type, classList }: Props) {
 
 	return (
 		<Card classList={classList}>
-			<Avatar user={currentUser.userInfo} classList="hidden sm:block h-16 w-16" />
+			<Avatar user={currentUser.userInfo!} classList="hidden sm:block h-16 w-16" />
 			<form onSubmit={e => onSubmit(e)} className="flex w-full flex-1 flex-col gap-y-4">
 				<textarea
 					onChange={e => setValue(e)}

@@ -18,7 +18,7 @@ const DesktopNav = () => {
 
 	if (breakpoint === 'MOBILE') return <></>
 
-	let menuNode = !!currentUser.userToken ? (
+	let menuNode = currentUser.userInfo ? (
 		<div className="nav-user-desk flex items-center gap-x-1">
 			<Avatar user={currentUser.userInfo} classList="w-9 relative" />
 			<button

@@ -102,10 +102,31 @@ const replySlice = createSlice({
 			const { id, type } = action.payload
 			return state.filter(reply => reply.forId !== id && reply.for === type)
 		},
+		reply_LIKE(
+			state,
+			action: PayloadAction<{ replyId: number | string; userId: number | string }>,
+		) {
+			const { replyId, userId } = action.payload
+			const likedReply = state.find(reply => reply.id === replyId)
+			if (likedReply) {
+				likedReply.likes.push(userId)
+			}
+		},
+		reply_UNLIKE(
+			state,
+			action: PayloadAction<{ replyId: number | string; userId: number | string }>,
+		) {
+			const { replyId, userId } = action.payload
+			const unlikedReply = state.find(reply => reply.id === replyId)
+			if (unlikedReply) {
+				unlikedReply.likes = unlikedReply.likes.filter(like => like !== userId)
+			}
+		},
 	},
 })
 
-export const { reply_CREATE, reply_DESTROY, reply_DESTROY_ALL_BY_ } = replySlice.actions
+export const { reply_CREATE, reply_DESTROY, reply_DESTROY_ALL_BY_, reply_LIKE, reply_UNLIKE } =
+	replySlice.actions
 export default replySlice.reducer
 
 // Selectors

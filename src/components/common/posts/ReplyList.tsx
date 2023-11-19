@@ -18,7 +18,7 @@ function ReplyList({ replies, user, kind }: IReplyListProps) {
 			{replies.map(reply => {
 				return <ReplyCard reply={reply} key={reply.id} />
 			})}
-			{!!currentUser.userToken && (
+			{!!currentUser.userInfo && (
 				<PostForm
 					btnText={'Reply'}
 					placeholder={`Replying to ${user}...`}

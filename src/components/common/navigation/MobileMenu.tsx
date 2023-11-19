@@ -6,6 +6,7 @@ import Avatar from 'components/common/buttons/Avatar'
 import { useAppDispatch } from 'hooks/hooks'
 import useDeviceWidth from 'hooks/useDeviceWidth'
 import dex_icon_w from 'media/dex-icon-w.svg'
+import { auth_LOGOUT } from 'redux/slices/authSlice'
 import { IUser } from 'utils/Interfaces'
 
 interface Props {
@@ -25,7 +26,7 @@ const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
 
 	const onLogout = () => {
 		closeMenu()
-		dispatch({ type: 'users/ON_LOGOUT' })
+		dispatch(auth_LOGOUT())
 		navigate('/login')
 	}
 

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import Avatar from 'components/common/buttons/Avatar'
 import EditProfile from 'components/common/modals/EditProfile'
 import Button from 'components/modules/Button'
+
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
 import { RootState } from 'redux/store'
@@ -26,10 +27,10 @@ function UserSummary({ user }: Props) {
 	const focus = () => buttonRef.current?.focus()
 
 	return (
-		<ul className="lg:min-w-[30%] group relative bg-gray2 rounded border border-white border-opacity-10 border-solid [&_li:nth-child(even)]:bg-gray6">
-			<li className="border-b border-white border-opacity-10 border-solid p-3 sm:p-6 text-center flex flex-col gap-y-3 sm:gap-y-4 items-center">
+		<ul className="group relative rounded border border-solid border-white border-opacity-10 bg-gray2 lg:min-w-[30%] [&_li:nth-child(even)]:bg-gray6">
+			<li className="flex flex-col items-center gap-y-3 border-b border-solid border-white border-opacity-10 p-3 text-center sm:gap-y-4 sm:p-6">
 				<div>
-					<h1 className="capitalize text-3xl">{user.name}</h1>
+					<h1 className="text-3xl capitalize">{user.name}</h1>
 					<p className="text-gray4">{user.username}</p>
 				</div>
 				<Avatar
@@ -48,8 +49,8 @@ function UserSummary({ user }: Props) {
 					</p>
 				</div>
 			</li>
-			{currentUser.userInfo.id === user.id && (
-				<li className="border-b border-white border-opacity-10 border-solid p-6">
+			{currentUser.userInfo?.id === user.id && (
+				<li className="border-b border-solid border-white border-opacity-10 p-6">
 					<Button.Secondary
 						ref={buttonRef}
 						action={() => {
@@ -61,34 +62,34 @@ function UserSummary({ user }: Props) {
 				</li>
 			)}
 			{user?.location && (
-				<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+				<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 					<p className="font-bold">Location</p>
 					<span>{user.location}</span>
 				</li>
 			)}
 			{user?.pronouns && (
-				<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+				<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 					<p className="font-bold">Pronouns</p>
 					<span>He/Him</span>
 				</li>
 			)}
-			<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 				<p className="font-bold">Joined</p>
 				<span>June 2022</span>
 			</li>
-			<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 				<p className="font-bold">Posts</p>
 				<span>{postCnt}</span>
 			</li>
-			<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 				<p className="font-bold">Reviews</p>
 				<span>{reviewCnt}</span>
 			</li>
-			<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 				<p className="font-bold">Favorites</p>
 				<span>0</span>
 			</li>
-			<li className="border-b text-xs sm:text-sm border-white border-opacity-10 border-solid px-8 sm:px-6 py-2 flex justify-between">
+			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
 				<p className="font-bold">Teams</p>
 				<span>0</span>
 			</li>

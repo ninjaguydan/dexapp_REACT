@@ -7,7 +7,7 @@ import Modal from 'components/modules/Modal'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
 	selectAllTeamNames,
-	selectTeamsByCreator,
+	selectOpenTeamsByCreator,
 	team_CREATE,
 	team_UPDATE,
 } from 'redux/slices/teamSlice'
@@ -27,7 +27,7 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
 	const navigate = useNavigate()
 	const [showCreateForm, setShowCreateForm] = useState(false)
 	const [error, setError] = useState<string>('')
-	const myTeams = useAppSelector(state => selectTeamsByCreator(state, userId))
+	const myTeams = useAppSelector(state => selectOpenTeamsByCreator(state, userId))
 	const allTeamNames = useAppSelector(selectAllTeamNames)
 	// Refs
 	const selectedTeam: React.MutableRefObject<HTMLInputElement | undefined> = useRef()
@@ -73,7 +73,6 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
 		},
 		[],
 	)
-
 	return (
 		<Modal closeModal={onClose}>
 			<Modal.Header>Add to Team</Modal.Header>
@@ -89,8 +88,7 @@ export default function AddToTeam({ onClose, userId, pkmnId }: Props) {
 								id="select-team"
 							>
 								{myTeams.map(team => {
-									if (team.members.length < 6)
-										return <option key={team.id}>{team.name}</option>
+									return <option key={team.id}>{team.name}</option>
 								})}
 							</select>
 						</div>

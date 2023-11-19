@@ -14,14 +14,14 @@ const SiteHeader = () => {
 
 	const menuBtnData = {
 		isOpen: menuIsOpen,
-		isVisible: !!currentUser.userToken,
+		isVisible: !!currentUser.userInfo,
 		action: () => {
 			setMenuIsOpen(!menuIsOpen)
 		},
 	}
 	const menuData = {
 		isOpen: menuIsOpen,
-		user: currentUser.userInfo,
+		user: currentUser.userInfo!,
 		closeMenu: () => {
 			setMenuIsOpen(false)
 		},

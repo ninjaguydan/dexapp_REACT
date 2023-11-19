@@ -24,7 +24,7 @@ export interface IAuthUser {
 		pronouns?: string
 		user_img: string
 		bg_color: string
-	}
+	} | null
 }
 export interface IPost {
 	id: number | string

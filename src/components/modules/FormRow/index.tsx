@@ -32,3 +32,18 @@ FormRow.Text = forwardRef(function FormRowText(props: any, ref?) {
 		</>
 	)
 })
+
+FormRow.Password = forwardRef(function FormRowPassword(props: any, ref?) {
+	const { classList } = useContext(InputContext)
+	return (
+		<>
+			<label htmlFor="">{props.children}</label>
+			<input
+				className={classList}
+				ref={ref as any}
+				type="password"
+				placeholder={props.children}
+			/>
+		</>
+	)
+})

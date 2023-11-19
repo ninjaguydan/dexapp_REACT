@@ -13,7 +13,7 @@ import { ITeam } from 'utils/Interfaces'
 import { ICON_KEY } from 'utils/iconKey'
 
 interface ITeamStatsProps {
-	current_user_id: string | number
+	current_user_id: string | number | undefined
 	team: ITeam
 	created_by: string
 }
@@ -30,8 +30,8 @@ export default function TeamStats({ current_user_id, team, created_by }: ITeamSt
 	const focus = () => buttonRef.current?.focus()
 
 	const toggleLike = () => {
-		const payload = { teamId: team.id, userId: current_user_id }
-		if (team.likes.includes(current_user_id)) {
+		const payload = { teamId: team.id, userId: current_user_id! }
+		if (team.likes.includes(current_user_id!)) {
 			dispatch(team_UNLIKE(payload))
 		} else {
 			dispatch(team_LIKE(payload))
