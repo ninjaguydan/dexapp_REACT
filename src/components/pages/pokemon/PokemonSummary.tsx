@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { FaHeart, FaStar } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 
@@ -24,6 +24,9 @@ interface Props {
 export default function PokemonSummary({ pokemon, isLoading }: Props) {
 	const [showAddToTeam, setShowAddToTeam] = useState(false)
 	const currentUser = useAppSelector(selectCurrentUser)
+	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
+	const focus = () => buttonRef.current?.focus()
+	//TODO: refactor to useAppSelector
 	const reviewCnt = useSelector(
 		(state: RootState) => state.reviews.filter(review => review.pkmn === pokemon?.id).length,
 	)
@@ -110,6 +113,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 			{!!currentUser.userInfo && pokemon && (
 				<ListItem>
 					<Button.Secondary
+						ref={buttonRef}
 						action={() => {
 							setShowAddToTeam(true)
 						}}
@@ -126,6 +130,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 				<AddToTeam
 					onClose={() => {
 						setShowAddToTeam(false)
+						focus()
 					}}
 					userId={currentUser.userInfo!.id}
 					pkmnId={pokemon!.id}

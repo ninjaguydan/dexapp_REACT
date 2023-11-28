@@ -1,3 +1,5 @@
+import { forwardRef, useImperativeHandle, useRef } from 'react'
+
 import {
 	ChatOutline,
 	Cross,
@@ -21,10 +23,25 @@ type Props = {
 		classList?: string
 	}
 }
-function IconBtn({ btnData: { label, content, action, state, classList } }: Props) {
+const IconBtn = forwardRef(function IconBtn(
+	{ btnData: { label, content, action, state, classList } }: Props,
+	ref?,
+) {
+	const btnRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
 	const currentUser = useAppSelector(selectCurrentUser)
-	let node = <></>
+	useImperativeHandle(
+		ref,
+		() => {
+			return {
+				focus() {
+					btnRef.current!.focus()
+				},
+			}
+		},
+		[],
+	)
 
+	let node = <></>
 	if (label === ICON_KEY.LIKES) {
 		node = state ? <Heart className="text-secondary" /> : <HeartOutline />
 	}
@@ -43,6 +60,7 @@ function IconBtn({ btnData: { label, content, action, state, classList } }: Prop
 
 	return (
 		<button
+			ref={btnRef as any}
 			aria-label={label}
 			className={`flex items-center gap-x-1 p-1 text-xs text-gray3 hover:text-secondary ${classList}`}
 			onClick={action}
@@ -52,5 +70,5 @@ function IconBtn({ btnData: { label, content, action, state, classList } }: Prop
 			{content}
 		</button>
 	)
-}
+})
 export default IconBtn

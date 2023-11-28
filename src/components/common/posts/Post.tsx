@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react'
+import { memo, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Avatar from 'components/common/buttons/Avatar'
@@ -30,6 +30,9 @@ function Post({ post }: IPostProps) {
 	const [repliesVisible, setRepliesVisible] = useState(false)
 	const [showPopup, setShowPopup] = useState(false)
 	const user = useAppSelector(state => state.users.filter(user => user.id === post.added_by)[0])
+
+	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
+	const focus = () => buttonRef.current?.focus()
 
 	const toggleLike = () => {
 		const payload = { postId: post.id, userId: currentUser.userInfo!.id }
@@ -78,7 +81,7 @@ function Post({ post }: IPostProps) {
 						&#8226; {getTimeDifference(post.created)}
 					</span>
 					{currentUser.userInfo?.id === post.added_by && (
-						<IconBtn btnData={deleteBtnData} />
+						<IconBtn btnData={deleteBtnData} ref={buttonRef} />
 					)}
 				</h2>
 				<p className="text-xs sm:text-sm">{post.content}</p>
@@ -100,6 +103,7 @@ function Post({ post }: IPostProps) {
 				<DeletePost
 					onClose={() => {
 						setShowPopup(false)
+						focus()
 					}}
 					onConfirm={() => {
 						dispatch(post_DELETE(post.id))
