@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+import { ROOT_URL } from 'api/urls'
 import getImageByKey from 'utils/getImageByKey'
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 
 function Avatar({ user: { user_img, username, bg_color }, classList, clickAction }: Props) {
 	return (
-		<Link to={`/profile/${username}`} className={classList} onClick={clickAction}>
+		<Link to={`/${ROOT_URL}/profile/${username}`} className={classList} onClick={clickAction}>
 			<img
 				src={getImageByKey(user_img)}
 				alt={'user profile'}

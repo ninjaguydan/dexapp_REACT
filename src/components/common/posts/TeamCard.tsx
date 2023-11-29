@@ -13,7 +13,7 @@ import { makeSelectRepliesByTeam } from 'redux/slices/replySlice'
 import { team_LIKE, team_UNLIKE } from 'redux/slices/teamSlice'
 import { selectUserById } from 'redux/slices/userSlice'
 import { getTimeDifference } from 'utils/Helpers'
-import { IReply, ITeam } from 'utils/Interfaces'
+import { ITeam } from 'utils/Interfaces'
 import { ICON_KEY } from 'utils/iconKey'
 
 interface ITeamProps {
@@ -62,11 +62,11 @@ function TeamCard({ team }: ITeamProps) {
 		<Card>
 			<div className="content team flex flex-col gap-y-1">
 				<h2 className="text-sm font-bold sm:text-base">
-					<Link to={`/profile/${user.username}`} className="hover:underline">
+					<Link to={`profile/${user.username}`} className="hover:underline">
 						{user.username}
 					</Link>
 					<span className="font-normal text-gray4"> created the team, </span>
-					<Link to={`/team/${team.name}`} className="capitalize hover:underline">
+					<Link to={`team/${team.name}`} className="capitalize hover:underline">
 						{' '}
 						{team.name}
 					</Link>
@@ -79,7 +79,7 @@ function TeamCard({ team }: ITeamProps) {
 					{arr.map(index => {
 						if (team.members[index]) {
 							return (
-								<Link to={`/pokemon/${team.members[index]}`} key={index}>
+								<Link to={`pokemon/${team.members[index]}`} key={index}>
 									<img
 										src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${team.members[index]}.png`}
 										className="rounded-full bg-gray1 hover:ring-2 hover:ring-gray3"

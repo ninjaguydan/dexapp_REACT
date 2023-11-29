@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import FormInput from 'components/common/forms/FormInput'
 
+import { ROOT_URL } from 'api/urls'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import pk_ball from 'media/pokeball.png'
 import { auth_LOGIN, selectCurrentUser } from 'redux/slices/authSlice'
@@ -30,7 +31,7 @@ const Register = () => {
 
 	useEffect(() => {
 		if (currentUser.userInfo) {
-			navigate('/dexapp_REACT')
+			navigate('/' + ROOT_URL)
 		}
 	}, [])
 
@@ -52,7 +53,7 @@ const Register = () => {
 		}
 		dispatch(user_ADDED(newUser))
 		dispatch(auth_LOGIN(newUser))
-		navigate('/dexapp_REACT')
+		navigate('/' + ROOT_URL)
 	}
 
 	return (
@@ -101,7 +102,7 @@ const Register = () => {
 							Sign Up
 						</button>
 						<Link
-							to="/login"
+							to={`/${ROOT_URL}/login`}
 							className="w-full rounded border border-solid px-4 py-1 text-center hover:bg-gray3"
 						>
 							Log In

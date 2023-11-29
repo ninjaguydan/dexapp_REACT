@@ -204,7 +204,6 @@ Animation
 .error404 button {
 	width: 15rem;
 	padding: 0.5rem;
-	margin-top: 2rem;
 }
 /*---------- 550px BREAK POINT ----------*/
 @media only screen and (min-width: 550px) {

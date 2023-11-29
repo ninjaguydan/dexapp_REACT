@@ -23,7 +23,7 @@ export default function TopTenCard({ id }: { id: number }) {
 			key={pkmnData.id}
 		>
 			<Link
-				to={`/pokemon/${pkmnData.id}`}
+				to={`pokemon/${pkmnData.id}`}
 				className="group flex w-full items-center gap-x-2 sm:gap-x-4 "
 			>
 				<img

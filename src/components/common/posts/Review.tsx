@@ -36,7 +36,7 @@ const setRating = (rating: number) => {
 		}
 	})
 }
-
+// TODO: Closing DeletePost should return focus to Delete Button
 const Review = ({ review, TL_view = false }: Props) => {
 	const dispatch = useAppDispatch()
 	// logged in user

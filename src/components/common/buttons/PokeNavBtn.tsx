@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
+import { ROOT_URL } from 'api/urls'
 import setImage from 'utils/setDefaultImg'
 
 type Props = {
@@ -50,7 +51,7 @@ export default function PokeNavBtn({ pkmnId, direction }: Props) {
 
 	return (
 		<Link
-			to={`/pokemon/${id}`}
+			to={`/${ROOT_URL}/pokemon/${id}`}
 			className={`flex items-center justify-center gap-x-4 ${
 				direction === 'next' ? 'flex-row-reverse' : 'flex-row'
 			}`}
