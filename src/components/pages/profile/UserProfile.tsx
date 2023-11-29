@@ -10,6 +10,8 @@ import { selectCurrentUser } from 'redux/slices/authSlice'
 import { selectPostById } from 'redux/slices/postSlice'
 import { IUser } from 'utils/Interfaces'
 
+import PageNotFound from '../error404/PageNotFound'
+
 const UserProfile = () => {
 	// parameter: "profile/username"
 	const { username } = useParams()
@@ -18,7 +20,9 @@ const UserProfile = () => {
 	const user = useAppSelector(state => state.users.filter(u => u.username === username)[0])
 	// get memoized posts
 	const selectPosts = useMemo(selectPostById, [])
-	const posts = useAppSelector(state => selectPosts(state, user.id))
+	const posts = useAppSelector(state => selectPosts(state, user?.id))
+
+	if (!user) return <PageNotFound />
 
 	return (
 		<div className="flex w-full flex-col gap-x-4 gap-y-4 sm:flex-row">

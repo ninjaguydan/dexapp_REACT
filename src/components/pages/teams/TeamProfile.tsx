@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import ReplyList from 'components/common/posts/ReplyList'
 import TeamGrid from 'components/common/posts/TeamGrid'
+import PageNotFound from 'components/pages/error404/PageNotFound'
 import TeamResistance from 'components/pages/teams/TeamResistance'
 import TeamStats from 'components/pages/teams/TeamStats'
 
@@ -22,11 +23,13 @@ function TeamProfile() {
 	const currentUser = useAppSelector(selectCurrentUser)
 	// get memoized replies
 	const selectTeamReplies = useMemo(makeSelectRepliesByTeam, [])
-	const replies = useAppSelector(state => selectTeamReplies(state, team.id))
+	const replies = useAppSelector(state => selectTeamReplies(state, team?.id))
 
 	const created_by: string = useSelector(
-		(state: RootState) => state.users.filter(user => user.id === team.added_by)[0].username,
+		(state: RootState) => state.users.filter(user => user.id === team?.added_by)[0]?.username,
 	)
+
+	if (!team) return <PageNotFound />
 
 	return (
 		<div className="flex w-full flex-col gap-4 md:flex-row">
