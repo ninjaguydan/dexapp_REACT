@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 
 import Button from 'components/modules/Button'
 
-import { ROOT_URL as ROOT } from 'api/urls'
-
 import error_img from '../../../media/404.png'
 
 const PageNotFound = () => {
@@ -18,7 +16,7 @@ const PageNotFound = () => {
 					<h1>Oops! Page not found</h1>
 					<p className="text-[#6c757d]">You shouldn't be here.</p>
 				</div>
-				<Link to={ROOT}>
+				<Link to="/">
 					<Button.Primary>Go home now</Button.Primary>
 				</Link>
 			</div>

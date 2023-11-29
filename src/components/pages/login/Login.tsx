@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import Button from 'components/modules/Button'
 import FormRow from 'components/modules/FormRow'
 
-import { ROOT_URL } from 'api/urls'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import pkmn_img from 'media/pkmn.png'
 import { auth_LOGIN, selectCurrentUser } from 'redux/slices/authSlice'
@@ -22,7 +21,7 @@ const Login = () => {
 
 	useEffect(() => {
 		if (currentUser.userInfo) {
-			navigate('/' + ROOT_URL)
+			navigate('/')
 		}
 	}, [])
 
@@ -35,7 +34,7 @@ const Login = () => {
 		)
 		if (logUser) {
 			dispatch(auth_LOGIN(logUser))
-			navigate('/' + ROOT_URL)
+			navigate('/')
 		} else {
 			setError(true)
 		}
@@ -58,7 +57,7 @@ const Login = () => {
 					</FormRow>
 					<div className="flex flex-col items-center gap-x-3 gap-y-3 sm:flex-row">
 						<Button.Primary>Log In</Button.Primary>
-						<Link to={`/${ROOT_URL}/register`} className="block w-full">
+						<Link to={`/register`} className="block w-full">
 							<Button.Secondary>Create New Account</Button.Secondary>
 						</Link>
 					</div>

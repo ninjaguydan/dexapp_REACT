@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import TypeBtn from 'components/common/buttons/TypeBtn'
 import Spinner from 'components/modules/Spinner'
 
-import { ROOT_URL } from 'api/urls'
 import useFetchPkmn from 'hooks/fetchers/useFetchPkmn'
 import setImage from 'utils/setDefaultImg'
 
@@ -19,7 +18,7 @@ export default function PokemonCard({ pokemon_id, classList }: Props) {
 
 	return (
 		<Link
-			to={`/${ROOT_URL}/pokemon/${pokemon.id}`}
+			to={`/pokemon/${pokemon.id}`}
 			key={pokemon.id}
 			className="flex flex-col gap-y-2 rounded-2xl bg-gray6 p-3 hover:ring-2 hover:ring-gray3 sm:p-6"
 		>

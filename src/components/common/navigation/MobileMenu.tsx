@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import Avatar from 'components/common/buttons/Avatar'
 
-import { ROOT_URL } from 'api/urls'
 import { useAppDispatch } from 'hooks/hooks'
 import useDeviceWidth from 'hooks/useDeviceWidth'
 import dex_icon_w from 'media/dex-icon-w.svg'
@@ -28,7 +27,7 @@ const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
 	const onLogout = () => {
 		closeMenu()
 		dispatch(auth_LOGOUT())
-		navigate(`${ROOT_URL}/login`)
+		navigate(`/login`)
 	}
 
 	return createPortal(
@@ -49,14 +48,14 @@ const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
 
 			<nav>
 				<Link
-					to={`/${ROOT_URL}/profile/${user.username}`}
+					to={`/profile/${user.username}`}
 					onClick={closeMenu}
 					className="flex h-14 items-center gap-x-3 hover:text-secondary"
 				>
 					<i className="material-icons">account_circle</i>Profile
 				</Link>
 				<Link
-					to={`/${ROOT_URL}`}
+					to="/"
 					onClick={closeMenu}
 					className="flex h-14 items-center gap-x-3 hover:text-secondary"
 				>
@@ -68,7 +67,7 @@ const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
 					Pokedex
 				</Link>
 				<Link
-					to={`/${ROOT_URL}`}
+					to="/"
 					onClick={closeMenu}
 					className="flex h-14 items-center gap-x-3 hover:text-secondary"
 				>

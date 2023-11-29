@@ -13,24 +13,24 @@ import UserProfile from 'components/pages/profile/UserProfile'
 import Pokedex from 'components/pages/search/Pokedex'
 import TeamProfile from 'components/pages/teams/TeamProfile'
 
-import { ROOT_URL as ROOT } from 'api/urls'
+import { ROOT_URL } from 'api/urls'
 import ScrolltoTop from 'hooks/ScrollToTop'
 
 function App() {
 	return (
-		<MyRouter>
+		<MyRouter basename={`/${ROOT_URL}`}>
 			<ScrolltoTop />
 			<SiteHeader />
 			<MobileNav />
 			<main className="profile main mx-auto flex max-w-5xl flex-col items-center gap-x-4 py-24 lg:flex-row-reverse lg:items-start">
 				<Routes>
-					<Route index path={ROOT} element={<Home />} />
-					<Route path={`${ROOT}/login`} element={<Login />} />
-					<Route path={`${ROOT}/register`} element={<Register />} />
-					<Route path={`${ROOT}/dex`} element={<Pokedex />} />
-					<Route path={`${ROOT}/pokemon/:id`} element={<PokemonProfile />} />
-					<Route path={`${ROOT}/profile/:username`} element={<UserProfile />} />
-					<Route path={`${ROOT}/team/:teamName`} element={<TeamProfile />} />
+					<Route index path="/" element={<Home />} />
+					<Route path={`/login`} element={<Login />} />
+					<Route path={`/register`} element={<Register />} />
+					<Route path={`/dex`} element={<Pokedex />} />
+					<Route path={`/pokemon/:id`} element={<PokemonProfile />} />
+					<Route path={`/profile/:username`} element={<UserProfile />} />
+					<Route path={`/team/:teamName`} element={<TeamProfile />} />
 					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</main>

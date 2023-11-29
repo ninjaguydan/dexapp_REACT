@@ -6,7 +6,6 @@ import Avatar from 'components/common/buttons/Avatar'
 import { FaAngleDown } from 'components/common/icons/index'
 import DesktopMenu from 'components/common/navigation/DesktopMenu'
 
-import { ROOT_URL } from 'api/urls'
 import { useAppSelector } from 'hooks/hooks'
 import useDeviceWidth from 'hooks/useDeviceWidth'
 import { selectCurrentUser } from 'redux/slices/authSlice'
@@ -38,11 +37,11 @@ const DesktopNav = () => {
 		</div>
 	) : (
 		<>
-			<NavLink to={`/${ROOT_URL}/register`} className={'font-bold hover:text-secondary'}>
+			<NavLink to={`/register`} className={'font-bold hover:text-secondary'}>
 				Sign Up
 			</NavLink>
 
-			<NavLink to={`/${ROOT_URL}/login`} className={'font-bold hover:text-secondary'}>
+			<NavLink to={`/login`} className={'font-bold hover:text-secondary'}>
 				Login
 			</NavLink>
 		</>
@@ -52,11 +51,11 @@ const DesktopNav = () => {
 		<nav className="flex w-[400px] items-center justify-between">
 			<SearchBtn />
 
-			<NavLink to={`/${ROOT_URL}`} className={'hover:text-secondary'}>
+			<NavLink to="/" className={'hover:text-secondary'}>
 				Home
 			</NavLink>
 
-			<NavLink to={`/${ROOT_URL}`} className={'hover:text-secondary'}>
+			<NavLink to="/" className={'hover:text-secondary'}>
 				Pokedex
 			</NavLink>
 
