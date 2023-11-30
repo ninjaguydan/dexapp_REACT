@@ -44,7 +44,6 @@ const Review = ({ review, TL_view = false }: Props) => {
 	// get memoized replies
 	const selectReviewReplies = useMemo(makeSelectRepliesByReview, [])
 	const replies = useAppSelector(state => selectReviewReplies(state, review.id))
-	// init state
 	const [repliesVisible, setRepliesVisible] = useState(false)
 	const [showPopup, setShowPopup] = useState(false)
 
@@ -111,7 +110,7 @@ const Review = ({ review, TL_view = false }: Props) => {
 				<Avatar user={user} classList="w-10 h-10 sm:w-16 sm:h-16" />
 			)}
 
-			<div className="flex w-[calc(100%-80px)] flex-col gap-y-1">
+			<Card.Body>
 				<h2 className="text-sm font-bold sm:text-base">
 					<Link to={`/profile/${user.username}`} className="hover:underline">
 						{TL_view ? truncateStr(user.username) : truncateStr(user.name)}
@@ -130,19 +129,20 @@ const Review = ({ review, TL_view = false }: Props) => {
 						{' '}
 						&#8226; {getTimeDifference(review.created)}
 					</span>
-					{currentUser.userInfo?.id === review.added_by && (
-						<IconBtn btnData={deleteBtnData} />
-					)}
 				</h2>
 				<span className="my-1 flex text-xs text-gray3 sm:my-2 sm:text-sm">
 					{setRating(review.rating)}
 				</span>
 				<p className="text-xs sm:text-sm">{review.content}</p>
 				<div className="flex gap-x-8">
+					{currentUser.userInfo?.id === review.added_by && (
+						<IconBtn btnData={deleteBtnData} />
+					)}
 					<IconBtn btnData={likeBtnData} />
 					<IconBtn btnData={commentBtnData} />
 				</div>
-			</div>
+			</Card.Body>
+
 			<div className="w-full">
 				{repliesVisible && (
 					<ReplyList

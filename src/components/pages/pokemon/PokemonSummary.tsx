@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { FaHeart, FaStar } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 
@@ -12,8 +12,9 @@ import Spinner from 'components/modules/Spinner'
 
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
-import { RootState } from 'redux/store'
-import { getBaseStatTotal, makeHundreds } from 'utils/Helpers'
+import { selectReviewCount } from 'redux/slices/reviewSlice'
+import { selectTeamsByPkmn } from 'redux/slices/teamSlice'
+import { getBaseStatTotal, makeHundreds, pluralize } from 'utils/Helpers'
 import { IPokemon } from 'utils/Interfaces'
 
 interface Props {
@@ -26,10 +27,10 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 	const currentUser = useAppSelector(selectCurrentUser)
 	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
 	const focus = () => buttonRef.current?.focus()
-	//TODO: refactor to useAppSelector
-	const reviewCnt = useSelector(
-		(state: RootState) => state.reviews.filter(review => review.pkmn === pokemon?.id).length,
-	)
+	const selectCount = useMemo(selectReviewCount, [])
+	const reviewCnt = useAppSelector(state => selectCount(state, pokemon?.id))
+	const teamCount = useAppSelector(state => selectTeamsByPkmn(state, pokemon?.id))
+
 	const stats: { [key: string]: number } = {
 		HP: pokemon?.hp || 0,
 		Attack: pokemon?.attack || 0,
@@ -108,7 +109,9 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 				<p>{reviewCnt || 0}</p>
 			</ListItem>
 			<ListItem classList="!justify-center">
-				<p className="font-bold">Featured on 0 Teams!</p>
+				<p className="font-bold">
+					Featured on {teamCount} {pluralize(teamCount, 'Team')}!
+				</p>
 			</ListItem>
 			{!!currentUser.userInfo && pokemon && (
 				<ListItem>

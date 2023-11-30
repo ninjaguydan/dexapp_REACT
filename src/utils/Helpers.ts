@@ -1,4 +1,4 @@
-export function makeHundreds(num) {
+export function makeHundreds(num: number | undefined) {
 	if (!num) return '000'
 	if (num < 10) {
 		return `00${num}`
@@ -8,12 +8,12 @@ export function makeHundreds(num) {
 		return num
 	}
 }
-export function getBaseStatTotal(arr) {
+export function getBaseStatTotal(arr: number[]) {
 	return arr.reduce((a, b) => {
 		return a + b
 	}, 0)
 }
-export function renderStars(num) {
+export function renderStars(num: number) {
 	var result = ''
 	for (var i = 1; i < 11; i++) {
 		if (i <= num) {
@@ -24,18 +24,18 @@ export function renderStars(num) {
 	}
 	return result
 }
-export function checkNum(value) {
+export function checkNum(value: string) {
 	return value.match(/\d/)
 }
-export function truncateStr(string) {
+export function truncateStr(string: string) {
 	if (string.length > 13) {
 		let str = string.substring(0, 12)
 		return `${str}...`
 	}
 	return string
 }
-export function titleCase(str) {
-	if ((str === undefined) | (str === '')) return
+export function titleCase(str: string | undefined) {
+	if (str === undefined || str === '') return ''
 	return str
 		.toLowerCase()
 		.split(' ')
@@ -44,17 +44,17 @@ export function titleCase(str) {
 		})
 		.join(' ')
 }
-export function getRandomInt(min, max) {
+export function getRandomInt(min: number, max: number) {
 	min = Math.ceil(min)
 	max = Math.floor(max)
 	return Math.floor(Math.random() * (max - min) + min)
 }
-export function getRandomFloat(min, max) {
+export function getRandomFloat(min: number, max: number) {
 	min = Math.ceil(min)
 	max = Math.floor(max)
 	return (Math.random() * (max - min) + min).toFixed(1)
 }
-export function addOrdinalSuffix(i) {
+export function addOrdinalSuffix(i: number) {
 	let j = i % 10,
 		k = i % 100
 	if (j === 1 && k !== 11) {
@@ -68,32 +68,35 @@ export function addOrdinalSuffix(i) {
 	}
 	return i + 'th'
 }
+export function pluralize(count: number, noun: string, suffix: string = 's') {
+	return count !== 1 ? `${noun}${suffix}` : noun
+}
 
-function getSeconds(milliseconds) {
+function getSeconds(milliseconds: number) {
 	return milliseconds / 1000
 }
-function getMinutes(milliseconds) {
+function getMinutes(milliseconds: number) {
 	return milliseconds / 60000
 }
-function getHours(milliseconds) {
+function getHours(milliseconds: number) {
 	return milliseconds / 3600000
 }
-function getDays(milliseconds) {
+function getDays(milliseconds: number) {
 	return milliseconds / 86400000
 }
-function getWeeks(milliseconds) {
+function getWeeks(milliseconds: number) {
 	return milliseconds / 604800000
 }
-function getMonths(milliseconds) {
+function getMonths(milliseconds: number) {
 	return milliseconds / 2629746000
 }
-function getYears(milliseconds) {
+function getYears(milliseconds: number) {
 	return milliseconds / 31556952000
 }
 
-export function getTimeDifference(date) {
-	let now = new Date()
-	let time = new Date(date)
+export function getTimeDifference(date: number) {
+	let now = new Date().getTime()
+	let time = new Date(date).getTime()
 	let milli = now - time
 	let roundDown = Math.floor
 	let years = getYears(milli)

@@ -119,3 +119,10 @@ export const selectOpenTeamsByCreator = createSelector(
 		return teams.filter(team => team.added_by === userId && team.members.length < 6)
 	},
 )
+export const selectTeamsByPkmn = createSelector(
+	[selectTeams, (state: RootState, pkmnId: number | undefined) => pkmnId],
+	(teams, pkmnId) => {
+		if (!pkmnId) return 0
+		return teams.filter(team => team.members.includes(pkmnId)).length
+	},
+)

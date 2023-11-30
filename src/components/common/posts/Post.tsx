@@ -70,7 +70,8 @@ function Post({ post }: IPostProps) {
 	return (
 		<Card>
 			<Avatar user={user} classList="h-10 sm:h-16 w-10 sm:w-16" />
-			<div className="flex w-[calc(100%-80px)] flex-col gap-y-1">
+
+			<Card.Body>
 				<h2 className="text-sm font-bold sm:text-base">
 					<Link to={`/profile/${truncateStr(user.username)}`} className="hover:underline">
 						{truncateStr(user.name)}
@@ -80,16 +81,16 @@ function Post({ post }: IPostProps) {
 						{' '}
 						&#8226; {getTimeDifference(post.created)}
 					</span>
-					{currentUser.userInfo?.id === post.added_by && (
-						<IconBtn btnData={deleteBtnData} ref={buttonRef} />
-					)}
 				</h2>
 				<p className="text-xs sm:text-sm">{post.content}</p>
-				<div className="flex gap-x-8">
-					<IconBtn btnData={likeBtnData} />
-					<IconBtn btnData={commentBtnData} />
-				</div>
-			</div>
+				<Card.Actions
+					like={likeBtnData}
+					comment={commentBtnData}
+					delete={deleteBtnData}
+					showDelete={currentUser.userInfo?.id === post.added_by}
+				/>
+			</Card.Body>
+
 			<div className="w-full">
 				{repliesVisible && (
 					<ReplyList

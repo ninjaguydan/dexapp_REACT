@@ -14,7 +14,7 @@ import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
 import { ICON_KEY } from 'utils/iconKey'
 
-type Props = {
+export type btnProps = {
 	btnData: {
 		label: string
 		content?: string | number
@@ -24,7 +24,7 @@ type Props = {
 	}
 }
 const IconBtn = forwardRef(function IconBtn(
-	{ btnData: { label, content, action, state, classList } }: Props,
+	{ btnData: { label, content, action, state, classList } }: btnProps,
 	ref?,
 ) {
 	const btnRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()

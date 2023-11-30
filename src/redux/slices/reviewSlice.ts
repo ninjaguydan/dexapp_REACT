@@ -89,8 +89,14 @@ export const { review_CREATE, review_DELETE, review_LIKE, review_UNLIKE } = revi
 export default reviewSlice.reducer
 
 // Selectors
+export const selectReviews = (state: RootState) => state.reviews
 export const selectReviewsByPkmn = () =>
 	createSelector(
-		[(state: RootState) => state.reviews, (state: RootState, pkmnId: number) => pkmnId],
+		[selectReviews, (state: RootState, pkmnId: number) => pkmnId],
 		(reviews, pkmnId) => reviews.filter(review => review.pkmn === pkmnId),
+	)
+export const selectReviewCount = () =>
+	createSelector(
+		[selectReviews, (state: RootState, pkmnId: number | undefined) => pkmnId],
+		(reviews, pkmnId) => reviews.filter(review => review.pkmn === pkmnId).length,
 	)
