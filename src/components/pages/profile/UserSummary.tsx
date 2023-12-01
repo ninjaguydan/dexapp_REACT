@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import Avatar from 'components/common/buttons/Avatar'
 import EditProfile from 'components/common/modals/EditProfile'
@@ -10,6 +11,7 @@ import { makeSelectPostsByUser } from 'redux/slices/postSlice'
 import { selectReviewsByUser } from 'redux/slices/reviewSlice'
 import { selectTeamsByCreator } from 'redux/slices/teamSlice'
 import { IUser } from 'utils/Interfaces'
+import setImage from 'utils/setDefaultImg'
 
 interface Props {
 	user: IUser
@@ -88,10 +90,20 @@ function UserSummary({ user }: Props) {
 				<p className="font-bold">Teams</p>
 				<span>{teamCnt}</span>
 			</li>
-			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
-				<p className="font-bold">Favorites</p>
-				<span>0</span>
-			</li>
+			{!!user.favorite && (
+				<li className="flex items-center justify-between gap-2 border-b border-solid border-white border-opacity-10 px-8 py-2 text-center text-xs sm:px-6 sm:text-sm">
+					<p className="font-bold">Favorite</p>
+					<Link to={`/pokemon/${user.favorite}`}>
+						<img
+							src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${user.favorite}.png`}
+							onError={e => {
+								setImage(e)
+							}}
+							className="h-10 w-10 rounded-full bg-gray1 hover:ring-2 hover:ring-gray3"
+						/>
+					</Link>
+				</li>
+			)}
 			{editForm && (
 				<EditProfile
 					closeEdit={() => {

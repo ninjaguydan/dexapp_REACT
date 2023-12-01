@@ -9,10 +9,6 @@ type Props = {
 	direction: 'prev' | 'next'
 }
 
-function scrollToTop() {
-	window.scrollTo(0, 0)
-}
-
 function setNav(
 	pokemonId: number | undefined,
 	total: number = 10275,
@@ -54,7 +50,6 @@ export default function PokeNavBtn({ pkmnId, direction }: Props) {
 			className={`flex items-center justify-center gap-x-4 ${
 				direction === 'next' ? 'flex-row-reverse' : 'flex-row'
 			}`}
-			onClick={scrollToTop}
 		>
 			{Arrow}
 			<img

@@ -8,23 +8,14 @@ export interface IUser {
 	pronouns?: string
 	user_img: string
 	bg_color: string
+	favorite: number
 }
 export interface IAuthUser {
 	loading: boolean
 	userToken: string | null
 	error: string | null
 	success: boolean
-	userInfo: {
-		id: number | string
-		name: string
-		username: string
-		password: string
-		bio?: string
-		location?: string
-		pronouns?: string
-		user_img: string
-		bg_color: string
-	} | null
+	userInfo: IUser | null
 }
 export interface IPost {
 	id: number | string

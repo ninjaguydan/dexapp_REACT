@@ -49,6 +49,7 @@ const Register = () => {
 			id: uuidv4(),
 			user_img: 'dfault',
 			bg_color: 'bg-black',
+			favorite: 0,
 		}
 		dispatch(user_ADDED(newUser))
 		dispatch(auth_LOGIN(newUser))

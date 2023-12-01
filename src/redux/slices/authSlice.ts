@@ -14,6 +14,7 @@ const initialState: IAuthUser | null = {
 		password: 'password',
 		user_img: 'dfault',
 		bg_color: 'bg-black',
+		favorite: 0,
 	},
 	userToken:
 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3Mjc2NjAyOCwiZXhwIjoxNjc0NDk0MDI4fQ.kCak9sLJr74frSRVQp0_27BY4iBCgQSmoT3vQVWKzJg',
