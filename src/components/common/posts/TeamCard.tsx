@@ -79,7 +79,7 @@ function TeamCard({ team }: ITeamProps) {
 					{arr.map(index => {
 						if (team.members[index]) {
 							return (
-								<Link to={`pokemon/${team.members[index]}`} key={index}>
+								<Link to={`/pokemon/${team.members[index]}`} key={index}>
 									<img
 										src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${team.members[index]}.png`}
 										className="rounded-full bg-gray1 hover:ring-2 hover:ring-gray3"
