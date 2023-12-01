@@ -97,10 +97,7 @@ function TeamCard({ team }: ITeamProps) {
 						}
 					})}
 				</span>
-				<div className="flex gap-x-8">
-					<IconBtn btnData={likeBtnData} />
-					<IconBtn btnData={commentBtnData} />
-				</div>
+				<Card.Actions like={likeBtnData} comment={commentBtnData} showDelete={false} />
 			</div>
 			<div className="w-full">
 				{repliesVisible && (

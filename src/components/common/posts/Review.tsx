@@ -39,19 +39,17 @@ const setRating = (rating: number) => {
 // TODO: Closing DeletePost should return focus to Delete Button
 const Review = ({ review, TL_view = false }: Props) => {
 	const dispatch = useAppDispatch()
-	// logged in user
 	const currentUser = useAppSelector(selectCurrentUser)
-	// get memoized replies
 	const selectReviewReplies = useMemo(makeSelectRepliesByReview, [])
 	const replies = useAppSelector(state => selectReviewReplies(state, review.id))
 	const [repliesVisible, setRepliesVisible] = useState(false)
-	const [showPopup, setShowPopup] = useState(false)
 
 	const user = useAppSelector(state => state.users.filter(user => user.id === review.added_by)[0])
 	const {
 		data: pkmnData,
 		isLoading,
 	}: { data?: { name: string; id: number }; isLoading: boolean } = useFetchPkmn(review.pkmn)
+
 	const toggleLike = () => {
 		const payload = { reviewId: review.id, userId: currentUser.userInfo!.id }
 		if (review.likes.includes(currentUser.userInfo!.id)) {
@@ -61,14 +59,9 @@ const Review = ({ review, TL_view = false }: Props) => {
 		}
 	}
 
-	const deleteBtnData = {
-		label: ICON_KEY.DELETE,
-		content: '',
-		action: () => {
-			setShowPopup(true)
-		},
-		state: true,
-		classList: 'absolute top-4 right-4',
+	const deletePost = () => {
+		dispatch(review_DELETE(review.id))
+		dispatch(reply_DESTROY_ALL_BY_({ id: review.id, type: 'review' }))
 	}
 
 	const likeBtnData = {
@@ -134,13 +127,12 @@ const Review = ({ review, TL_view = false }: Props) => {
 					{setRating(review.rating)}
 				</span>
 				<p className="text-xs sm:text-sm">{review.content}</p>
-				<div className="flex gap-x-8">
-					{currentUser.userInfo?.id === review.added_by && (
-						<IconBtn btnData={deleteBtnData} />
-					)}
-					<IconBtn btnData={likeBtnData} />
-					<IconBtn btnData={commentBtnData} />
-				</div>
+				<Card.Actions
+					like={likeBtnData}
+					comment={commentBtnData}
+					delete={{ fn: deletePost, label: 'review' }}
+					showDelete={currentUser.userInfo?.id === review.added_by}
+				/>
 			</Card.Body>
 
 			<div className="w-full">
@@ -152,18 +144,6 @@ const Review = ({ review, TL_view = false }: Props) => {
 					/>
 				)}
 			</div>
-			{showPopup && (
-				<DeletePost
-					onClose={() => {
-						setShowPopup(false)
-					}}
-					onConfirm={() => {
-						dispatch(review_DELETE(review.id))
-						dispatch(reply_DESTROY_ALL_BY_({ id: review.id, type: 'review' }))
-					}}
-					label="review"
-				/>
-			)}
 		</Card>
 	)
 }

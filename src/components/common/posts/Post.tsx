@@ -1,9 +1,7 @@
-import { memo, useMemo, useRef, useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Avatar from 'components/common/buttons/Avatar'
-import IconBtn from 'components/common/buttons/IconBtn'
-import DeletePost from 'components/common/modals/DeletePost'
 import ReplyList from 'components/common/posts/ReplyList'
 import Card from 'components/modules/Card'
 
@@ -18,21 +16,13 @@ import { ICON_KEY } from 'utils/iconKey'
 interface IPostProps {
 	post: IPost
 }
-
 function Post({ post }: IPostProps) {
 	const dispatch = useAppDispatch()
-	// logged in user
 	const currentUser = useAppSelector(selectCurrentUser)
-	// get memoized replies
 	const selectPostReplies = useMemo(makeSelectRepliesByPost, [])
 	const replies = useAppSelector(state => selectPostReplies(state, post.id))
-	// init state
 	const [repliesVisible, setRepliesVisible] = useState(false)
-	const [showPopup, setShowPopup] = useState(false)
 	const user = useAppSelector(state => state.users.filter(user => user.id === post.added_by)[0])
-
-	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
-	const focus = () => buttonRef.current?.focus()
 
 	const toggleLike = () => {
 		const payload = { postId: post.id, userId: currentUser.userInfo!.id }
@@ -42,16 +32,11 @@ function Post({ post }: IPostProps) {
 			dispatch(post_LIKE(payload))
 		}
 	}
-
-	const deleteBtnData = {
-		label: ICON_KEY.DELETE,
-		content: '',
-		action: () => {
-			setShowPopup(true)
-		},
-		state: true,
-		classList: 'absolute top-4 right-4',
+	const deletePost = () => {
+		dispatch(post_DELETE(post.id))
+		dispatch(reply_DESTROY_ALL_BY_({ id: post.id, type: 'post' }))
 	}
+
 	const likeBtnData = {
 		label: ICON_KEY.LIKES,
 		content: post.likes.length,
@@ -86,7 +71,7 @@ function Post({ post }: IPostProps) {
 				<Card.Actions
 					like={likeBtnData}
 					comment={commentBtnData}
-					delete={deleteBtnData}
+					delete={{ fn: deletePost, label: 'post' }}
 					showDelete={currentUser.userInfo?.id === post.added_by}
 				/>
 			</Card.Body>
@@ -100,19 +85,6 @@ function Post({ post }: IPostProps) {
 					/>
 				)}
 			</div>
-			{showPopup && (
-				<DeletePost
-					onClose={() => {
-						setShowPopup(false)
-						focus()
-					}}
-					onConfirm={() => {
-						dispatch(post_DELETE(post.id))
-						dispatch(reply_DESTROY_ALL_BY_({ id: post.id, type: 'post' }))
-					}}
-					label="post"
-				/>
-			)}
 		</Card>
 	)
 }

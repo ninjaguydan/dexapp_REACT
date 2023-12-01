@@ -48,6 +48,15 @@ const initialState: IReview[] = [
 		pkmn: 3,
 		likes: [],
 	},
+	{
+		added_by: 10,
+		content: 'tf is this',
+		created: 1701393031930,
+		id: '6ee64edb-84bf-4ba1-b1d3-a66e66f77228',
+		likes: [],
+		pkmn: 959,
+		rating: 1,
+	},
 ]
 
 const reviewSlice = createSlice({
