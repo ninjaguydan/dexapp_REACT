@@ -54,19 +54,20 @@ export function getRandomFloat(min: number, max: number) {
 	max = Math.floor(max)
 	return (Math.random() * (max - min) + min).toFixed(1)
 }
-export function addOrdinalSuffix(i: number) {
-	let j = i % 10,
-		k = i % 100
+export function addOrdinalSuffix(indexStr: string) {
+	let index = parseInt(indexStr)
+	let j = index % 10,
+		k = index % 100
 	if (j === 1 && k !== 11) {
-		return i + 'st'
+		return index + 'st'
 	}
 	if (j === 2 && k !== 12) {
-		return i + 'nd'
+		return index + 'nd'
 	}
 	if (j === 3 && k !== 13) {
-		return i + 'rd'
+		return index + 'rd'
 	}
-	return i + 'th'
+	return index + 'th'
 }
 export function pluralize(count: number, noun: string, suffix: string = 's') {
 	return count !== 1 ? `${noun}${suffix}` : noun

@@ -25,7 +25,7 @@ const SearchBar = ({ show = true, classList }: Props) => {
 						className="w-full rounded-l-full bg-gray1 px-4"
 						placeholder="Search DexApp..."
 					/>
-					<Button.Secondary classList="w-[fit-content] px-4 rounded-none rounded-r-full border-gray1 text-[#ced4da]">
+					<Button.Secondary classList="!w-[fit-content] px-4 rounded-none rounded-r-full !border-gray1 !text-[#ced4da] hover:!border-[#3d3c44]">
 						Search
 					</Button.Secondary>
 				</form>

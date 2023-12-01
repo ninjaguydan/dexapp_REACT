@@ -8,19 +8,19 @@ import m3 from '../media/3m.png'
 import f4 from '../media/4f.png'
 import m4 from '../media/4m.png'
 
-const images = {
-	dfault,
-	f1,
-	f2,
-	f3,
-	f4,
-	m1,
-	m2,
-	m3,
-	m4,
+const images: { [key: string]: any } = {
+	dfault: dfault,
+	f1: f1,
+	f2: f2,
+	f3: f3,
+	f4: f4,
+	m1: m1,
+	m2: m2,
+	m3: m3,
+	m4: m4,
 }
 
-function getImageByKey(keyname) {
+function getImageByKey(keyname: string) {
 	return images[keyname]
 }
 export default getImageByKey
