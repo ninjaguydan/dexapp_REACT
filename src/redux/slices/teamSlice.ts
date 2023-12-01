@@ -104,6 +104,10 @@ export default teamSlice.reducer
 
 // selectors
 export const selectTeams = (state: RootState) => state.teams
+export const selectTeamByName = createSelector(
+	[selectTeams, (state: RootState, teamName: string | undefined) => teamName],
+	(teams, teamName) => teams.filter(team => team.name === teamName)[0],
+)
 export const selectAllTeamNames = createSelector([selectTeams], teams => {
 	return teams.map(team => team.name)
 })
@@ -119,10 +123,17 @@ export const selectOpenTeamsByCreator = createSelector(
 		return teams.filter(team => team.added_by === userId && team.members.length < 6)
 	},
 )
-export const selectTeamsByPkmn = createSelector(
+export const selectTeamCountByPkmn = createSelector(
 	[selectTeams, (state: RootState, pkmnId: number | undefined) => pkmnId],
 	(teams, pkmnId) => {
 		if (!pkmnId) return 0
 		return teams.filter(team => team.members.includes(pkmnId)).length
+	},
+)
+export const selectTeamsByPkmn = createSelector(
+	[selectTeams, (state: RootState, pkmnId: number | undefined) => pkmnId],
+	(teams, pkmnId) => {
+		if (!pkmnId) return []
+		return teams.filter(team => team.members.includes(pkmnId))
 	},
 )

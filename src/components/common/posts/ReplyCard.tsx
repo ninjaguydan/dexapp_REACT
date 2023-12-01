@@ -20,7 +20,7 @@ interface Props {
 function ReplyCard({ reply }: Props) {
 	const dispatch = useAppDispatch()
 	const currentUser = useAppSelector(selectCurrentUser)
-	const user = useAppSelector(state => selectUserById(state.users, reply.added_by))
+	const user = useAppSelector(state => selectUserById(state, reply.added_by))
 
 	const toggleLike = () => {
 		const payload = { replyId: reply.id, userId: currentUser.userInfo!.id }

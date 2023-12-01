@@ -1,4 +1,5 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit'
+import { RootState } from 'redux/store'
 import { IUser } from 'utils/Interfaces'
 
 const initialState: IUser[] = [
@@ -64,7 +65,8 @@ export const { user_ADDED, user_UPDATE } = userSlice.actions
 export default userSlice.reducer
 
 // Selectors
-export const selectUsers = (state: IUser[]) => state
+export const selectUsers = (state: RootState) => state.users
+
 export const selectUserById = createSelector(
 	[selectUsers, (state, userId) => userId],
 	(users, userId) => users.filter(user => user.id === userId)[0],

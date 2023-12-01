@@ -9,8 +9,8 @@ import UserSummary from 'components/pages/profile/UserSummary'
 
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
-import { selectPostById } from 'redux/slices/postSlice'
-import { reviewsByUser, selectReviewsByUser } from 'redux/slices/reviewSlice'
+import { makeSelectPostById } from 'redux/slices/postSlice'
+import { selectReviewsByUser } from 'redux/slices/reviewSlice'
 import { selectTeamsByCreator } from 'redux/slices/teamSlice'
 import { IUser } from 'utils/Interfaces'
 
@@ -21,12 +21,9 @@ const UserProfile = () => {
 	const { username } = useParams()
 	const currentUser = useAppSelector(selectCurrentUser)
 	const user = useAppSelector(state => state.users.filter(u => u.username === username)[0])
-	// Posts
-	const selectPosts = useMemo(selectPostById, [])
+	const selectPosts = useMemo(makeSelectPostById, [])
 	const posts = useAppSelector(state => selectPosts(state, user?.id))
-	// Reviews
-	const reviews = useAppSelector(state => reviewsByUser(state, user.id))
-	// Teams
+	const reviews = useAppSelector(state => selectReviewsByUser(state, user.id))
 	const teams = useAppSelector(state => selectTeamsByCreator(state, user.id))
 
 	const [activeTab, setActiveTab] = useState<'Posts' | 'Reviews' | 'Teams'>('Posts')

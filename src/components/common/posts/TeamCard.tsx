@@ -1,7 +1,6 @@
 import { memo, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import IconBtn from 'components/common/buttons/IconBtn'
 import ReplyList from 'components/common/posts/ReplyList'
 import Card from 'components/modules/Card'
 
@@ -28,7 +27,7 @@ function TeamCard({ team }: ITeamProps) {
 	const selectTeamReplies = useMemo(makeSelectRepliesByTeam, [])
 	const replies = useAppSelector(state => selectTeamReplies(state, team.id))
 	// get user
-	const user = useAppSelector(state => selectUserById(state.users, team.added_by))
+	const user = useAppSelector(state => selectUserById(state, team.added_by))
 	// init state
 	const [repliesVisible, setRepliesVisible] = useState(false)
 	const toggleLike = () => {

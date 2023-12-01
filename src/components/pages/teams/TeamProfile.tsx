@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import ReplyList from 'components/common/posts/ReplyList'
@@ -11,23 +10,16 @@ import TeamStats from 'components/pages/teams/TeamStats'
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
 import { makeSelectRepliesByTeam } from 'redux/slices/replySlice'
-import { RootState } from 'redux/store'
-import { ITeam } from 'utils/Interfaces'
+import { selectTeamByName } from 'redux/slices/teamSlice'
+import { selectUserById } from 'redux/slices/userSlice'
 
 function TeamProfile() {
 	const { teamName } = useParams()
-	const team: ITeam = useSelector(
-		(state: RootState) => state.teams.filter(team => team.name === teamName)[0],
-	)
-	// logged in user
+	const team = useAppSelector(state => selectTeamByName(state, teamName))
 	const currentUser = useAppSelector(selectCurrentUser)
-	// get memoized replies
 	const selectTeamReplies = useMemo(makeSelectRepliesByTeam, [])
 	const replies = useAppSelector(state => selectTeamReplies(state, team?.id))
-
-	const created_by: string = useSelector(
-		(state: RootState) => state.users.filter(user => user.id === team?.added_by)[0]?.username,
-	)
+	const created_by = useAppSelector(state => selectUserById(state, team.added_by)).username
 
 	if (!team) return <PageNotFound />
 

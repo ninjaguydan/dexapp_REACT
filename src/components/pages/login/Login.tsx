@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Button from 'components/modules/Button'
@@ -8,13 +7,12 @@ import FormRow from 'components/modules/FormRow'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import pkmn_img from 'media/pkmn.png'
 import { auth_LOGIN, selectCurrentUser } from 'redux/slices/authSlice'
-import { RootState } from 'redux/store'
 
 const Login = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const currentUser = useAppSelector(selectCurrentUser)
-	const users = useSelector((state: RootState) => state.users)
+	const users = useAppSelector(state => state.users)
 	const [error, setError] = useState(false)
 	const username: React.MutableRefObject<HTMLInputElement | undefined> = useRef()
 	const password: React.MutableRefObject<HTMLInputElement | undefined> = useRef()

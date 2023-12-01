@@ -68,8 +68,14 @@ const postSlice = createSlice({
 export const { post_CREATE, post_DELETE, post_LIKE, post_UNLIKE } = postSlice.actions
 export default postSlice.reducer
 
-export const selectPostById = () =>
+export const selectPosts = (state: RootState) => state.posts
+
+export const makeSelectPostById = () =>
 	createSelector(
-		[(state: RootState) => state.posts, (state: RootState, userId: number | string) => userId],
+		[selectPosts, (state: RootState, userId: number | string) => userId],
 		(posts, userId) => posts.filter(post => post.added_by === userId),
+	)
+export const makeSelectPostsByUser = () =>
+	createSelector([selectPosts, (state: RootState, userId) => userId], (posts, userId) =>
+		posts.filter(post => post.added_by === userId),
 	)

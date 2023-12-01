@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useMemo, useRef, useState } from 'react'
 
 import Avatar from 'components/common/buttons/Avatar'
 import EditProfile from 'components/common/modals/EditProfile'
@@ -7,7 +6,9 @@ import Button from 'components/modules/Button'
 
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
-import { RootState } from 'redux/store'
+import { makeSelectPostsByUser } from 'redux/slices/postSlice'
+import { selectReviewsByUser } from 'redux/slices/reviewSlice'
+import { selectTeamsByCreator } from 'redux/slices/teamSlice'
 import { IUser } from 'utils/Interfaces'
 
 interface Props {
@@ -16,12 +17,10 @@ interface Props {
 
 function UserSummary({ user }: Props) {
 	const [editForm, setEditForm] = useState<boolean>(false)
-	const postCnt = useSelector(
-		(state: RootState) => state.posts.filter(post => post.added_by === user.id).length,
-	)
-	const reviewCnt = useSelector(
-		(state: RootState) => state.reviews.filter(review => review.added_by === user.id).length,
-	)
+	const selectPosts = useMemo(makeSelectPostsByUser, [])
+	const postCnt = useAppSelector(state => selectPosts(state, user.id)).length
+	const reviewCnt = useAppSelector(state => selectReviewsByUser(state, user.id)).length
+	const teamCnt = useAppSelector(state => selectTeamsByCreator(state, user.id)).length
 	const currentUser = useAppSelector(selectCurrentUser)
 	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
 	const focus = () => buttonRef.current?.focus()
@@ -86,11 +85,11 @@ function UserSummary({ user }: Props) {
 				<span>{reviewCnt}</span>
 			</li>
 			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
-				<p className="font-bold">Favorites</p>
-				<span>0</span>
+				<p className="font-bold">Teams</p>
+				<span>{teamCnt}</span>
 			</li>
 			<li className="flex justify-between border-b border-solid border-white border-opacity-10 px-8 py-2 text-xs sm:px-6 sm:text-sm">
-				<p className="font-bold">Teams</p>
+				<p className="font-bold">Favorites</p>
 				<span>0</span>
 			</li>
 			{editForm && (

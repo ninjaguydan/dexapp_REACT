@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
 import { FaHeart, FaStar } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
 
 import PokeNavBtn from 'components/common/buttons/PokeNavBtn'
 import PokemonAvatar from 'components/common/buttons/PokemonAvatar'
@@ -12,8 +11,8 @@ import Spinner from 'components/modules/Spinner'
 
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
-import { selectReviewCount } from 'redux/slices/reviewSlice'
-import { selectTeamsByPkmn } from 'redux/slices/teamSlice'
+import { makeSelectReviewCount } from 'redux/slices/reviewSlice'
+import { selectTeamCountByPkmn } from 'redux/slices/teamSlice'
 import { getBaseStatTotal, makeHundreds, pluralize } from 'utils/Helpers'
 import { IPokemon } from 'utils/Interfaces'
 
@@ -27,9 +26,9 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 	const currentUser = useAppSelector(selectCurrentUser)
 	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
 	const focus = () => buttonRef.current?.focus()
-	const selectCount = useMemo(selectReviewCount, [])
-	const reviewCnt = useAppSelector(state => selectCount(state, pokemon?.id))
-	const teamCount = useAppSelector(state => selectTeamsByPkmn(state, pokemon?.id))
+	const selectReviewCount = useMemo(makeSelectReviewCount, [])
+	const reviewCnt = useAppSelector(state => selectReviewCount(state, pokemon?.id))
+	const teamCount = useAppSelector(state => selectTeamCountByPkmn(state, pokemon?.id))
 
 	const stats: { [key: string]: number } = {
 		HP: pokemon?.hp || 0,

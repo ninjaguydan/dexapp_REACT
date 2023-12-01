@@ -99,28 +99,23 @@ export default reviewSlice.reducer
 
 // Selectors
 export const selectReviews = (state: RootState) => state.reviews
-export const selectReviewsByPkmn = () =>
+
+export const makeSelectReviewsByPkmn = () =>
 	createSelector(
 		[selectReviews, (state: RootState, pkmnId: number) => pkmnId],
 		(reviews, pkmnId) => reviews.filter(review => review.pkmn === pkmnId),
 	)
-export const selectReviewCount = () =>
+export const makeSelectReviewCount = () =>
 	createSelector(
 		[selectReviews, (state: RootState, pkmnId: number | undefined) => pkmnId],
 		(reviews, pkmnId) => reviews.filter(review => review.pkmn === pkmnId).length,
 	)
-export const selectReviewsByUser = () =>
+export const makeSelectReviewsByUser = () =>
 	createSelector(
 		[selectReviews, (state: RootState, userId: number | string) => userId],
 		(reviews, userId) => reviews.filter(review => review.added_by === userId),
 	)
-export const reviewsByUser = createSelector(
+export const selectReviewsByUser = createSelector(
 	[selectReviews, (state: RootState, userId: number | string) => userId],
 	(reviews, userId) => reviews.filter(review => review.added_by === userId),
 )
-// export const selectTeamsByCreator = createSelector(
-// 	[selectTeams, (state: RootState, userId: number | string) => userId],
-// 	(teams, userId) => {
-// 		return teams.filter(team => team.added_by === userId)
-// 	},
-// )
