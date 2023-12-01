@@ -27,7 +27,7 @@ function UserSummary({ user }: Props) {
 	const focus = () => buttonRef.current?.focus()
 
 	return (
-		<ul className="group relative rounded border border-solid border-white border-opacity-10 bg-gray2 lg:min-w-[30%] [&_li:nth-child(even)]:bg-gray6">
+		<ul className="group relative h-[fit-content] rounded border border-solid border-white border-opacity-10 bg-gray2 lg:min-w-[30%] [&_li:nth-child(even)]:bg-gray6">
 			<li className="flex flex-col items-center gap-y-3 border-b border-solid border-white border-opacity-10 p-3 text-center sm:gap-y-4 sm:p-6">
 				<div>
 					<h1 className="text-3xl capitalize">{user.name}</h1>

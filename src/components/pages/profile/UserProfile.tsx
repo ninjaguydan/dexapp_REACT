@@ -1,26 +1,35 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import PostForm from 'components/common/posts/PostForm'
 import PostList from 'components/common/posts/PostList'
+import ReviewList from 'components/common/posts/ReviewList'
+import TeamList from 'components/common/posts/TeamList'
+import Card from 'components/modules/Card'
 import UserSummary from 'components/pages/profile/UserSummary'
 
 import { useAppSelector } from 'hooks/hooks'
 import { selectCurrentUser } from 'redux/slices/authSlice'
 import { selectPostById } from 'redux/slices/postSlice'
+import { reviewsByUser, selectReviewsByUser } from 'redux/slices/reviewSlice'
+import { selectTeamsByCreator } from 'redux/slices/teamSlice'
 import { IUser } from 'utils/Interfaces'
 
+import ProfileTab from '../../common/buttons/ProfileTab'
 import PageNotFound from '../error404/PageNotFound'
 
 const UserProfile = () => {
-	// parameter: "profile/username"
 	const { username } = useParams()
-	// logged in user
 	const currentUser = useAppSelector(selectCurrentUser)
 	const user = useAppSelector(state => state.users.filter(u => u.username === username)[0])
-	// get memoized posts
+	// Posts
 	const selectPosts = useMemo(selectPostById, [])
 	const posts = useAppSelector(state => selectPosts(state, user?.id))
+	// Reviews
+	const reviews = useAppSelector(state => reviewsByUser(state, user.id))
+	// Teams
+	const teams = useAppSelector(state => selectTeamsByCreator(state, user.id))
+
+	const [activeTab, setActiveTab] = useState<'Posts' | 'Reviews' | 'Teams'>('Posts')
 
 	if (!user) return <PageNotFound />
 
@@ -28,20 +37,36 @@ const UserProfile = () => {
 		<div className="flex w-full flex-col gap-x-4 gap-y-4 sm:flex-row">
 			<UserSummary user={user as IUser} />
 			<div className="w-full">
-				{currentUser.userInfo?.id === user.id ? (
-					<PostForm
-						btnText={'Post'}
-						placeholder={`What's on your mind?	`}
-						type={{ name: 'POST' }}
+				<div className="flex gap-1 sm:max-w-sm">
+					<ProfileTab
+						action={() => setActiveTab('Posts')}
+						label="Posts"
+						isActive={activeTab === 'Posts'}
 					/>
-				) : null}
-				{posts.length !== 0 ? (
-					<PostList posts={posts} />
-				) : (
-					<div className="group relative rounded border border-solid border-white border-opacity-10 bg-gray2 p-4">
-						No posts yet!!
-					</div>
+					<ProfileTab
+						action={() => setActiveTab('Reviews')}
+						label="Reviews"
+						isActive={activeTab === 'Reviews'}
+					/>
+					<ProfileTab
+						action={() => setActiveTab('Teams')}
+						label="Teams"
+						isActive={activeTab === 'Teams'}
+					/>
+				</div>
+				{activeTab === 'Posts' && (
+					<PostList posts={posts} currentUser={currentUser.userInfo?.id === user.id} />
 				)}
+				{activeTab === 'Reviews' && (
+					<>
+						{reviews.length !== 0 ? (
+							<ReviewList reviews={reviews} pkmnView={true} />
+						) : (
+							<Card>No reviews yet!!</Card>
+						)}
+					</>
+				)}
+				{activeTab === 'Teams' && <TeamList teams={teams} />}
 			</div>
 		</div>
 	)

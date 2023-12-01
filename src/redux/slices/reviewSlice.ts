@@ -109,3 +109,18 @@ export const selectReviewCount = () =>
 		[selectReviews, (state: RootState, pkmnId: number | undefined) => pkmnId],
 		(reviews, pkmnId) => reviews.filter(review => review.pkmn === pkmnId).length,
 	)
+export const selectReviewsByUser = () =>
+	createSelector(
+		[selectReviews, (state: RootState, userId: number | string) => userId],
+		(reviews, userId) => reviews.filter(review => review.added_by === userId),
+	)
+export const reviewsByUser = createSelector(
+	[selectReviews, (state: RootState, userId: number | string) => userId],
+	(reviews, userId) => reviews.filter(review => review.added_by === userId),
+)
+// export const selectTeamsByCreator = createSelector(
+// 	[selectTeams, (state: RootState, userId: number | string) => userId],
+// 	(teams, userId) => {
+// 		return teams.filter(team => team.added_by === userId)
+// 	},
+// )

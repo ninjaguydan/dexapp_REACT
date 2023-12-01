@@ -66,7 +66,7 @@ function TeamCard({ team }: ITeamProps) {
 						{user.username}
 					</Link>
 					<span className="font-normal text-gray4"> created the team, </span>
-					<Link to={`team/${team.name}`} className="capitalize hover:underline">
+					<Link to={`/team/${team.name}`} className="capitalize hover:underline">
 						{' '}
 						{team.name}
 					</Link>

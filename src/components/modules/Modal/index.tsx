@@ -2,8 +2,7 @@ import { createContext, createRef, useContext, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import Button from 'components/modules/Button'
-
-import handleTabKey from './utils/handleTabKey'
+import handleTabKey from 'components/modules/Modal/utils/handleTabKey'
 
 type Props = {
 	closeModal: () => void

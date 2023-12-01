@@ -140,9 +140,7 @@ function EditProfile({ closeEdit }: IEditProfileProps) {
 					<hr />
 					<Button.Primary>Update</Button.Primary>
 				</form>
-				<Button.Secondary classList="mt-2" isDisabled={true}>
-					Delete Profile
-				</Button.Secondary>
+				<Button.Secondary classList="mt-2">Delete Profile</Button.Secondary>
 			</Modal.Body>
 		</Modal>
 	)

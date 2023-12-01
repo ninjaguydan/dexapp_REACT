@@ -12,16 +12,14 @@ import { selectReviewsByPkmn } from 'redux/slices/reviewSlice'
 import { titleCase } from 'utils/Helpers'
 import { IPokemon } from 'utils/Interfaces'
 
+import Card from '../../modules/Card/index'
+
 const PokemonProfile = () => {
-	// parameter: "pokemon/number"
 	const { id } = useParams<string>()
 	const pkmnId: number = parseInt(id!)
-	// logged in user
 	const currentUser = useAppSelector(selectCurrentUser)
-	// get memoized reviews
 	const selectReviews = useMemo(selectReviewsByPkmn, [])
 	const reviews = useAppSelector(state => selectReviews(state, pkmnId))
-	// fetch Pokemon
 	const { data: pkmnData, isLoading }: { data: IPokemon | undefined; isLoading: boolean } =
 		useFetchPkmn(pkmnId)
 
@@ -41,9 +39,7 @@ const PokemonProfile = () => {
 				{reviews.length !== 0 ? (
 					<ReviewList reviews={reviews} />
 				) : (
-					<div className="rounded border border-solid border-white border-opacity-10 bg-gray2 p-4">
-						No reviews yet!!
-					</div>
+					<Card>No reviews yet!!</Card>
 				)}
 			</div>
 		</div>
