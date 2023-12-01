@@ -1,20 +1,19 @@
-import { useState } from 'react'
+import useDeviceWidth from 'hooks/useDeviceWidth'
 
-const SearchBtn = () => {
-	const [showSearchBar, setShowSearchBar] = useState(false)
+type Props = {
+	action: () => void
+}
 
+const SearchBtn = ({ action }: Props) => {
+	// const breakpoint = useDeviceWidth()
+
+	// if (breakpoint === 'DESKTOP') return <></>
 	return (
-		<>
-			<button
-				className="nav-icon search-icon"
-				onClick={() => setShowSearchBar(!showSearchBar)}
-			>
-				<i className="material-icons" aria-hidden="true">
-					search
-				</i>
-				<span className="sr-only">toggle search bar</span>
-			</button>
-		</>
+		<button aria-label="search button" className="flex hover:text-secondary" onClick={action}>
+			<i className="material-icons" aria-hidden="true">
+				search
+			</i>
+		</button>
 	)
 }
 

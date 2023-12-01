@@ -5,7 +5,7 @@ import dex_logo_icon from 'media/dex-icon-4c.svg'
 import dex_logo_full from 'media/dex-logo-w.svg'
 
 export default function Logo() {
-	const [breakpoint] = useDeviceWidth()
+	const breakpoint = useDeviceWidth()
 	const LOGO: { [key: string]: any } = {
 		MOBILE: dex_logo_icon,
 		TABLET: dex_logo_icon,

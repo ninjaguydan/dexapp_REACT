@@ -24,11 +24,11 @@ interface Props {
 export default function PokemonSummary({ pokemon, isLoading }: Props) {
 	const [showAddToTeam, setShowAddToTeam] = useState(false)
 	const currentUser = useAppSelector(selectCurrentUser)
+	const selectReviewCount = useMemo(makeSelectReviewCount, [])
+	const reviewCount = useAppSelector(state => selectReviewCount(state, pokemon?.id))
+	const teamCount = useAppSelector(state => selectTeamCountByPkmn(state, pokemon?.id))
 	const buttonRef: React.MutableRefObject<HTMLButtonElement | undefined> = useRef()
 	const focus = () => buttonRef.current?.focus()
-	const selectReviewCount = useMemo(makeSelectReviewCount, [])
-	const reviewCnt = useAppSelector(state => selectReviewCount(state, pokemon?.id))
-	const teamCount = useAppSelector(state => selectTeamCountByPkmn(state, pokemon?.id))
 
 	const stats: { [key: string]: number } = {
 		HP: pokemon?.hp || 0,
@@ -105,7 +105,7 @@ export default function PokemonSummary({ pokemon, isLoading }: Props) {
 			})}
 			<ListItem>
 				<h3 className="font-bold">Reviews</h3>
-				<p>{reviewCnt || 0}</p>
+				<p>{reviewCount || 0}</p>
 			</ListItem>
 			<ListItem classList="!justify-center">
 				<p className="font-bold">

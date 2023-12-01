@@ -7,7 +7,7 @@ interface Props {
 }
 
 const MenuBtn = ({ data: { action, isOpen, isVisible } }: Props) => {
-	const [breakpoint] = useDeviceWidth()
+	const breakpoint = useDeviceWidth()
 	if (!isVisible || breakpoint !== 'MOBILE') return <></>
 	return createPortal(
 		<>

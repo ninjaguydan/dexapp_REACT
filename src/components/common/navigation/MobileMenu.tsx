@@ -20,7 +20,7 @@ interface Props {
 const MobileMenu = ({ data: { isOpen, user, closeMenu } }: Props) => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
-	const [breakpoint] = useDeviceWidth()
+	const breakpoint = useDeviceWidth()
 
 	if (!isOpen || breakpoint !== 'MOBILE') return <></>
 

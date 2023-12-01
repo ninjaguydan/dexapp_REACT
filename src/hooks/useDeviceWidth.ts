@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 
 import debounce from '../utils/debounce'
 
-const useDeviceWidth = () => {
-	const [breakpoint, setBreakpoint] = useState<string>('MOBILE')
+type Breakpoints = 'MOBILE' | 'TABLET' | 'DESKTOP'
+const useDeviceWidth = (): Breakpoints => {
+	const [breakpoint, setBreakpoint] = useState<Breakpoints>('MOBILE')
 
 	const updateBreakpoint = debounce(() => {
 		let deviceWidth = window.innerWidth
@@ -22,6 +23,6 @@ const useDeviceWidth = () => {
 		return () => window.removeEventListener('resize', updateBreakpoint)
 	}, [breakpoint])
 
-	return [breakpoint]
+	return breakpoint
 }
 export default useDeviceWidth

@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import SearchBtn from 'components/common//buttons/SearchBtn'
 import Avatar from 'components/common/buttons/Avatar'
+import SearchBar from 'components/common/forms/SearchBar'
 import { FaAngleDown } from 'components/common/icons/index'
 import DesktopMenu from 'components/common/navigation/DesktopMenu'
 
@@ -11,10 +12,24 @@ import useDeviceWidth from 'hooks/useDeviceWidth'
 import { selectCurrentUser } from 'redux/slices/authSlice'
 import { truncateStr } from 'utils/Helpers'
 
+let searchStyle = {
+	TABLET: 'absolute left-0 top-[72px] border-b border-solid border-gray3',
+	DESKTOP: 'min-w-[440px]',
+}
+
 const DesktopNav = () => {
 	const currentUser = useAppSelector(selectCurrentUser)
 	const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
-	const [breakpoint] = useDeviceWidth()
+	const breakpoint = useDeviceWidth()
+	const [showSearch, setShowSearch] = useState(false)
+
+	useEffect(() => {
+		if (breakpoint === 'DESKTOP') {
+			setShowSearch(true)
+		} else {
+			setShowSearch(false)
+		}
+	}, [breakpoint])
 
 	if (breakpoint === 'MOBILE') return <></>
 
@@ -48,9 +63,9 @@ const DesktopNav = () => {
 	)
 
 	return (
-		<nav className="flex w-[400px] items-center justify-between">
-			<SearchBtn />
-
+		<nav className="flex items-center gap-6">
+			{breakpoint !== 'DESKTOP' && <SearchBtn action={() => setShowSearch(prev => !prev)} />}
+			<SearchBar classList={searchStyle[breakpoint]} show={showSearch} />
 			<NavLink to="/" className={'hover:text-secondary'}>
 				Home
 			</NavLink>
